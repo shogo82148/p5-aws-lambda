@@ -42,6 +42,7 @@
       },
       "runtime" : {
          "requires" : {
+            "HTTP::Tiny" : "0",
             "perl" : "5.026000"
          }
       },
