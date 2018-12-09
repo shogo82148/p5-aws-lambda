@@ -2,6 +2,7 @@ package AWS::Lambda::Bootstrap;
 use 5.026000;
 use strict;
 use warnings;
+use Try::Tiny;
 
 sub new {
     my $class = shift;
@@ -57,7 +58,15 @@ sub init {
 sub handle_event {
     my $self = shift;
     my ($payload, $context) = $self->lambda_next;
-    my $response = $self->hander_function->($payload, $context);
+    my $response = try {
+        $self->hander_function->($payload, $context);
+    } catch {
+        $self->lambda_erorr($_);
+        bless {}, 'AWS::Lambda::ErrorSentinel';
+    };
+    if (ref($response) eq 'AWS::Lambda::ErrorSentinel') {
+        return
+    }
     $self->lambda_response($response, $context)
 }
 

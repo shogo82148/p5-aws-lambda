@@ -1,9 +1,7 @@
 use strict;
 use warnings;
 use utf8;
-
 use Test::More;
-use Test::Deep;
 
 use FindBin;
 use lib "$FindBin::Bin/lib";
@@ -12,7 +10,7 @@ use AWS::Lambda::Context;
 
 my $error;
 my $bootstrap = BootstrapMock->new(
-    handler     => "echo.handle",
+    handler     => "error.handle",
     runtime_api => "example.com",
     task_root   => "$FindBin::Bin/test_handlers",
     lambda_next => sub {
@@ -29,5 +27,5 @@ my $bootstrap = BootstrapMock->new(
 );
 
 $bootstrap->handle_event;
-is $error, "some error";
+like $error, qr/some error/;
 done_testing;
