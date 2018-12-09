@@ -1,5 +1,6 @@
 package AWS::Lambda::Bootstrap;
 use 5.026000;
+use utf8;
 use strict;
 use warnings;
 use Try::Tiny;
@@ -21,8 +22,6 @@ sub new {
         api_version    => $api_version,
         next_event_url => "http://${runtime_api}/${api_version}/runtime/invocation/next",
     }, $class;
-    $self->init;
-
     return $self;
 }
 
@@ -51,15 +50,27 @@ sub init {
     my $handler = $self->handler;
     my $function = $self->function;
 
-    require "${task_root}/${handler}.pl";
-    $self->hander_function(\&$function);
+    try {
+        package main;
+        require "${task_root}/${handler}.pl";
+        my $f = main->can($function) // die "handler $function is not found";
+        $self->hander_function($f);
+    } catch {
+        $self->lambda_init_error($_);
+        die "initialize error: $_";
+    };
 }
 
 sub handle_event {
     my $self = shift;
+    my $func = $self->hander_function;
+    if (!$func) {
+        $self->init;
+        $func = $self->hander_function;
+    }
     my ($payload, $context) = $self->lambda_next;
     my $response = try {
-        $self->hander_function->($payload, $context);
+        $func->($payload, $context);
     } catch {
         $self->lambda_erorr($_);
         bless {}, 'AWS::Lambda::ErrorSentinel';

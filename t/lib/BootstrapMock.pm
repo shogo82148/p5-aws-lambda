@@ -9,7 +9,7 @@ our @ISA = qw(AWS::Lambda::Bootstrap);
 sub new {
     my $class = shift;
     my %args = @_;
-    my $self  = $class->SUPER::new(%args);
+    my $self = $class->SUPER::new(%args);
     $self->{lambda_next}       = $args{lambda_next} // sub { die "unexpected call of lambda_next" };
     $self->{lambda_response}   = $args{lambda_response} // sub { die "unexpected call of lambda_response" };
     $self->{lambda_error}      = $args{lambda_error} // sub { die "unexpected call of lambda_error" };

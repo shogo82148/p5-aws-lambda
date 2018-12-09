@@ -3,7 +3,12 @@
 use strict;
 use warnings;
 use utf8;
+use Try::Tiny;
 use AWS::Lambda::Bootstrap;
 
-my $bootstrap = AWS::Lambda::Bootstrap->new
-$bootstrap->run;
+try {
+    my $bootstrap = AWS::Lambda::Bootstrap->new
+    $bootstrap->run;
+} catch {
+    exit 1;
+};
