@@ -102,6 +102,17 @@ sub lambda_next {
 
 sub lambda_response {
     my $self = shift;
+    my ($response, $context) = @_;
+    my $runtime_api = $self->{runtime_api};
+    my $api_version = $self->{api_version};
+    my $request_id = $context->aws_request_id;
+    my $url = "http://${runtime_api}/${api_version}/runtime/invocation/${request_id}/response";
+    my $resp = $self->{http}->post($url, {
+        content => encode_json($response),
+    });
+    if (!$resp->{success}) {
+        die 'failed to response of execution: $resp->{status} $resp->{reason}';
+    }
 }
 
 sub lambda_erorr {

@@ -8,4 +8,5 @@ on 'test' => sub {
     requires 'Test::Deep', '1.128';
     requires 'Test::TCP', '2.19';
     requires 'HTTP::Server::PSGI';
+    requires 'Test::SharedFork';
 };
