@@ -1,21 +1,19 @@
+
 # NAME
 
-aws::lambda - It's new $module
+AWS::Lambda - It's new $module
 
 # SYNOPSIS
 
-    use aws::lambda;
+    use AWS::Lambda;
 
 # DESCRIPTION
 
-aws::lambda is ...
-
 # LICENSE
 
-Copyright (C) Ichinose Shogo.
+The MIT License (MIT)
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+Copyright (C) Ichinose Shogo.
 
 # AUTHOR
 

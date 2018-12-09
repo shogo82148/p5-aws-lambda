@@ -6,13 +6,13 @@
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v3.1.3, CPAN::Meta::Converter version 2.150010",
    "license" : [
-      "perl_5"
+      "mit"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : 2
    },
-   "name" : "aws-lambda",
+   "name" : "AWS-Lambda",
    "no_index" : {
       "directory" : [
          "t",
@@ -42,7 +42,7 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008001"
+            "perl" : "5.026000"
          }
       },
       "test" : {
@@ -52,7 +52,10 @@
       }
    },
    "release_status" : "unstable",
-   "version" : "0.01",
+   "version" : "0.0.1",
+   "x_contributors" : [
+      "Ichinose Shogo <shogo82148@gmail.com>"
+   ],
    "x_serialization_backend" : "JSON::PP version 2.97001",
    "x_static_install" : 1
 }

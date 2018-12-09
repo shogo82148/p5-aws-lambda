@@ -25,11 +25,11 @@ AWS::Lambda - It's new $module
 
 =head1 LICENSE
 
+The MIT License (MIT)
+
 Copyright (C) Ichinose Shogo.
 
 =head1 AUTHOR
-
-The MIT License (MIT)
 
 Ichinose Shogo E<lt>shogo82148@gmail.comE<gt>
 
