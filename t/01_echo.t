@@ -16,21 +16,25 @@ my $payload = +{
     key3 => 3,
 };
 my $response;
+my $context;
+my $dummy_context = time;
 
 my $bootstrap = BootstrapMock->new(
     handler     => "echo.handle",
     runtime_api => "example.com",
     task_root   => "$FindBin::Bin/test_handlers",
     lambda_next => sub {
-        return $payload, AWS::Lambda::Context->new;
+        return $payload, $dummy_context;
     },
     lambda_response => sub {
         my $self = shift;
         $response = shift;
+        $context = shift;
     },
 );
 
 $bootstrap->handle_event;
 cmp_deeply $response, $payload, "echo handler";
+is $context, $dummy_context, "context";
 
 done_testing;

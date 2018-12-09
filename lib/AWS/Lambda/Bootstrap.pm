@@ -3,7 +3,10 @@ use 5.026000;
 use utf8;
 use strict;
 use warnings;
+use HTTP::Tiny;
+use JSON::XS qw/decode_json encode_json/;
 use Try::Tiny;
+use AWS::Lambda::Context;
 
 sub new {
     my $class = shift;
@@ -21,6 +24,7 @@ sub new {
         runtime_api    => $runtime_api,
         api_version    => $api_version,
         next_event_url => "http://${runtime_api}/${api_version}/runtime/invocation/next",
+        http           => HTTP::Tiny->new,
     }, $class;
     return $self;
 }
@@ -83,7 +87,17 @@ sub handle_event {
 
 sub lambda_next {
     my $self = shift;
-    return +{};
+    my $resp = $self->{http}->get($self->{next_event_url});
+    if (!$resp->{success}) {
+        die 'failed to retrieve the next event: $resp->{status} $resp->{reason}';
+    }
+    my $h = $resp->{headers};
+    my $payload = decode_json($resp->{content});
+    return $payload, AWS::Lambda::Context->new(
+        deadline_ms    => $h->{'lambda-runtime-deadline-ms'},
+        aws_request_id => $h->{'lambda-runtime-aws-request-id'},
+        invoked_function_arn => $h->{'lambda-runtime-invoked-function-arn'},
+    );
 }
 
 sub lambda_response {

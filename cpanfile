@@ -5,5 +5,7 @@ requires 'Try::Tiny', '0.30';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
-    requires 'Test::Deep', '1.128'
+    requires 'Test::Deep', '1.128';
+    requires 'Test::TCP', '2.19';
+    requires 'HTTP::Server::PSGI';
 };

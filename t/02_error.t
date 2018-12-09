@@ -18,7 +18,7 @@ my $bootstrap = BootstrapMock->new(
             key1 => 1,
             key2 => 2,
             key3 => 3,
-        }, AWS::Lambda::Context->new;
+        }, undef;
     },
     lambda_error => sub {
         my $self = shift;
