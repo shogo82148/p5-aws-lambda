@@ -130,12 +130,25 @@ sub lambda_error {
         }),
     });
     if (!$resp->{success}) {
-        die 'failed to response of execution: $resp->{status} $resp->{reason}';
+        die 'failed to send error of execution: $resp->{status} $resp->{reason}';
     }
 }
 
 sub lambda_init_error {
     my $self = shift;
+    my $error = shift;
+    my $runtime_api = $self->{runtime_api};
+    my $api_version = $self->{api_version};
+    my $url = "http://${runtime_api}/${api_version}/runtime/init/error";
+    my $resp = $self->{http}->post($url, {
+        content => encode_json({
+            errorMessage => "$error",
+            errorType => blessed($error) // "error",
+        }),
+    });
+    if (!$resp->{success}) {
+        die 'failed to send error of execution: $resp->{status} $resp->{reason}';
+    }
 }
 
 1;
