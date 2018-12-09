@@ -2,10 +2,9 @@ package AWS::Lambda;
 use 5.026000;
 use strict;
 use warnings;
+use HTTP::Tiny;
 
 our $VERSION = "0.0.1";
-
-
 
 1;
 __END__
