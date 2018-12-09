@@ -7,6 +7,7 @@ use HTTP::Tiny;
 use JSON::XS qw/decode_json encode_json/;
 use Try::Tiny;
 use AWS::Lambda::Context;
+use Scalar::Util qw(blessed);
 
 sub new {
     my $class = shift;
@@ -115,8 +116,22 @@ sub lambda_response {
     }
 }
 
-sub lambda_erorr {
+sub lambda_error {
     my $self = shift;
+    my ($error, $context) = @_;
+    my $runtime_api = $self->{runtime_api};
+    my $api_version = $self->{api_version};
+    my $request_id = $context->aws_request_id;
+    my $url = "http://${runtime_api}/${api_version}/runtime/invocation/${request_id}/error";
+    my $resp = $self->{http}->post($url, {
+        content => encode_json({
+            errorMessage => "$error",
+            errorType => blessed($error) // "error",
+        }),
+    });
+    if (!$resp->{success}) {
+        die 'failed to response of execution: $resp->{status} $resp->{reason}';
+    }
 }
 
 sub lambda_init_error {
