@@ -3,4 +3,7 @@
 use strict;
 use warnings;
 use utf8;
+use AWS::Lambda::Bootstrap;
 
+my $bootstrap = AWS::Lambda::Bootstrap->new
+$bootstrap->run;

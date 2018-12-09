@@ -29,3 +29,4 @@ cover_db/
 MYMETA.*
 
 /aws-lambda-*
+/.perl-layler/
