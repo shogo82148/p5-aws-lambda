@@ -42,17 +42,34 @@
       },
       "runtime" : {
          "requires" : {
-            "HTTP::Tiny" : "0",
+            "HTTP::Tiny" : "0.076",
+            "JSON::XS" : "4.0",
+            "Try::Tiny" : "0.30",
             "perl" : "5.026000"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.98"
+            "HTTP::Server::PSGI" : "0",
+            "Test::Deep" : "1.128",
+            "Test::More" : "0.98",
+            "Test::SharedFork" : "0",
+            "Test::TCP" : "2.19"
          }
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/shogo82148/p5-aws-lambda/issues"
+      },
+      "homepage" : "https://github.com/shogo82148/p5-aws-lambda",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/shogo82148/p5-aws-lambda.git",
+         "web" : "https://github.com/shogo82148/p5-aws-lambda"
+      }
+   },
    "version" : "0.0.1",
    "x_contributors" : [
       "Ichinose Shogo <shogo82148@gmail.com>"
