@@ -20,9 +20,7 @@ my $bootstrap = BootstrapMock->new(
     },
 );
 
-try {
-    $bootstrap->handle_event;
-};
+ok !$bootstrap->handle_event;
 like $error, qr/handler handle_not_found is not found/;
 
 done_testing;

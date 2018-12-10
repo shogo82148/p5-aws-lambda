@@ -26,6 +26,6 @@ my $bootstrap = BootstrapMock->new(
     },
 );
 
-$bootstrap->handle_event;
+ok !$bootstrap->handle_event;
 like $error, qr/some error/;
 done_testing;

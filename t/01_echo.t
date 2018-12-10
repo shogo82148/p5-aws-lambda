@@ -33,7 +33,7 @@ my $bootstrap = BootstrapMock->new(
     },
 );
 
-$bootstrap->handle_event;
+ok $bootstrap->handle_event;
 cmp_deeply $response, $payload, "echo handler";
 is $context, $dummy_context, "context";
 

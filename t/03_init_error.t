@@ -20,9 +20,7 @@ my $bootstrap = BootstrapMock->new(
     },
 );
 
-try {
-    $bootstrap->handle_event;
-};
+ok !$bootstrap->handle_event;
 like $error, qr/did not return a true value/;
 
 done_testing;

@@ -21,7 +21,7 @@ sub new {
     my $self = bless +{
         task_root      => $task_root,
         handler        => $handler,
-        function       => $function,
+        function_name  => $function,
         runtime_api    => $runtime_api,
         api_version    => $api_version,
         next_event_url => "http://${runtime_api}/${api_version}/runtime/invocation/next",
@@ -30,60 +30,50 @@ sub new {
     return $self;
 }
 
-sub task_root { shift->{task_root} }
-sub handler   { shift->{handler} }
-sub function  { shift->{function} }
-sub hander_function {
-    my $self = shift;
-    if (scalar(@_) == 0) {
-        return $self->{hander_function};
-    } else {
-        $self->{hander_function} = $_[0];
-    }
-}
-
 sub handle_events {
     my $self = shift;
+    $self->_init or return;
     while(1) {
         $self->handle_event;
     }
 }
 
-sub init {
+sub _init {
     my $self = shift;
-    my $task_root = $self->task_root;
-    my $handler = $self->handler;
-    my $function = $self->function;
+    if (my $func = $self->{function}) {
+        return $func;
+    }
 
-    try {
+    my $task_root = $self->{task_root};
+    my $handler = $self->{handler};
+    my $name = $self->{function_name};
+    return try {
         package main;
         require "${task_root}/${handler}.pl";
-        my $f = main->can($function) // die "handler $function is not found";
-        $self->hander_function($f);
+        my $f = main->can($name) // die "handler $name is not found";
+        $self->{function} = $f;
     } catch {
         $self->lambda_init_error($_);
-        die "initialize error: $_";
+        $self->{function} = sub {};
+        undef;
     };
 }
 
 sub handle_event {
     my $self = shift;
-    my $func = $self->hander_function;
-    if (!$func) {
-        $self->init;
-        $func = $self->hander_function;
-    }
+    $self->_init or return;
     my ($payload, $context) = $self->lambda_next;
     my $response = try {
-        $func->($payload, $context);
+        $self->{function}->($payload, $context);
     } catch {
         $self->lambda_erorr($_);
         bless {}, 'AWS::Lambda::ErrorSentinel';
     };
     if (ref($response) eq 'AWS::Lambda::ErrorSentinel') {
-        return
+        return;
     }
-    $self->lambda_response($response, $context)
+    $self->lambda_response($response, $context);
+    return 1;
 }
 
 sub lambda_next {
