@@ -1,0 +1,44 @@
+{
+    "requestContext": {
+        "elb": {
+            "targetGroupArn": "arn:aws:elasticloadbalancing:ap-northeast-1:445285296882:targetgroup/lambda-target/a8d0882e91e66540"
+        }
+    },
+    "httpMethod": "GET",
+    "path": "/foo/bar",
+    "multiValueQueryStringParameters": {
+        "query": [
+            "hoge",
+            "fuga"
+        ]
+    },
+    "multiValueHeaders": {
+        "accept": [
+            "*/*"
+        ],
+        "header-name": [
+            "Value1",
+            "Value2"
+        ],
+        "host": [
+            "lambda-test-1062019563.ap-northeast-1.elb.amazonaws.com"
+        ],
+        "user-agent": [
+            "curl/7.54.0"
+        ],
+        "x-amzn-trace-id": [
+            "Root=1-5c0f279e-761eb33e877ace561add4a4a"
+        ],
+        "x-forwarded-for": [
+            "122.249.124.94"
+        ],
+        "x-forwarded-port": [
+            "443"
+        ],
+        "x-forwarded-proto": [
+            "https"
+        ]
+    },
+    "body": "",
+    "isBase64Encoded": true
+}

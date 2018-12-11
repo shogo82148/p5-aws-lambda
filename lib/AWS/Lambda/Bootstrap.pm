@@ -10,8 +10,14 @@ use AWS::Lambda::Context;
 use Scalar::Util qw(blessed);
 
 sub new {
-    my $class = shift;
-    my %args = @_;
+    my $proto = shift;
+    my $class = ref $proto || $proto;
+    my %args;
+    if (@_ == 1 && ref $_[0] eq 'HASH') {
+        %args = %{$_[0]};
+    } else {
+        %args = @_;
+    }
 
     my $api_version = '2018-06-01';
     my $env_handler = $args{handler} // $ENV{'_HANDLER'} // die '$_HANDLER is not found';
