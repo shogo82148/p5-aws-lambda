@@ -7,6 +7,8 @@ use FindBin;
 use JSON::XS qw/decode_json encode_json/;
 use File::Slurp qw(slurp);
 use Plack::Request;
+use Test::Deep;
+use JSON::Types;
 
 use AWS::Lambda::PSGI;
 
@@ -85,6 +87,35 @@ subtest "ALB POST Request" => sub {
     is $req->request_uri, '/foo/bar', 'request uri';
     is $req->path_info, '/foo/bar', 'path info';
     is $req->query_string, '', 'query string';
+};
+
+subtest "plain text response" => sub {
+    my $response = [
+        200,
+        [
+            'Content-Type' => 'text/plain',
+            'Header-Name' => 'value1',
+            'Header-Name' => 'value2',
+        ],
+        [
+            "Hello",
+            "World",
+        ]
+    ];
+    my $res = $app->format_output($response);
+    cmp_deeply $res, {
+        isBase64Encoded => bool 0,
+        headers => {
+            'Content-Type' => 'text/plain',
+            'Header-Name' => 'value2',
+        },
+        multiValueHeaders => {
+            'Content-Type' => ['text/plain'],
+            'Header-Name' => ['value1', 'value2'],
+        },
+        statusCode => 200,
+        body => "HelloWorld",
+    };
 };
 
 done_testing;

@@ -8,6 +8,7 @@ use WWW::Form::UrlEncoded qw/build_urlencoded/;
 use Plack::Util;
 use bytes ();
 use MIME::Base64;
+use JSON::Types;
 
 sub new {
     my $proto = shift;
@@ -114,7 +115,35 @@ sub format_input {
 }
 
 sub format_output {
+    my ($self, $response) = @_;
+    my ($status, $headers, $body) = @$response;
 
+    my $singleValueHeaders = {};
+    my $multiValueHeaders = {};
+    Plack::Util::header_iter($headers, sub {
+        my ($k, $v) = @_;
+        $singleValueHeaders->{$k} = string $v;
+        push @{$multiValueHeaders->{$k} //= []}, string $v;
+    });
+
+    my $content = '';
+    if (ref $body eq 'ARRAY') {
+        $content = join '', grep defined, @$body;
+    } else {
+        local $/ = \4096;
+        while (defined(my $buf = $body->getline)) {
+            $content .= $buf;
+        }
+        $body->close;
+    }
+
+    return +{
+        isBase64Encoded => bool 0,
+        headers => $singleValueHeaders,
+        multiValueHeaders => $multiValueHeaders,
+        statusCode => number $status,
+        body => string $content,
+    }
 }
 
 1;
