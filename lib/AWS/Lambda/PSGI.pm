@@ -9,6 +9,8 @@ use Plack::Util;
 use bytes ();
 use MIME::Base64;
 use JSON::Types;
+use Encode;
+use Try::Tiny;
 
 sub new {
     my $proto = shift;
@@ -141,6 +143,14 @@ sub format_output {
     my $isBase64Encoded = $type !~ m(^text/.*|application/(:?json|javascript|xml))i;
     if ($isBase64Encoded) {
         $content = encode_base64 $content, '';
+    } else {
+        try {
+            # is valid utf-8 string?
+            decode_utf8($content, Encode::FB_CROAK | Encode::LEAVE_SRC);
+        } catch {
+            $isBase64Encoded = 1;
+            $content = encode_base64 $content, '';
+        };
     }
 
     return +{

@@ -9,6 +9,7 @@ use File::Slurp qw(slurp);
 use Plack::Request;
 use Test::Deep;
 use JSON::Types;
+use Encode;
 
 use AWS::Lambda::PSGI;
 
@@ -116,6 +117,7 @@ subtest "plain text response" => sub {
         statusCode => 200,
         body => "HelloWorld",
     };
+    diag encode_json $res;
 };
 
 subtest "binary response" => sub {
@@ -140,6 +142,7 @@ subtest "binary response" => sub {
         statusCode => 200,
         body => "eyJoZWxsbyI6IndvcmxkIn0=",
     };
+    diag encode_json $res;
 };
 
 subtest "IO::Handle-like response" => sub {
@@ -163,6 +166,32 @@ subtest "IO::Handle-like response" => sub {
         statusCode => 200,
         body => "HelloWorld",
     };
+    diag encode_json $res;
+};
+
+subtest "EUC-JP encoded response" => sub {
+    my $response = [
+        200,
+        [
+            'Content-Type' => 'text/plain',
+        ],
+        [
+            "\xC8\xFE\xC6\xFD",
+        ]
+    ];
+    my $res = $app->format_output($response);
+    cmp_deeply $res, {
+        isBase64Encoded => bool 1,
+        headers => {
+            'content-type' => 'text/plain',
+        },
+        multiValueHeaders => {
+            'content-type' => ['text/plain'],
+        },
+        statusCode => 200,
+        body => "yP7G/Q==",
+    };
+    diag encode_json $res;
 };
 
 done_testing;
