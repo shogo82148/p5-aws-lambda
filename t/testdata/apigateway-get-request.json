@@ -1,0 +1,86 @@
+{
+    "resource": "/{proxy+}",
+    "path": "/foo%20/bar",
+    "httpMethod": "GET",
+    "headers": {
+        "accept": "*/*",
+        "header-name": "Value2",
+        "Host": "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com",
+        "User-Agent": "curl/7.54.0",
+        "X-Amzn-Trace-Id": "Root=1-5c0f299f-3d4e8aea2d2c6df68d9c4b62",
+        "X-Forwarded-For": "192.0.2.1",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "accept": [
+            "*/*"
+        ],
+        "header-name": [
+            "Value1",
+            "Value2"
+        ],
+        "Host": [
+            "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com"
+        ],
+        "User-Agent": [
+            "curl/7.54.0"
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5c0f299f-3d4e8aea2d2c6df68d9c4b62"
+        ],
+        "X-Forwarded-For": [
+            "192.0.2.1"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "queryStringParameters": {
+        "query": "fuga"
+    },
+    "multiValueQueryStringParameters": {
+        "query": [
+            "hoge",
+            "fuga"
+        ]
+    },
+    "pathParameters": {
+        "proxy": "foo%20/bar"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "eto9na",
+        "resourcePath": "/{proxy+}",
+        "httpMethod": "GET",
+        "extendedRequestId": "RuNw7G65tjMFreQ=",
+        "requestTime": "11/Dec/2018:03:06:07 +0000",
+        "path": "/prod/foo%20/bar",
+        "accountId": "123456789012",
+        "protocol": "HTTP/1.1",
+        "stage": "prod",
+        "domainPrefix": "xxxxxxxxxx",
+        "requestTimeEpoch": 1544497567503,
+        "requestId": "b42dfa11-fcf1-11e8-b9d0-b9272ebf40e8",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "192.0.2.1",
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "curl/7.54.0",
+            "user": null
+        },
+        "domainName": "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com",
+        "apiId": "xxxxxxxxxx"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}

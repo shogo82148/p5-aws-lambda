@@ -6,8 +6,14 @@ use warnings;
 use Time::HiRes qw(time);
 
 sub new {
-    my $class = shift;
-    my %args = @_;
+    my $proto = shift;
+    my $class = ref $proto || $proto;
+    my %args;
+    if (@_ == 1 && ref $_[0] eq 'HASH') {
+        %args = %{$_[0]};
+    } else {
+        %args = @_;
+    }
     my $deadline_ms = $args{deadline_ms} // die 'deadine_ms is required';
     my $invoked_function_arn = $args{invoked_function_arn} // die 'invoked_function_arn is required';
     my $aws_request_id = $args{aws_request_id} // 'aws_request_id is required';

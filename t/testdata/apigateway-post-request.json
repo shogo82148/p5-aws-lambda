@@ -1,0 +1,76 @@
+{
+    "resource": "/",
+    "path": "/",
+    "httpMethod": "POST",
+    "headers": {
+        "accept": "*/*",
+        "content-type": "application/json",
+        "Host": "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com",
+        "User-Agent": "curl/7.54.0",
+        "X-Amzn-Trace-Id": "Root=1-5c0f033a-32eff4c8b894f0d4f8fa213c",
+        "X-Forwarded-For": "192.0.2.1",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "accept": [
+            "*/*"
+        ],
+        "content-type": [
+            "application/json"
+        ],
+        "Host": [
+            "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com"
+        ],
+        "User-Agent": [
+            "curl/7.54.0"
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5c0f033a-32eff4c8b894f0d4f8fa213c"
+        ],
+        "X-Forwarded-For": [
+            "192.0.2.1"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "pathParameters": null,
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "ccbvnay7y6",
+        "resourcePath": "/",
+        "httpMethod": "POST",
+        "extendedRequestId": "Rt1xMGJVtjMFrAQ=",
+        "requestTime": "11/Dec/2018:00:22:18 +0000",
+        "path": "/prod",
+        "accountId": "123456789012",
+        "protocol": "HTTP/1.1",
+        "stage": "prod",
+        "domainPrefix": "xxxxxxxxxx",
+        "requestTimeEpoch": 1544487738890,
+        "requestId": "d1dea7a0-fcda-11e8-b123-a312074f0e79",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "192.0.2.1",
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "curl/7.54.0",
+            "user": null
+        },
+        "domainName": "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com",
+        "apiId": "xxxxxxxxxx"
+    },
+    "body": "{\"hello\":\"world\"}",
+    "isBase64Encoded": false
+}

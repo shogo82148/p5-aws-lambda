@@ -44,13 +44,14 @@
          "requires" : {
             "HTTP::Tiny" : "0.076",
             "JSON::XS" : "4.0",
+            "Plack" : "1.0047",
             "Try::Tiny" : "0.30",
             "perl" : "5.026000"
          }
       },
       "test" : {
          "requires" : {
-            "HTTP::Server::PSGI" : "0",
+            "File::Slurp" : "9999.25",
             "Test::Deep" : "1.128",
             "Test::More" : "0.98",
             "Test::SharedFork" : "0",

@@ -1,0 +1,23 @@
+{
+    "requestContext": {
+        "elb": {
+            "targetGroupArn": "arn:aws:elasticloadbalancing:ap-northeast-1:123456789012:targetgroup/lambda-target/a8d0882e91e66540"
+        }
+    },
+    "httpMethod": "POST",
+    "path": "/",
+    "queryStringParameters": {},
+    "headers": {
+        "accept": "*/*",
+        "content-length": "17",
+        "content-type": "application/json",
+        "host": "lambda-test-1234567890.ap-northeast-1.elb.amazonaws.com",
+        "user-agent": "curl/7.54.0",
+        "x-amzn-trace-id": "Root=1-5c0f08ec-8a00ddf3c79b53a01fa905ba",
+        "x-forwarded-for": "192.0.2.1",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "body": "{\"hello\":\"world\"}",
+    "isBase64Encoded": false
+}
