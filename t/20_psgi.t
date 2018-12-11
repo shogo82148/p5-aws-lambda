@@ -51,4 +51,40 @@ subtest "API Gateway Base64 encoded POST Request" => sub {
     is $req->query_string, '', 'query string';
 };
 
+subtest "ALB GET Request" => sub {
+    my $input = decode_json(slurp("$FindBin::Bin/testdata/alb-get-request.json"));
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'GET', 'method';
+    is $req->content, '', 'content';
+    is $req->request_uri, '/foo/bar', 'request uri';
+    is $req->path_info, '/foo/bar', 'path info';
+    is $req->query_string, 'query=hoge&query=fuga', 'query string';
+    is $req->header('Header-Name'), 'Value1, Value2', 'header';
+};
+
+subtest "ALB POST Request" => sub {
+    my $input = decode_json(slurp("$FindBin::Bin/testdata/alb-post-request.json"));
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'POST', 'method';
+    is $req->content_type, 'application/json', 'content-type';
+    is $req->content, '{"hello":"world"}', 'content';
+    is $req->request_uri, '/', 'request uri';
+    is $req->path_info, '/', 'path info';
+    is $req->query_string, '', 'query string';
+};
+
+subtest "ALB POST Request" => sub {
+    my $input = decode_json(slurp("$FindBin::Bin/testdata/alb-base64-request.json"));
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'POST', 'method';
+    is $req->content_type, 'application/octet-stream', 'content-type';
+    is $req->content, '{"hello":"world"}', 'content';
+    is $req->request_uri, '/foo/bar', 'request uri';
+    is $req->path_info, '/foo/bar', 'path info';
+    is $req->query_string, '', 'query string';
+};
+
 done_testing;
