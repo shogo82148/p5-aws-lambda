@@ -7,6 +7,7 @@ use URI::Escape;
 use WWW::Form::UrlEncoded qw/build_urlencoded/;
 use Plack::Util;
 use bytes ();
+use MIME::Base64;
 
 sub new {
     my $proto = shift;
@@ -98,6 +99,9 @@ sub format_input {
     $env->{'psgix.input.buffered'} = Plack::Util::TRUE;
 
     my $body = $payload->{body};
+    if ($payload->{isBase64Encoded}) {
+        $body = decode_base64 $body;
+    }
     open my $input, "<", \$body;
     $env->{REQUEST_METHOD} = $payload->{httpMethod};
     $env->{'psgi.input'} = $input;
