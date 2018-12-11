@@ -118,7 +118,7 @@ subtest "plain text response" => sub {
     };
 };
 
-subtest "plain text response" => sub {
+subtest "binary response" => sub {
     my $response = [
         200,
         [
@@ -139,6 +139,29 @@ subtest "plain text response" => sub {
         },
         statusCode => 200,
         body => "eyJoZWxsbyI6IndvcmxkIn0=",
+    };
+};
+
+subtest "IO::Handle-like response" => sub {
+    open my $f, "<", \"HelloWorld";
+    my $response = [
+        200,
+        [
+            'Content-Type' => 'text/plain',
+        ],
+        $f,
+    ];
+    my $res = $app->format_output($response);
+    cmp_deeply $res, {
+        isBase64Encoded => bool 0,
+        headers => {
+            'content-type' => 'text/plain',
+        },
+        multiValueHeaders => {
+            'content-type' => ['text/plain'],
+        },
+        statusCode => 200,
+        body => "HelloWorld",
     };
 };
 
