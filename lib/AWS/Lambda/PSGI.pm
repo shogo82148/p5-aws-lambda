@@ -122,8 +122,8 @@ sub format_output {
     my $multiValueHeaders = {};
     Plack::Util::header_iter($headers, sub {
         my ($k, $v) = @_;
-        $singleValueHeaders->{$k} = string $v;
-        push @{$multiValueHeaders->{$k} //= []}, string $v;
+        $singleValueHeaders->{lc $k} = string $v;
+        push @{$multiValueHeaders->{lc $k} //= []}, string $v;
     });
 
     my $content = '';
@@ -137,8 +137,14 @@ sub format_output {
         $body->close;
     }
 
+    my $type = $singleValueHeaders->{'content-type'};
+    my $isBase64Encoded = $type !~ m(^text/.*|application/(:?json|javascript|xml))i;
+    if ($isBase64Encoded) {
+        $content = encode_base64 $content, '';
+    }
+
     return +{
-        isBase64Encoded => bool 0,
+        isBase64Encoded => bool $isBase64Encoded,
         headers => $singleValueHeaders,
         multiValueHeaders => $multiValueHeaders,
         statusCode => number $status,

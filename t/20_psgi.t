@@ -95,7 +95,7 @@ subtest "plain text response" => sub {
         [
             'Content-Type' => 'text/plain',
             'Header-Name' => 'value1',
-            'Header-Name' => 'value2',
+            'header-name' => 'value2',
         ],
         [
             "Hello",
@@ -106,15 +106,39 @@ subtest "plain text response" => sub {
     cmp_deeply $res, {
         isBase64Encoded => bool 0,
         headers => {
-            'Content-Type' => 'text/plain',
-            'Header-Name' => 'value2',
+            'content-type' => 'text/plain',
+            'header-name' => 'value2',
         },
         multiValueHeaders => {
-            'Content-Type' => ['text/plain'],
-            'Header-Name' => ['value1', 'value2'],
+            'content-type' => ['text/plain'],
+            'header-name' => ['value1', 'value2'],
         },
         statusCode => 200,
         body => "HelloWorld",
+    };
+};
+
+subtest "plain text response" => sub {
+    my $response = [
+        200,
+        [
+            'Content-Type' => 'application/octet-stream',
+        ],
+        [
+            '{"hello":"world"}',
+        ]
+    ];
+    my $res = $app->format_output($response);
+    cmp_deeply $res, {
+        isBase64Encoded => bool 1,
+        headers => {
+            'content-type' => 'application/octet-stream',
+        },
+        multiValueHeaders => {
+            'content-type' => ['application/octet-stream'],
+        },
+        statusCode => 200,
+        body => "eyJoZWxsbyI6IndvcmxkIn0=",
     };
 };
 
