@@ -21,6 +21,7 @@ subtest "API Gateway GET Request" => sub {
     is $req->request_uri, '/foo%20/bar', 'request uri';
     is $req->path_info, '/foo /bar', 'path info';
     is $req->query_string, 'query=hoge&query=fuga', 'query string';
+    is $req->header('Header-Name'), 'Value1, Value2', 'header';
 };
 
 subtest "API Gateway POST Request" => sub {
@@ -44,7 +45,6 @@ subtest "API Gateway Base64 encoded POST Request" => sub {
     # You have to add 'application/octet-stream' to binary media types.
     # https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-payload-encodings-configure-with-console.html
     is $req->content_type, 'application/octet-stream', 'content-type';
-
     is $req->content, '{"hello":"world"}', 'content';
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
