@@ -72,7 +72,7 @@ sub handle_event {
     my $response = try {
         $self->{function}->($payload, $context);
     } catch {
-        $self->lambda_erorr($_);
+        $self->lambda_error($_, $context);
         bless {}, 'AWS::Lambda::ErrorSentinel';
     };
     if (ref($response) eq 'AWS::Lambda::ErrorSentinel') {
