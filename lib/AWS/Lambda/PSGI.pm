@@ -29,12 +29,8 @@ sub new {
 sub prepare_app { return }
 
 sub app {
-    my $self = shift;
-    if (@_ == 1) {
-        return $self->{app};
-    } else {
-        return $self->{app} = $_[0];
-    }
+    return $_[0]->{app} if scalar(@_) == 1;
+    return $_[0]->{app} = scalar(@_) == 2 ? $_[1] : [ @_[1..$#_ ]];
 }
 
 sub to_app {
