@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: S3 Bucket for AWS Lambda Perl Runtime
+
+Resources:
+  LayerBucket:
+    DeletionPolicy: Retain
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub shogo82148-lambda-perl-runtime-${AWS::Region}
+      VersioningConfiguration:
+        Status: Enabled

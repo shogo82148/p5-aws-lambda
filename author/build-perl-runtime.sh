@@ -1,16 +1,25 @@
 #!/usr/bin/env bash
 
 ROOT=$(cd "$(dirname "$0")/../" && pwd)
+
+if [[ $# -eq 0 ]]; then
+    $0 5.26.3 5-26
+    $0 5.28.1 5-28
+    exit 0
+fi
+
 PERL_VERSION=$1
 TAG=$2
 OPT="$ROOT/.perl-layer/$PERL_VERSION"
-set -ue
+DIST="$ROOT/.perl-layer/dist"
+set -uex
 
 # clean up
 rm -rf "$OPT"
 mkdir -p "$OPT"
-rm -f "$ROOT/lambda-perl-layer-$TAG.zip"
+rm -f "$DIST/perl-$TAG-runtime.zip"
 
 docker run -v "$ROOT:/var/task" -v "$OPT:/opt" --rm lambci/lambda:build-provided ./author/build-perl.sh "$PERL_VERSION"
 cd "$OPT"
-zip -9 -r "$ROOT/lambda-perl-layer-$TAG.zip" .
+mkdir -p "$DIST"
+zip -9 -r "$DIST/perl-$TAG-runtime.zip" .
