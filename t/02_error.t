@@ -6,7 +6,6 @@ use Test::More;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 use BootstrapMock;
-use AWS::Lambda::Context;
 
 my $error;
 my $bootstrap = BootstrapMock->new(
