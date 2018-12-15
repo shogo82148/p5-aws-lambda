@@ -7,7 +7,7 @@ use FindBin;
 use JSON::XS qw/decode_json encode_json/;
 use File::Slurp qw(slurp);
 use Plack::Request;
-use Test::Deep;
+use Test::Deep qw(cmp_deeply);
 use JSON::Types;
 use Encode;
 
