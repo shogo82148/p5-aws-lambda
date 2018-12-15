@@ -27,7 +27,7 @@ sub lambda_response {
     return $self->{lambda_response}->($self, @_);
 }
 
-sub lambda_erorr {
+sub lambda_error {
     my $self = shift;
     return $self->{lambda_error}->($self, @_);
 }
