@@ -35,14 +35,3 @@ for ZIP in "$ROOT"/.perl-layer/dist/*.zip; do
         echo updated stack in "$REGION"
     done < "$ROOT/author/regions.txt"
 done
-
-echo
-echo ARNS
-for ZIP in "$ROOT"/.perl-layer/dist/*.zip; do
-    PERLVERION=$(echo "$NAME" | cut -d- -f2,3 | sed -e 's/-/./')
-    STACK="${PERLVERION//./-}"
-    while read -r REGION; do
-        aws --region "$REGION" cloudformation describe-stacks \
-            --stack-name "lambda-$STACK-runtime" | jq -r .Stacks[0].Outputs[0].OutputValue
-    done < "$ROOT/author/regions.txt"
-done
