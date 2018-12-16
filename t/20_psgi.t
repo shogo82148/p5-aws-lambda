@@ -194,4 +194,21 @@ subtest "EUC-JP encoded response" => sub {
     diag encode_json $res;
 };
 
+subtest "query string enconding" => sub {
+    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-get-request.json"));
+    $input->{queryStringParameters} = {
+        "gif+ref+" => "",
+    };
+    $input->{multiValueQueryStringParameters} = {
+        "gif+ref+" => [""],
+    };
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'GET', 'method';
+    is $req->content, '', 'content';
+    is $req->request_uri, '/foo%20/bar', 'request uri';
+    is $req->path_info, '/foo /bar', 'path info';
+    is $req->query_string, 'gif+ref+=', 'query string';
+};
+
 done_testing;

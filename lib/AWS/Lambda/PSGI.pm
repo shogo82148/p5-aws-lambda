@@ -4,7 +4,6 @@ use utf8;
 use strict;
 use warnings;
 use URI::Escape;
-use WWW::Form::UrlEncoded qw/build_urlencoded/;
 use Plack::Util;
 use bytes ();
 use MIME::Base64;
@@ -68,7 +67,17 @@ sub format_input {
         %{$payload->{queryStringParameters} // {}},
         %{$payload->{multiValueQueryStringParameters} // {}},
     };
-    $env->{QUERY_STRING} = build_urlencoded($query);
+    my @params;
+    while (my ($key, $value) = each %$query) {
+        if (ref($value) eq 'ARRAY') {
+            for my $v (@$value) {
+                push @params, "$key=$v";
+            }
+        } else {
+            push @params, "$key=$value";
+        }
+    }
+    $env->{QUERY_STRING} = join '&', @params;
 
     # merge headers and multiValueHeaders
     my $headers = {
