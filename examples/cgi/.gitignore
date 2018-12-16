@@ -1,4 +1,6 @@
 /local/
+/extlocal/
 /wwwcount.cnt
 /wwwcount.acc
 /wwwcount.dat
+/*.zip

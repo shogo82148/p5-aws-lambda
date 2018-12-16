@@ -1,52 +1,52 @@
 ;# ====================================================================
 ;#
-;# gifcat.pl: GIFƒtƒ@ƒCƒ‹˜AŒ‹ƒ‰ƒCƒuƒ‰ƒŠ Ver1.61
+;# gifcat.pl: GIFï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ Ver1.61
 ;#
 ;# Copyright (c) 1997,2002 http://tohoho.wakusei.ne.jp/
 ;#
-;# ’˜ìŒ ‚Í•úŠü‚µ‚Ü‚¹‚ñ‚ªAŽ©—R‚ÉŽg—pE‰ü‘¢EÄ”z•z‰Â”\‚Å‚·B
+;# ï¿½ï¿½ï¿½ìŒ ï¿½Í•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ñ‚ªAï¿½ï¿½ï¿½Rï¿½ÉŽgï¿½pï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½Ä”zï¿½zï¿½Â”\ï¿½Å‚ï¿½ï¿½B
 ;#
-;# Šî–{“I‚ÈŽg‚¢•û
+;# ï¿½ï¿½{ï¿½Iï¿½ÈŽgï¿½ï¿½ï¿½ï¿½
 ;#    require "gifcat.pl";
 ;#    open(OUT, "> out.gif");
-;#    binmode(OUT);    # MS-DOS ‚â Windows ‚Ìê‡‚É•K—v‚Å‚·B
+;#    binmode(OUT);    # MS-DOS ï¿½ï¿½ Windows ï¿½Ìê‡ï¿½É•Kï¿½vï¿½Å‚ï¿½ï¿½B
 ;#    print OUT &gifcat'gifcat("xx.gif", "yy.gif", "zz.gif");
 ;#    close(OUT);
 ;#
-;# ƒfƒoƒbƒO—p(GIF‚Ì‰ðÍo—Í)
+;# ï¿½fï¿½oï¿½bï¿½Oï¿½p(GIFï¿½Ì‰ï¿½Íoï¿½ï¿½)
 ;#    require "gifcat.pl";
 ;#    &gifcat'gifprint("xx.gif", "yy.gif", "zz.gif");
 ;#
-;# §ŒÀŽ–€
-;#    ƒAƒjƒGIF“¯Žm‚ð˜AŒ‹‚·‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñB
-;#    ƒAƒjƒGIF‘Î‰ž‚Ìƒuƒ‰ƒEƒU‚Å‚È‚¯‚ê‚ÎAÅ‰‚Ì‰æ‘œ‚µ‚©•\Ž¦‚³‚ê‚Ü‚¹‚ñB
-;#    ‚‚³‚ÌˆÙ‚È‚éGIFƒtƒ@ƒCƒ‹‚Í˜AŒ‹‚Å‚«‚Ü‚¹‚ñB
+;# ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+;#    ï¿½Aï¿½jï¿½ï¿½GIFï¿½ï¿½ï¿½mï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚Í‚Å‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B
+;#    ï¿½Aï¿½jï¿½ï¿½GIFï¿½Î‰ï¿½ï¿½Ìƒuï¿½ï¿½ï¿½Eï¿½Uï¿½Å‚È‚ï¿½ï¿½ï¿½ÎAï¿½Åï¿½ï¿½Ì‰æ‘œï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B
+;#    ï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÙ‚È‚ï¿½GIFï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Í˜Aï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B
 ;#
-;# ÅV”Å“üŽèæ
+;# ï¿½ÅVï¿½Å“ï¿½ï¿½ï¿½ï¿½
 ;#    http://tohoho.wakusei.ne.jp/wwwsoft.htm
 ;#
-;# XV—š—ð:
-;#    1997.05.03 ‰”ÅB
-;#    1997.05.10 ƒXƒyƒ‹ƒ~ƒXC³B
-;#    1997.05.29 ƒTƒCƒY‚ÌˆÙ‚È‚éƒJƒ‰[ƒe[ƒuƒ‹‚É‘Î‰žB
-;#    1997.07.07 ƒGƒ‰[”­¶Žž‚Éexit()‚µ‚È‚¢‚æ‚¤‚ÉC³B
-;#    1998.05.05 Trailer‚ðŽ‚½‚È‚¢GIFƒtƒ@ƒCƒ‹‚ð˜AŒ‹‚Å‚«‚È‚¢ƒoƒO‚ðC³B
-;#    1998.05.05 ‰¡•‚ª256‚ð’´‚¦‚éGIF‚Ìo—Í‚ª‚Å‚«‚È‚¢ƒoƒO‚ðC³B
-;#    1998.05.05 gifprint()‚Å˜AŒ‹Œ‹‰Ê‚ðo—Í‚µ‚È‚¢‚æ‚¤‚ÉC³B
-;#    1998.05.10 ˜AŒ‹‚Å‚«‚È‚¢GIF‰æ‘œ‚ª‚ ‚é‚Æ‚¢‚¤ƒoƒO‚ðC³B
-;#    1998.08.20 Ver1.50 •Ï”‚Ì‰Šú‰»‚ðs‚¤‚æ‚¤‚ÉC³B
-;#    1998.08.20 Ver1.50 “§‰ßGIF‚É‘Î‰žB
-;#    1999.05.30 Ver1.51 “®ì‚É‚ÍŠÖŒW‚È‚¢ƒ^ƒCƒvƒ~ƒXC³B
-;#    1999.10.11 Ver1.52 ƒRƒƒ“ƒg‚ÌC³
-;#    2000.05.21 Ver1.53 •‚ÌˆÙ‚È‚éGIF‚Ì˜AŒ‹‚É‘Î‰ž
-;#    2000.06.04 Ver1.54 perl -wc‚Ìwarning‘Î‰ž
-;#    2000.06.04 Ver1.55 ƒCƒ“ƒ^ƒŒ[ƒXGIF•”‚ÌƒR[ƒhƒ~ƒX‚ðC³B
-;#    2000.09.17 Ver1.56 ˜A‘±ŒÄ‚Ño‚µ‚ÌÛ‚ÌƒoƒOC³
-;#    2000.11.28 Ver1.57 ƒCƒ“ƒ^ƒŒ[ƒXGIF•”‚ÌƒR[ƒhƒ~ƒX‚ðC³B
-;#    2001.09.14 Ver1.58 gifcat‚ð˜A‘±‚ÅŒÄ‚Ño‚·Û‚Ì•s‹ï‡C³B
-;#    2001.10.04 Ver1.59 “¯ãB
-;#    2001.11.25 Ver1.60 gifprint‚Ì•s‹ï‡C³B
-;#    2002.06.10 Ver1.61 Netscape 6.*‚Å1Œ…–Ú‚ª•\Ž¦‚³‚ê‚È‚¢–â‘è‚É‘Î‰žB
+;# ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½:
+;#    1997.05.03 ï¿½ï¿½ï¿½ÅB
+;#    1997.05.10 ï¿½Xï¿½yï¿½ï¿½ï¿½~ï¿½Xï¿½Cï¿½ï¿½ï¿½B
+;#    1997.05.29 ï¿½Tï¿½Cï¿½Yï¿½ÌˆÙ‚È‚ï¿½Jï¿½ï¿½ï¿½[ï¿½eï¿½[ï¿½uï¿½ï¿½ï¿½É‘Î‰ï¿½ï¿½B
+;#    1997.07.07 ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½exit()ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½ÉCï¿½ï¿½ï¿½B
+;#    1998.05.05 Trailerï¿½ï¿½ï¿½ï¿½È‚ï¿½GIFï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½oï¿½Oï¿½ï¿½Cï¿½ï¿½ï¿½B
+;#    1998.05.05 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½256ï¿½ð’´‚ï¿½ï¿½ï¿½GIFï¿½Ìoï¿½Í‚ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½ï¿½oï¿½Oï¿½ï¿½Cï¿½ï¿½ï¿½B
+;#    1998.05.05 gifprint()ï¿½Å˜Aï¿½ï¿½ï¿½ï¿½ï¿½Ê‚ï¿½oï¿½Í‚ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½ÉCï¿½ï¿½ï¿½B
+;#    1998.05.10 ï¿½Aï¿½ï¿½ï¿½Å‚ï¿½ï¿½È‚ï¿½GIFï¿½æ‘œï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½oï¿½Oï¿½ï¿½Cï¿½ï¿½ï¿½B
+;#    1998.08.20 Ver1.50 ï¿½Ïï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½æ‚¤ï¿½ÉCï¿½ï¿½ï¿½B
+;#    1998.08.20 Ver1.50 ï¿½ï¿½ï¿½ï¿½GIFï¿½É‘Î‰ï¿½ï¿½B
+;#    1999.05.30 Ver1.51 ï¿½ï¿½ï¿½ï¿½É‚ÍŠÖŒWï¿½È‚ï¿½ï¿½^ï¿½Cï¿½vï¿½~ï¿½Xï¿½Cï¿½ï¿½ï¿½B
+;#    1999.10.11 Ver1.52 ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ÌCï¿½ï¿½
+;#    2000.05.21 Ver1.53 ï¿½ï¿½ï¿½ÌˆÙ‚È‚ï¿½GIFï¿½Ì˜Aï¿½ï¿½ï¿½É‘Î‰ï¿½
+;#    2000.06.04 Ver1.54 perl -wcï¿½ï¿½warningï¿½Î‰ï¿½
+;#    2000.06.04 Ver1.55 ï¿½Cï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½[ï¿½XGIFï¿½ï¿½ï¿½ÌƒRï¿½[ï¿½hï¿½~ï¿½Xï¿½ï¿½Cï¿½ï¿½ï¿½B
+;#    2000.09.17 Ver1.56 ï¿½Aï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½ÌÛ‚Ìƒoï¿½Oï¿½Cï¿½ï¿½
+;#    2000.11.28 Ver1.57 ï¿½Cï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½[ï¿½XGIFï¿½ï¿½ï¿½ÌƒRï¿½[ï¿½hï¿½~ï¿½Xï¿½ï¿½Cï¿½ï¿½ï¿½B
+;#    2001.09.14 Ver1.58 gifcatï¿½ï¿½Aï¿½ï¿½ï¿½ÅŒÄ‚Ñoï¿½ï¿½ï¿½Û‚Ì•sï¿½ï‡ï¿½Cï¿½ï¿½ï¿½B
+;#    2001.10.04 Ver1.59 ï¿½ï¿½ï¿½ï¿½B
+;#    2001.11.25 Ver1.60 gifprintï¿½Ì•sï¿½ï‡ï¿½Cï¿½ï¿½ï¿½B
+;#    2002.06.10 Ver1.61 Netscape 6.*ï¿½ï¿½1ï¿½ï¿½ï¿½Ú‚ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½É‘Î‰ï¿½ï¿½B
 ;#
 ;# ====================================================================
 

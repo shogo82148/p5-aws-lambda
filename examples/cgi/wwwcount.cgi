@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/usr/bin/env perl
 
 #==================================================================
 # 名称： WwwCount Ver3.16
@@ -92,6 +92,9 @@ $my_url = '';
 #    場合は 1 を、そのまま記録する場合は 0 を指定してください。
 $do_decode_url = 0;
 
+# カウンターの結果を書き込むパス
+$count_dir = $ENV{WWWCOUNT_DIR} // ".";
+
 # ★ 省略時のカウンター名を指定します。カウンター名は *.cnt や *.dat
 #    などのファイル名に対応しています。
 $count_name = "wwwcount";
@@ -110,15 +113,15 @@ if ($chdir ne "") {
 #
 # 関連するファイルを洗い出しておく
 #
-$file_count  = "$count_name" . ".cnt";
-$file_date   = "$count_name" . ".dat";
-$file_access = "$count_name" . ".acc";
-$file_lock   = "lock/$count_name" . ".loc";
+$file_count  = "$count_dir/" . "$count_name" . ".cnt";
+$file_date   = "$count_dir/" . "$count_name" . ".dat";
+$file_access = "$count_dir/" . "$count_name" . ".acc";
+$file_lock   = "$count_dir/" . "lock/$count_name" . ".loc";
 
 #
 # 引数を解釈する
 #
-@ARGV = split(/\+/, $ENV{'QUERY_STRING'});
+@ARGV = split(/\+/, $ENV{'QUERY_STRING'} =~ s/=//rg);
 for ($i = 0; $i <= $#ARGV; $i++) {
 	if ($ARGV[$i] eq "test") {
 		test();
@@ -140,9 +143,9 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 		if ($count_name !~ /^[a-zA-Z0-9]+$/) {
 			exit(1);
 		}
-		$file_count  = "$count_name" . ".cnt";
-		$file_date   = "$count_name" . ".dat";
-		$file_access = "$count_name" . ".acc";
+		$file_count  = "$count_dir/" . "$count_name" . ".cnt";
+		$file_date   = "$count_dir/" . "$count_name" . ".dat";
+		$file_access = "$count_dir/" . "$count_name" . ".acc";
 	} elsif ($ARGV[$i] eq "ref") {
 		$reffile = $ARGV[++$i];
 	}
