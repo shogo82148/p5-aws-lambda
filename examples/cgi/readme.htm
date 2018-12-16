@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WwwCounter Ver3.16利用メモ</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="stylesheet" href="style3.css">
+</head>
+<body>
+<h2>WwwCounter Ver3.16 利用メモ</h2>
+<h4>目次</h4>
+<ul>
+<li><a href="#WhatIs">WwwCounterとは？</a>
+<li><a href="#Download">ダウンロード</a>
+<li><a href="#Files">添付ファイル</a>
+<li><a href="#History">更新履歴</a>
+<li><a href="#Cgi">CGIグラフィックモードの設置方法</a>
+<li><a href="#Ssi">SSIテキストモードの設置方法</a>
+<li><a href="#InitValue">カウンターの初期値を変更する</a>
+<li><a href="#Report">レポート送信機能</a>
+<li><a href="#Hidden">隠しカウンタ機能</a>
+<li><a href="#RefFind">リンク元発見機能</a>
+<li><a href="#Figure">表示桁数を変更するには？</a>
+<li><a href="#Multi">カウンターを複数設置するには？</a>
+<li><a href="#Point">注意事項</a>
+<li><a href="#Trouble">動かないときは</a>
+<li><a href="#gifcat.pl">gifcat.plについて</a>
+</ul>
+
+<h4 id="WhatIs">WwwCounterとは？</h4>
+<div class=i>
+<p>WwwCounter は、以下の機能・特徴をもったWeb用カウンターです。</p>
+<dl>
+<dt>フリーソフト</dt>
+<dd>フリーソフトとして配布しています。利用、改造、流用、再配布、紹介はご自由にどうぞ。</dd>
+<dt>グラフィックモード/テキストモード</dt>
+<dd>WwwCounter は、CGI によるグラフィックモード、SSI によるテキストモードの両方をサポートします。CGIグラフィックモードの場合はさらに、リンク元発見機能や、隠しカウンター機能も使用できます。</dd>
+<dt>マルチプラットフォーム対応</dt>
+<dd>WwwCounter は、100% Perl で記述されていますので、サーバーが UNIX 系（Linux, Solaris, HP-UX...)でも、Windows系でも動作します。</dd>
+<dt>レポート機能</dt>
+<dd>毎日、訪問者に関する情報(1日のカウント数、訪問者のアドレスなど)を電子メールで通知する機能をサポートしています。（電子メール通知が送信が可能なサーバーのみ。）</dd>
+<dt>リンク元発見機能</dt>
+<dd> 自分のホームページがどこからリンクされているのか発見してレポートする機能をサポートしています。</dd>
+<dt>隠しカウンタ機能</dt>
+<dd>画面上のとある画像に、こっそりカウンターを仕込むことができます。訪問者にカウント数は見えませんが、カウント数だけは記録できるようになります。</dd>
+<dt>UnisysのGIF特許に抵触しない</dt>
+<dd>WwwCounter は、画像の連結に GIFアニメーションの機能を用いているため、Unisys社のGIF関連特許には抵触しません。</dd>
+</dl>
+</div>
+
+<h4 id="Download">ダウンロード</h4>
+<div class=i>
+<ul>
+<li><a href="http://www.tohoho-web.com/soft/wcnt316.zip">wcnt316.zip</a> - WwwCounter Ver3.16
+</ul>
+</div>
+
+<h4 id="Files">添付ファイル</h4>
+<div class=i>
+<ul>
+<li>readme.htm - このファイル。
+<li>gifcat.pl - GIF画像連結ライブラリ。
+<li>wwwcount.cgi - CGIスクリプトファイル。
+<li>wwwcount.cnt - カウンター値保存ファイル。（最初は空）
+<li>wwwcount.dat - 日付保存ファイル。（最初は空）
+<li>wwwcount.acc - アクセスログ保存ファイル。（最初は空）
+<li>wwwcount.htm - 設置サンプルファイル。
+<li>lock - ロックファイル作成用フォルダ。
+<li>0.gif～9.gif - カウンター用画像。
+</ul>
+</div>
+
+<h4 id="History">更新履歴</h4>
+<div class=i>
+<pre>
+2018-11-11 perl 5.26に対応。(Ver3.16)
+2003-03-23 フォルダ変更時のテストがうまく動作しなかったのを修正。(Ver3.15)
+2002-06-10 SSIモードでREFERERをロギングするように修正。(Ver3.14)
+2002-06-10 @ARGVの代わりに$ENV{QUERY_STRING}を参照。(Ver3.14)
+2002-06-10 gifcat.plの改版(Netscape 6.*のバグ対応)。(Ver3.14)
+2002-03-24 From: を指定可能に。(Ver3.13)
+2001-05-01 説明文などの変更。(Ver3.11)
+2000-12-03 IPアドレスからホスト名への変換機能をサポート。(Ver3.10)
+2000-01-03 2000年問題対応。(Ver3.07)
+1999-12-12 nameオプションのセキュリティホール対処が誤っていた（Ver3.06)
+1999-10-03 時刻も記録するよう変更。(Ver3.05)
+1999-10-03 nameオプションのセキュリティホールに対処。(Ver3.04)
+1999-10-03 誤ってロックファイルを消してしまうことがあるバグを修正。(Ver3.03)
+1999-06-27 同一アドレスチェック機能の初期値をオフに修正。(Ver3.02)
+1999-06-06 ロックファイルのパーミッションを755から0755に修正。(Ver3.01)
+1999-05-30 nkfを使用しないようにした。(Ver3.00)
+1999-01-17 日付ファイルが空だとレポートが送れないバグ対応。(Ver2.92)
+1999-01-17 複数カウンターのバグ対応。(Ver2.91)
+1998-12-20 カウンター破壊対処/SIGPIPE対応。(Ver2.81)
+1998-11-29 複数カウンターに対応した。(Ver2.80)
+1998-09-20 SSIで使用する際に text の引数を不要とした。(Ver2.70)
+1998-02-15 セキュリティ改善。hide+で.gifしか読み取れないようにした。(Ver2.60)
+1997-10-19 自己診断機能の強化。(Ver2.50)
+1997-09-14 メールのサブジェクトに前日のアクセス件数を表示。(Ver2.40)
+1997-07-06 10分以上古いロックファイルを消すようにした。(Ver2.30)
+1997-05-11 %7E や \~ を ~ に変換/自URLは表示しないようにした。(Ver2.20)
+1997-05-08 ロックファイルが残ってしまうバグを修正。(Ver2.10)
+1997-04-28 大幅改造/テスト機能追加/GIF連結機能。(Ver2.00)
+1997-04-10 シグナル処理の追加。(Ver1.10)
+1997-03-16 初版。(Ver1.00)
+</pre>
+</div>
+
+<h4 id="Cgi">CGIグラフィックモードの設置方法</h4>
+<div class=i>
+<ol>
+<li><p>Webサーバーが、Perl による CGI をサポートしている必要があります。CGI を設置するのが初めての方は最初に、簡単な CGI の設置を練習してみてください。（参考：「<a href="http://www.tohoho-web.com/wwwcgi.htm">とほほのCGI入門</a>」）</p>
+<li><p>wwwcount.cgi ファイルの中の、★ 印の部分を、適切に修正してください。最初は必須項目のみを修正して、ステップバイステップで設置テストしてみるのがよいでしょう。</p></li>
+<li><p>wwwcount.cgi などのファイルやフォルダ（readme.htm を除く）を Web サーバーに転送してください。Windows マシンから、FTP を用いてサーバーにアップロードする場合は、GIF画像をバイナリモードで、その他のファイルをテキストモードで転送してください。（参考：「<a href="http://www.tohoho-web.com/wwwxx011.htm">改行コードについて</a>」）</p>
+<li><p>サーバーの OSにあわせて、ファイルやフォルダのパーミッションを次のように変更してください。（参考：「<a href="http://www.tohoho-web.com/wwwxx012.htm">パーミッションについて</a>」）</p>
+<table border=1 cellspacing=0 cellpadding=3>
+<tr bgcolor="#C0C0C0"><th>ファイル名<br>フォルダ名</th><th>パーミッション<br>（UNIX系の場合）</th><th>アクセス権<br>（Windows系の場合）</th></tr>
+<tr><td>wwwcount.cgi</td><td>755</td><td>読み込み権</td></tr>
+<tr><td>wwwcount.cnt</td><td>666</td><td>読み込み＆書き込み権</td></tr>
+<tr><td>wwwcount.dat</td><td>666</td><td>読み込み＆書き込み権</td></tr>
+<tr><td>wwwcount.acc</td><td>666</td><td>読み込み＆書き込み権</td></tr>
+<tr><td>lock</td><td>777</td><td>読み込み＆書き込み権</td></tr>
+</table>
+<p>BIGLOBE などのように、CGI が設置ユーザーの権限で動作する場合は、666 の代わりに 644、777 の代わりに 755 でも構いません。</p>
+<li><p>カウンターを貼り付けたいページに、以下のコードを貼り付ければ、設置完了です。使用する画像ファイルに応じて、width や height は適切に調節してください。</p>
+<pre class=c>
+&lt;img src="wwwcount.cgi?gif" width=96 height=18 alt="Counter"&gt;
+</pre>
+<li><p>カウンター用の画像は別途入手した画像ファイルを、0.gif ～ 9.gif という名前にして、上記のものと置き換えても構いません。</p>
+</ol>
+</div>
+
+<h4 id="Ssi">SSIテキストモードの設置方法</h4>
+<div class=i>
+<ol>
+<li><p>Webサーバーが、Perl による CGI をサポートし、かつ、SSI をサポートしている必要があります。SSI を設置するのが初めての方は最初に、簡単な SSI の練習をしてみてください。（参考：「<a href="http://www.tohoho-web.com/wwwssi.htm">とほほのSSI入門</a>」）</p>
+<li><p>前述の「CGIグラフィックモードの設置方法」を参考に、CGIグラフィックモードのカウンターを設置してください。</p>
+<li><p>カウンターを貼り付けたいページに、以下の SSI コードを貼り付ければ、設置は完了です。</p>
+<pre class=c>
+&lt;!--#exec cgi="wwwcount.cgi text"--&gt;
+</pre>
+<li><p>最近は、SSI に引数を指定できないプロバイダも増えているので、その場合は、wwwcount.cgi の $mode = ""; という行を、$mode = "text"; に書き換えて、次のように呼び出してください。</p>
+<pre class=c>
+&lt;!--#exec cgi="wwwcount.cgi"--&gt;
+</pre>
+</ol>
+</div>
+
+<h4 id="InitValue">カウンターの初期値を変更する</h4>
+<div class=i>
+<p>wwwcount.cnt ファイルに 100 と記述しておけば、カウンターの初期値を 100 からはじめることができます。</p>
+<pre class=c>
+100
+</pre>
+</div>
+
+<h4 id="Report">レポート送信機能</h4>
+<div class=i>
+<p>その日の最初のアクセスがあった時点で、前日までのアクセスログが自分宛にメール送信されてくる機能をサポートしています。実行には、サーバー側に sendmail コマンドが必要です。レポート送信機能を使用する場合は、wwwcount.cgi の ★項目のうち、下記の値を適切に設定してください。</p>
+<pre class=c>
+$mailto  = '';
+$mailfrom = '';
+$sendmail = '/usr/lib/sendmail';
+$account_detail = 1;
+$do_addr_to_host = 0;
+$my_url = '';
+</pre>
+</div>
+
+<h4 id="Hidden">隠しカウンタ機能</h4>
+<div class=i>
+<p>隠しカウンタ機能とは、一見カウンタとは思えないアイコン（ネコやウサギなど）を表示しているけど、実はそれがカウンタ・・・というものです。CGIグラフィックモードで使用可能です。「wwwcount.cgi?gif」の gif の代わりに、「hide+画像名」を指定してください。例えば、neko.gif を表示するには次のようにしてください。</p>
+<pre class=c>
+変更前：&lt;img src="wwwcount.cgi?gif" 略...&gt;
+変更後：&lt;img src="wwwcount.cgi?hide+neko.gif" 略...&gt;
+</pre>
+<p>隠しカウンタのカウント数は、レポート機能や、wwwcount.cnt ファイルを直接参照することで確認できます。</p>
+</div>
+
+<h4 id="RefFind">リンク元発見機能</h4>
+<div class=i>
+<p>CGIグラフィックカウンターを以下のように呼び出すと、自分のホームページがどこからリンクされているのか発見することができます。</p>
+<pre class=c>
+&lt;script type="text/javascript"&gt;
+&lt;!--
+xx = escape(document.referrer);
+yy = "";
+for (i = 0; i &lt; xx.length; i++) {
+  zz = xx.charAt(i);
+  yy += (zz == "+") ? "%2B" : zz;
+}
+document.write('&lt;img width=96 height=19 ');
+document.write('src="wwwcount.cgi?gif');
+document.write('+ref+', yy, '"&gt;');
+// --&gt;
+&lt;/script&gt;
+&lt;noscript&gt;
+&lt;img width=96 height=19 src="wwwcount.cgi?gif"&gt;
+&lt;/noscript&gt;
+</pre>
+<p>発見した情報は wwwcount.acc ファイルに FROM 項目として蓄積されますので、レポート送信機能で送信するようにしてください。</p>
+<p>ただし、JavaScript をサポートしたブラウザが、JavaScript をオフにして参照した場合、カウントアップされないという制限が発生しますのでご注意ください。また、ブラウザによっては、リンク元の情報を送ってこなかったり、嘘のリンク元情報を送ってくるものがあります。この場合は正確なリンク元は取得できませんので、ご了承ください。</p>
+</div>
+
+<h4 id="Figure">表示桁数を変更するには？</h4>
+<div class=i>
+<p>wwwcount.cgi の中の「$figure = 5;」という行の 5 を 6 に変更すれば、カウンターを6桁で表示できるようになります。この時、&lt;img&gt; タグの width 属性を調整するようにしてください。</p>
+</div>
+
+<h4 id="Multi">カウンターを複数設置するには？</h4>
+<div class=i>
+<p>まず、wwwcount.cnt、wwwcount.acc、wwwcount.dat と同じ要領で、サーバー側に wwwcount2.cnt、wwwcount2.acc、wwwcount2.dat ファイルを作成してください。カウンターを貼り付ける部分を、次のように変更することで、別のカウンターとして動作させることができます。</p>
+<p>CGIグラフィックカウンターの場合：</p>
+<pre class=c>
+変更前：&lt;img src="wwwcount.cgi?gif" 略...&gt;
+変更後：&lt;img src="wwwcount.cgi?gif+name+wwwcount2" 略...&gt;
+</pre>
+<p>SSIテキストカウンターの場合：</p>
+<pre class=c>
+変更前：&lt;!--#exec cgi="wwwcount.cgi text"--&gt;
+変更後：&lt;!--#exec cgi="wwwcount.cgi text name wwwcount2"--&gt;
+</pre>
+<p>wwwcount2 を、wwwcount3、wwwcount4... としていけば、3個目、4個目のカウンターを設置することができます。名前は、wwwcount2 でも、aabbcc のようなまったく別の名前でも構いません。</p>
+</div>
+
+<h4 id="Point">注意事項</h4>
+<div class=i>
+<ol>
+<li><p>ブラウザがアニメーションGIFに対応していなかったり、アニメーションGIF機能がオフになっている場合、カウンターの１桁目しか表示されません。</p>
+<li><p>lock フォルダの下に、wwwcount.loc という名前のフォルダが作成されたまま残ってしまうことがあります。その際は、wwwcount.loc フォルダを削除してから再度テストしてみてください。</p>
+<li><p>SSI モードでグラフィックカウンタを、CGI モードでテキストカウンタを表示することはできません。</p>
+<li><p>カウンターを貼り付けたページは http://～ や https://～ で始まる名前でアクセスしてください。file://～ や C:\ で始まる名前でアクセスした場合は動作しません。</p>
+<li><p>CGI の設置方法は、ご利用のサーバーやプロバイダによって異なります。不明な点がある場合は、「<a href="http://www.tohoho-web.com/wwwcgi.htm">とほほのCGI入門</a>」や、プロバイダの CGI 設置に関する説明を参照してください。</p>
+<li><p>Netscape 6.1 の場合、最上位の桁が横に伸びて表示されてしまうという問題があるようです。他のGIFアニメソフトを利用しても同様の結果となることから、1枚目の画像の大きさが全体の画像の大きさと異なるときにうまく表示できないという、Netscape 6.1 のバグによるものと推測しています。(2001.10.27追記) → Ver3.14 で、とりあえず、Netscape のバグを回避するコードを埋め込みました。(2002.6.10追記)</p>
+<li><p>同じIPアドレスからのアクセス時はカウントアップしない場合や、プロキシサーバーのキャッシュなどの理由により、同じキリ番を複数の人がゲットすることがあります。</p>
+</ol>
+</div>
+
+<h4 id="Trouble">動かないときは</h4>
+<div class=i>
+<p>カウンターがうまく動かない時は以下の手順に従って調べて見てください。</p>
+<ol>
+<li><p><b>テスト１</b><br>
+「<a href="http://www.tohoho-web.com/wwwcgi.htm">とほほのCGI入門</a>」の「CGIの設置方法」に従って、簡単なCGIが動作するかどうか確認してください。</p></li>
+<li><p><b>テスト２</b><br>
+ブラウザの[ファイル]→[(場所を指定して)開く] から、「http://～/～/wwwcount.cgi?test」と入力して、開いてください。「～」の部分には適切なサーバー名やフォルダ名を指定してください。CGIスクリプトが上手く動作していれば「OK. You can use CGI script.」と表示されます。また、何か不備がある場合は、「NG. 不備の原因」も表示されます。このテストが失敗する原因として以下のことが考えられます。</p>
+<ul>
+<li>http://～ で始まるアドレスでアクセスしていない。
+<li>サーバーがCGIをサポートしていない。
+<li>1行目の #! の前に空白文字や空行やゴミがある。
+<li>1行目の perl のパス名が適切でない。
+<li>wwwcount.cgi の改行コードが適切でない。
+<li>wwwcount.cgi のパーミッションが適切でない。
+</ul>
+<br>
+</li>
+<li><p><b>テスト３</b><br>
+[ファイル]→[(場所を指定して)開く] から「http://～/wwwcount.cgi?text」を入力して、カウンター数値が表示されるか調べてください。これがうまくいかない原因としては以下のことが考えられます。</p>
+<ul>
+<li>lockフォルダの中にwwwcount.locフォルダが残っている。
+<li>ファイルやフォルダのバーミッションが誤っている。
+</ul>
+<br>
+</li>
+<li><p><b>テスト４</b><br>
+「http://～/wwwcount.cgi?gif」を入力して、GIFイメージのカウンター数値が表示されるか調べてください。これがうまくいかない原因としては以下のことが考えられます。 </p>
+<ul>
+<li>0.gif～9.gif が wwwcount.cgi と同じフォルダに存在しない。
+<li>0.gif～9.gif のファイル名が誤っている。
+<li>0.gif～9.gif のサイズが大きすぎる。
+<li>gifcat.pl がテキストモードで転送されていない。
+</ul>
+<br>
+</li>
+</ol>
+<p>その外、再表示をちゃんと行っているか、画像の読み込みモードはオンになっているかなど、「とほほのCGI入門」の「CGIスクリプト作成時の注意」を参照してください。それでもうまく動かないときは、質問メールを受け付けています。上記のテスト結果など詳しい状況を記載の上、「<a href="http://www.tohoho-web.com/wwwquest.htm">杜甫々へメールを送る</a>」を参照して送付ください。</p>
+</div>
+
+<h4 id="gifcat.pl">gifcat.plについて</h4>
+<div class=i>
+<p><a href="http://www.tohoho-web.com/wwwsoft.htm">gifcat.pl</a> は、GIF 画像を連結するPerl用フリーソフトライブラリです。改造、利用、転載、再配布など自由です。GIF アニメーションの機能を用いて、同じ大きさの複数の画像を横方向に並べます。Unisys 社の特許には抵触しないことを確認済みです。以下のように使用します。</p>
+<pre class=c>
+require "gifcat.pl";
+binmode(STDOUT);
+print &amp;gifcat'gifcat("xxx.gif", "yyy.gif", "zzz.gif");
+</pre>
+</div>
+
+<hr>
+<div>Copyright (C) 1996-2018 杜甫々</div>
+<div>最終更新：2018年11月11日</div>
+<div>http://www.tohoho-web.com/soft/wcnt.htm</div>
+</body>
+</html>

@@ -9,8 +9,8 @@ set -ue
 for ZIP in "$ROOT"/.perl-layer/dist/*.zip; do
     MD5=$(openssl dgst -md5 -binary "$ZIP" | openssl enc -base64)
     NAME=$(basename "$ZIP" .zip)
-    PERLVERION=$(echo "$NAME" | cut -d- -f2 | sed -e 's/-/./')
-    STACK=$(echo "$NAME" | cut -d- -f2)
+    PERLVERION=$(echo "$NAME" | cut -d- -f2,3 | sed -e 's/-/./')
+    STACK="${PERLVERION//./-}"
     while read -r REGION; do
         # Upload zip file
         OBJECT=$(aws --output json --region "$REGION" \
@@ -25,7 +25,7 @@ for ZIP in "$ROOT"/.perl-layer/dist/*.zip; do
         else
             echo "$(basename "$ZIP")" in "shogo82148-lambda-perl-runtime-$REGION" is already updated
         fi
-        echo updating stack in "$REGION"...
+        echo updating stack "lambda-$STACK-runtime" in "$REGION"...
         VERSION=$(echo "$OBJECT" | jq -r .VersionId)
         aws --region "$REGION" cloudformation deploy \
             --stack-name "lambda-$STACK-runtime" \
@@ -33,15 +33,5 @@ for ZIP in "$ROOT"/.perl-layer/dist/*.zip; do
             --parameter-overrides "PerlVersion=$PERLVERION" "Name=$NAME" "ObjectVersion=$VERSION" \
             || true
         echo updated stack in "$REGION"
-    done < "$ROOT/author/regions.txt"
-done
-
-echo
-echo ARNS
-for ZIP in "$ROOT"/.perl-layer/dist/*.zip; do
-    STACK="${PERLVERION//./-}"
-    while read -r REGION; do
-        aws --region "$REGION" cloudformation describe-stacks \
-            --stack-name "lambda-$STACK-runtime" | jq -r .Stacks[0].Outputs[0].OutputValue
     done < "$ROOT/author/regions.txt"
 done

@@ -1,0 +1,2 @@
+requires 'CGI::Emulate::PSGI';
+requires 'CGI::Compile';
