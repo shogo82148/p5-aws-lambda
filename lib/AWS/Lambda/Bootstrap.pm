@@ -154,14 +154,38 @@ __END__
 
 =head1 NAME
 
-AWS::Lambda::Bootstrap - It's new $module
+AWS::Lambda::Bootstrap - It's the bootrap script for AWS Lambda Custom Runtime.
 
 =head1 SYNOPSIS
 
+Save the following script as C<bootstrap>, and then zip it with your perl script.
+Now, you can start using Perl in AWS Lambda!
+
+    #!/opt/bin/perl
+    use strict;
+    use warnings;
+    use utf8;
     use AWS::Lambda::Bootstrap;
+
+    my $bootstrap = AWS::Lambda::Bootstrap->new;
+    $bootstrap->handle_events;
+
+Prebuild Perl Runtime Layer includes the C<bootstrap> script.
+So, if you use the Layer, no need to include the C<bootstrap> script into your zip.
+See L<AWS::Lambda> for more details.
 
 =head1 DESCRIPTION
 
+The format of the handler is following.
+
+    sub handle {
+        my ($payload, $context) = @_;
+        # handle the event here.
+        my $result = {};
+        return $result;
+    }
+
+C<$context> is an instance of L<AWS::Lambda::Context>.
 
 =head1 LICENSE
 

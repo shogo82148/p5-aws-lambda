@@ -168,5 +168,45 @@ sub format_output {
 }
 
 1;
- 
 __END__
+
+=encoding utf-8
+
+=head1 NAME
+
+AWS::Lambda::PSGI - It translates enevt of Lambda Proxy Integrations in API Gateway and 
+Application Load Balancer into L<PSGI>.
+
+=head1 SYNOPSIS
+
+Add the following script into your Lambda code archive.
+
+    use utf8;
+    use warnings;
+    use strict;
+    use AWS::Lambda::PSGI;
+
+    my $app = require "$ENV{'LAMBDA_TASK_ROOT'}/app.psgi";
+    my $func = AWS::Lambda::PSGI->wrap($app);
+
+    sub handle {
+        my $payload = shift;
+        return $func->($payload);
+    }
+
+    1;
+
+And then, L<Set up Lambda Proxy Integrations in API Gateway|https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html> or
+L<Lambda Functions as ALB Targets|https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html>
+
+=head1 LICENSE
+
+The MIT License (MIT)
+
+Copyright (C) Ichinose Shogo.
+
+=head1 AUTHOR
+
+Ichinose Shogo E<lt>shogo82148@gmail.comE<gt>
+
+=cut
