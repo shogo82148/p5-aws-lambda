@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "It's Perl support for AWS Lambda Custom Runtime.",
    "author" : [
       "@gmail.com>"
    ],

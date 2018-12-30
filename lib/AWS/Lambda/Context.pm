@@ -70,3 +70,51 @@ sub client_context {
 }
 
 1;
+=encoding utf-8
+
+=head1 NAME
+
+AWS::Lambda::Context - It's Perl port of the AWS Lambda Context.
+
+=head1 SYNOPSIS
+
+    sub handle {
+        my ($payload, $context) = @_;
+        # $context is an instance of AWS::Lambda::Context
+        my $result = {
+            # The name of the Lambda function.
+            function_name => $context->function_name,
+
+            # The version of the function.
+            function_version => $context->function_version,
+            
+            # The Amazon Resource Name (ARN) used to invoke the function.
+            # Indicates if the invoker specified a version number or alias.
+            invoked_function_arn => $context->invoked_function_arn,
+
+            # The amount of memory configured on the function.
+            memory_limit_in_mb => $context->memory_limit_in_mb,
+
+            # The identifier of the invocation request.
+            aws_request_id => $context->aws_request_id,
+
+            # The log group for the function.
+            log_group_name => $context->log_group_name,
+
+            # The log stream for the function instance.
+            log_stream_name => $context->log_stream_name,
+        };
+        return $result;
+    }
+
+=head1 LICENSE
+
+The MIT License (MIT)
+
+Copyright (C) Ichinose Shogo.
+
+=head1 AUTHOR
+
+Ichinose Shogo E<lt>shogo82148@gmail.comE<gt>
+
+=cut
