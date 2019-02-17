@@ -115,6 +115,9 @@ sub format_input {
     $env->{'psgi.input'} = $input;
     $env->{CONTENT_LENGTH} //= bytes::length($body);
     $env->{REQUEST_URI} = $payload->{path};
+    if ($env->{QUERY_STRING}) {
+        $env->{REQUEST_URI} .= '?' . $env->{QUERY_STRING};
+    }
     $env->{PATH_INFO} = URI::Escape::uri_unescape($payload->{path});
     $env->{SCRIPT_NAME} = '';
 
