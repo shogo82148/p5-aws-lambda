@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/shogo82148/p5-aws-lambda.svg?branch=master)](https://travis-ci.org/shogo82148/p5-aws-lambda)
+[![Build Status](https://travis-ci.com/shogo82148/p5-aws-lambda.svg?branch=master)](https://travis-ci.com/shogo82148/p5-aws-lambda)
 # NAME
 
 AWS::Lambda - It's Perl support for AWS Lambda Custom Runtime.
