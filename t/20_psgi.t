@@ -21,7 +21,7 @@ subtest "API Gateway GET Request" => sub {
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
     is $req->content, '', 'content';
-    is $req->request_uri, '/foo%20/bar', 'request uri';
+    is $req->request_uri, '/foo%20/bar?query=hoge&query=fuga', 'request uri';
     is $req->path_info, '/foo /bar', 'path info';
     is $req->query_string, 'query=hoge&query=fuga', 'query string';
     is $req->header('Header-Name'), 'Value1, Value2', 'header';
@@ -60,7 +60,7 @@ subtest "ALB GET Request" => sub {
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
     is $req->content, '', 'content';
-    is $req->request_uri, '/foo/bar', 'request uri';
+    is $req->request_uri, '/foo/bar?query=hoge&query=fuga', 'request uri';
     is $req->path_info, '/foo/bar', 'path info';
     is $req->query_string, 'query=hoge&query=fuga', 'query string';
     is $req->header('Header-Name'), 'Value1, Value2', 'header';
@@ -206,7 +206,7 @@ subtest "query string enconding" => sub {
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
     is $req->content, '', 'content';
-    is $req->request_uri, '/foo%20/bar', 'request uri';
+    is $req->request_uri, '/foo%20/bar?gif+ref+=', 'request uri';
     is $req->path_info, '/foo /bar', 'path info';
     is $req->query_string, 'gif+ref+=', 'query string';
 };
