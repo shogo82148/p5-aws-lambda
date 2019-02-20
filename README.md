@@ -24,7 +24,7 @@ Finally, create new function using awscli.
         --handler "handler.function" \
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-28-runtime:4"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-28-runtime:5"
 
 # DESCRIPTION
 
@@ -45,37 +45,37 @@ This package makes it easy to run AWS Lambda Functions written in Perl.
 The Layer ARN list is here.
 
 - Perl 5.28
-    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-28-runtime:4`
-    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-28-runtime:4`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-28-runtime:5`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-28-runtime:5`
 - Perl 5.26
-    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-26-runtime:4`
-    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-26-runtime:4`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-26-runtime:5`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-26-runtime:5`
 
 ## Use Prebuild Zip Archive
 
