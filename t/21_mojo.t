@@ -3,18 +3,10 @@ use warnings;
 use utf8;
 
 use Test::More;
-use FindBin;
-use JSON::XS qw/decode_json encode_json/;
-use File::Slurp qw(slurp);
-use Plack::Request;
-use Test::Deep qw(cmp_deeply);
-use JSON::Types;
-use Encode;
+use JSON::XS qw/decode_json/;
 
 use AWS::Lambda::PSGI;
 use Mojo::Server::PSGI;
-
-my $app = AWS::Lambda::PSGI->new;
 
 my $get_request_for_get_link = <<EOF;
 {
