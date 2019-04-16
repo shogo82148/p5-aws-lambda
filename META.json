@@ -74,7 +74,8 @@
    },
    "version" : "0.0.1",
    "x_contributors" : [
-      "Ichinose Shogo <shogo82148@gmail.com>"
+      "Ichinose Shogo <shogo82148@gmail.com>",
+      "Jose Luis Martinez <jlmartinez@capside.com>"
    ],
    "x_serialization_backend" : "JSON::PP version 2.97001",
    "x_static_install" : 1
