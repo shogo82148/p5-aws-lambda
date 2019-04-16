@@ -10,6 +10,7 @@ use MIME::Base64;
 use JSON::Types;
 use Encode;
 use Try::Tiny;
+use Plack::Middleware::ReverseProxy;
 
 sub new {
     my $proto = shift;
@@ -40,6 +41,11 @@ sub to_app {
 
 sub wrap {
     my($self, $app, @args) = @_;
+
+    # Lambda function runs as reverse proxy backend.
+    # So, we always enable ReverseProxy middleware.
+    $app = Plack::Middleware::ReverseProxy->wrap($app);
+
     if (ref $self) {
         $self->{app} = $app;
     } else {
