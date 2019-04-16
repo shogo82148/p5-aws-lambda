@@ -62,8 +62,7 @@ my $get_request_for_get_link = <<EOF;
 }
 EOF
 
-use lib 't';
-my $app = require '22_dancerapp';
+my $app = require './22_dancerapp.pl';
 my $func = AWS::Lambda::PSGI->wrap($app);
 my $input = decode_json($get_request_for_get_link);
 my $ret = $func->($input);

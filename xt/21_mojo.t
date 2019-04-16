@@ -63,7 +63,7 @@ my $get_request_for_get_link = <<EOF;
 EOF
 
 my $server = Mojo::Server::PSGI->new;
-$server->load_app('t/21_mojoapp');
+$server->load_app('xt/21_mojoapp.pl');
 my $func = AWS::Lambda::PSGI->wrap($server->to_psgi_app);
 my $input = decode_json($get_request_for_get_link);
 my $ret = $func->($input);

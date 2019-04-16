@@ -1,5 +1,16 @@
+dist: xenial
 language: perl
 sudo: false
 perl:
   - "5.26"
   - "5.28"
+
+before_script:
+  - cpanm --notest Minilla
+  # for extra tests
+  - cpanm --notest Test::CPAN::Meta Test::Pod Test::MinimumVersion::Fast
+  - cpanm --notest Mojolicious
+  - cpanm --quiet --with-develop --installdeps --notest .
+
+script:
+  - minil test --all
