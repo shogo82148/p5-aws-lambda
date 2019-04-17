@@ -30,8 +30,7 @@ my $app_server = Test::TCP->new(
             ]
         });
     },
-    wait_port_retry => 40,
-    wait_port_sleep => 0.1,
+    max_wait => 10, # seconds
 );
 
 my $bootstrap = AWS::Lambda::Bootstrap->new(
