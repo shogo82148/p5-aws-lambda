@@ -126,10 +126,14 @@ sub format_input {
     }
     $env->{PATH_INFO} = URI::Escape::uri_unescape($payload->{path});
 
-    if (defined $payload->{ requestContext } and defined $payload->{ requestContext }->{ stage }) {
-      $env->{SCRIPT_NAME} = "/$payload->{ requestContext }->{ stage }";
-    } else {
-      $env->{SCRIPT_NAME} = '';
+    $env->{SCRIPT_NAME} = '';
+    my $requestContext = $payload->{requestContext};
+    if ($requestContext) {
+        my $path = $requestContext->{path};
+        my $stage = $requestContext->{stage};
+        if ($stage && $path && $path ne $payload->{path}) {
+            $env->{SCRIPT_NAME} = "/$stage";
+        }
     }
 
     return $env;

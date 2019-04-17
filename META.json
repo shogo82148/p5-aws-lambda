@@ -46,6 +46,7 @@
             "JSON::Types" : "0.05",
             "JSON::XS" : "4.0",
             "Plack" : "1.0047",
+            "Plack::Middleware::ReverseProxy" : "0.16",
             "Try::Tiny" : "0.30",
             "perl" : "5.026000"
          }
