@@ -108,7 +108,7 @@ sub lambda_response {
         content => encode_json($response),
     });
     if (!$resp->{success}) {
-        die 'failed to response of execution: $resp->{status} $resp->{reason}';
+        die "failed to response of execution: $resp->{status} $resp->{reason}";
     }
 }
 
@@ -126,7 +126,7 @@ sub lambda_error {
         }),
     });
     if (!$resp->{success}) {
-        die 'failed to send error of execution: $resp->{status} $resp->{reason}';
+        die "failed to send error of execution: $resp->{status} $resp->{reason}";
     }
 }
 
