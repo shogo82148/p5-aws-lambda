@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - set SCRIPT_NAME environment value (fixes #7)
+    - install Plack::Middleware::ReverseProxy
 
 0.0.1 2019-03-10T06:01:37Z
 
