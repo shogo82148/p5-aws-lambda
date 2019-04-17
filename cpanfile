@@ -5,6 +5,7 @@ requires 'Try::Tiny', '0.30';
 requires 'Plack', '1.0047';
 requires 'Plack::Middleware::ReverseProxy', '0.16';
 requires 'JSON::Types', '0.05';
+requires 'URI::Escape';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
