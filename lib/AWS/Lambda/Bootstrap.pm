@@ -86,7 +86,7 @@ sub lambda_next {
     my $self = shift;
     my $resp = $self->{http}->get($self->{next_event_url});
     if (!$resp->{success}) {
-        die 'failed to retrieve the next event: $resp->{status} $resp->{reason}';
+        die "failed to retrieve the next event: $resp->{status} $resp->{reason}";
     }
     my $h = $resp->{headers};
     my $payload = decode_json($resp->{content});
@@ -143,7 +143,7 @@ sub lambda_init_error {
         }),
     });
     if (!$resp->{success}) {
-        die 'failed to send error of execution: $resp->{status} $resp->{reason}';
+        die "failed to send error of execution: $resp->{status} $resp->{reason}";
     }
 }
 
