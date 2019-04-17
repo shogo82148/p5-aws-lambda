@@ -218,7 +218,7 @@ Here is prebuild docker image based on L<https://hub.docker.com/r/lambci/lambda/
 
 =over
 
-=item L<AWS::Lambda::Bootstap>
+=item L<AWS::Lambda::Bootstrap>
 
 =item L<AWS::Lambda::Context>
 

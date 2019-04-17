@@ -106,7 +106,7 @@ Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/]
 
 # SEE ALSO
 
-- [AWS::Lambda::Bootstap](https://metacpan.org/pod/AWS::Lambda::Bootstap)
+- [AWS::Lambda::Bootstrap](https://metacpan.org/pod/AWS::Lambda::Bootstrap)
 - [AWS::Lambda::Context](https://metacpan.org/pod/AWS::Lambda::Context)
 - [AWS::Lambda::PSGI](https://metacpan.org/pod/AWS::Lambda::PSGI)
 
