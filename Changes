@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - Added missing prereq URI::Escape as suggested by CPANTS. #13 (thx @manwar)
 
 0.0.2 2019-04-17T07:14:14Z
     - set SCRIPT_NAME environment value (fixes #7)
