@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - perl 5.28.2 is released
 
 0.0.3 2019-04-18T06:17:14Z
     - Added missing prereq URI::Escape as suggested by CPANTS. #13 (thx @manwar)
