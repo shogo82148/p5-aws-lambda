@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.4 2019-04-20T07:09:46Z
     - perl 5.28.2 is released
 
 0.0.3 2019-04-18T06:17:14Z

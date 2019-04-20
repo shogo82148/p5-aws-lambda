@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use HTTP::Tiny;
 
-our $VERSION = "0.0.3";
+our $VERSION = "0.0.4";
 
 1;
 __END__
