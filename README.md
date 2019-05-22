@@ -44,7 +44,25 @@ This package makes it easy to run AWS Lambda Functions written in Perl.
 
 The Layer ARN list is here.
 
+- Perl 5.30
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-30-runtime:1`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-30-runtime:1`
 - Perl 5.28
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-28-runtime:1`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-runtime:8`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-runtime:8`
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-runtime:8`
@@ -61,6 +79,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-28-runtime:8`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-28-runtime:8`
 - Perl 5.26
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-26-runtime:1`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-runtime:8`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-runtime:8`
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-runtime:8`
@@ -97,11 +116,11 @@ Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/]
 - [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda)
 
     # Install the dependency.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.28 \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30 \
         cpanm --notest -L extlocal --installdeps .
 
     # run an event.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.28 \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30 \
         handler.handle '{"some":"event"}'
 
 # SEE ALSO
