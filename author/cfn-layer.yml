@@ -12,6 +12,7 @@ Parameters:
 Resources:
   PerlLayer:
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Type: AWS::Lambda::LayerVersion
     Properties:
       Content:
@@ -23,6 +24,7 @@ Resources:
       LicenseInfo: https://github.com/shogo82148/p5-aws-lambda/blob/master/LICENSE
   Permission:
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Type: AWS::Lambda::LayerVersionPermission
     DependsOn: PerlLayer
     Properties:
