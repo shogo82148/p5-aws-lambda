@@ -1,0 +1,3 @@
+requires 'perl', '5.026000';
+requires 'Paws';
+requires 'Try::Tiny';
