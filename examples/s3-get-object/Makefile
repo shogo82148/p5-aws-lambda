@@ -1,7 +1,7 @@
 build: s3-get-object.zip
 s3-get-object.zip: handler.pl cpanfile
 	docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30 \
-		cpanm --notest -L extlocal --installdeps .
+		cpanm --notest -l extlocal --installdeps .
 	zip -r s3-get-object.zip . -x '*.zip'
 
 test:
