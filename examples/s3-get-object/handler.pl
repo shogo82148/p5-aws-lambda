@@ -2,10 +2,10 @@ use utf8;
 use warnings;
 use strict;
 use 5.30.0;
+use lib "$ENV{'LAMBDA_TASK_ROOT'}/extlocal/lib/perl5";
 use Paws;
 use Try::Tiny;
 use URI::Escape;
-use lib "$ENV{'LAMBDA_TASK_ROOT'}/extlocal/lib/perl5";
 
 my $obj = Paws->service('S3', region => 'ap-northeast-1');
 
