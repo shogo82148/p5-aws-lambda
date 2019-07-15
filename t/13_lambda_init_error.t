@@ -14,11 +14,11 @@ use Plack::Request;
 use JSON::XS qw/decode_json/;
 
 my $app_server = Test::TCP->new(
+    listen => 1,
     code => sub {
-        my $port = shift;
+        my $sock = shift;
         my $server = HTTP::Server::PSGI->new(
-            host    => "127.0.0.1",
-            port    => $port,
+            listen_sock => $sock,
         );
         $server->run(sub {
             my $env = shift;

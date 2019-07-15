@@ -10,11 +10,11 @@ use AWS::Lambda::Bootstrap;
 use Test::Deep;
 
 my $app_server = Test::TCP->new(
+    listen => 1,
     code => sub {
-        my $port = shift;
+        my $sock = shift;
         my $server = HTTP::Server::PSGI->new(
-            host    => "127.0.0.1",
-            port    => $port,
+            listen_sock => $sock,
         );
         $server->run(sub {
             [
