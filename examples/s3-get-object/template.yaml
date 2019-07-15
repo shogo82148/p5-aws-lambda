@@ -13,9 +13,9 @@ Resources:
   s3getobject:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: index.handler
-      Runtime: nodejs8.10
-      CodeUri: .
+      Handler: handler.handle
+      Runtime: provided
+      CodeUri: s3-get-object.zip
       Description: >-
         An Amazon S3 trigger that retrieves metadata for the object that has
         been updated.
