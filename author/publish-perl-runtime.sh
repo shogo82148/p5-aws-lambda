@@ -58,7 +58,7 @@ for ZIP in "$ROOT"/.perl-layer/dist/perl-*-paws.zip; do
         else
             echo "$(basename "$ZIP")" in "shogo82148-lambda-perl-runtime-$REGION" is already updated
         fi
-        echo updating stack "lambda-$STACK-runtime" in "$REGION"...
+        echo updating stack "lambda-$STACK-paws" in "$REGION"...
         VERSION=$(echo "$OBJECT" | jq -r .VersionId)
         aws --region "$REGION" cloudformation deploy \
             --stack-name "lambda-$STACK-paws" \
