@@ -123,6 +123,118 @@ Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/]
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30 \
         handler.handle '{"some":"event"}'
 
+# Paws SUPPORT
+
+If you want to call AWS API from your Lambda function,
+you can use a prebuild Lambda Layer for [Paws](https://metacpan.org/pod/Paws) - A Perl SDK for AWS (Amazon Web Services) APIs.
+
+## Use Prebuild Public Lambda Layer
+
+Add the perl-runtime layer and the perl-paws layer into your lambda function.
+
+    aws --region "$REGION" --profile "$PROFILE" lambda create-function \
+        --function-name "hello-perl" \
+        --zip-file "fileb://handler.zip" \
+        --handler "handler.function" \
+        --runtime provided \
+        --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
+        --layers \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:2" \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-paws:1" 
+
+Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your Lambda function.
+
+    use Paws;
+    my $obj = Paws->service('...');
+    my $res = $obj->MethodCall(Arg1 => $val1, Arg2 => $val2);
+    print $res->AttributeFromResult;
+
+The Layer ARN list is here.
+
+- Perl 5.30
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-30-paws:1`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-30-paws:1`
+- Perl 5.28
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-28-paws:1`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-28-paws:1`
+- Perl 5.26
+
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-26-paws:1`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-26-paws:1`
+
+    URLs for Zip archive are here.
+
+    `https://s3-$REGION.amazonaws.com/shogo82148-lambda-perl-runtime-$REGION/perl-$VERSION-runtime.zip`
+
+## Run in Local using Docker
+
+Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
+
+- [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda)
+
+    # Install the dependency.
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30-aws \
+        cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
+
+    # run an event.
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30-aws \
+        handler.handle '{"some":"event"}'
+
+# CREATE MODULE LAYER
+
+To create custom module layer such as the Paws Layer,
+install the modules into `/opt/lib/perl5/site_perl` in the layer.
+
+    # Create Some::Module Layer
+    docker run --rm \
+        -v $(PWD):/var/task \
+        -v $(PATH_TO_LAYER_DIR)/lib/perl5/site_perl:/opt/lib/perl5/site_perl \
+        shogo82148/p5-aws-lambda:build-5.30 \
+        cpanm --notest --no-man-pages Some::Module
+    cd $(PATH_TO_LAYER_DIR) && zip zip -9 -r $(PATH_TO_DIST)/some-module.zip .
+
 # SEE ALSO
 
 - [AWS::Lambda::Bootstrap](https://metacpan.org/pod/AWS::Lambda::Bootstrap)
