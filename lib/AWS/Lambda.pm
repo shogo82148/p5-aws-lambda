@@ -33,7 +33,7 @@ Finally, create new function using awscli.
     aws --region "$REGION" --profile "$PROFILE" lambda create-function \
         --function-name "hello-perl" \
         --zip-file "fileb://handler.zip" \
-        --handler "handler.function" \
+        --handler "handler.handle" \
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-28-runtime:5"
@@ -268,7 +268,7 @@ Add the perl-runtime layer and the perl-paws layer into your lambda function.
     aws --region "$REGION" --profile "$PROFILE" lambda create-function \
         --function-name "hello-perl" \
         --zip-file "fileb://handler.zip" \
-        --handler "handler.function" \
+        --handler "handler.handle" \
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers \
