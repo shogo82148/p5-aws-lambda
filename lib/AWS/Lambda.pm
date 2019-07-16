@@ -400,6 +400,8 @@ The Layer ARN list is here.
 
 =back
 
+=back
+
 URLs for Zip archive are here.
 
 C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-paws.zip>
