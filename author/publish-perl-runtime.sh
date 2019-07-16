@@ -61,7 +61,7 @@ for ZIP in "$ROOT"/.perl-layer/dist/perl-*-paws.zip; do
         echo updating stack "lambda-$STACK-runtime" in "$REGION"...
         VERSION=$(echo "$OBJECT" | jq -r .VersionId)
         aws --region "$REGION" cloudformation deploy \
-            --stack-name "lambda-$STACK-runtime" \
+            --stack-name "lambda-$STACK-paws" \
             --template-file "$ROOT/author/cfn-layer-paws.yml" \
             --parameter-overrides "PerlVersion=$PERLVERION" "Name=$NAME" "ObjectVersion=$VERSION" \
             || true
