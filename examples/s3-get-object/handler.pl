@@ -20,13 +20,13 @@ sub handle {
             Key    => $key,
         );
     } catch {
-        print "$_\n";
+        print STDERR "$_\n";
         my $message = "Error getting object $key from bucket $bucket. Make sure they exist and your bucket is in the same region as this function.";
-        print "$message\n";
+        print STDERR "$message\n";
         die $message;
     };
 
-    printf "CONTENT TYPE: %s\n", $resp->ContentType;
+    printf STDERR "CONTENT TYPE: %s\n", $resp->ContentType;
     return $resp->ContentType;
 }
 
