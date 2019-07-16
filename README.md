@@ -186,7 +186,6 @@ The Layer ARN list is here.
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-28-paws:1`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-28-paws:1`
 - Perl 5.26
-
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-26-paws:1`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-paws:1`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-paws:1`
@@ -204,9 +203,9 @@ The Layer ARN list is here.
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-26-paws:1`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-26-paws:1`
 
-    URLs for Zip archive are here.
+URLs for Zip archive are here.
 
-    `https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime.zip`
+`https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-paws.zip`
 
 ## Run in Local using Docker
 
@@ -215,11 +214,11 @@ Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/]
 - [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda)
 
     # Install the dependency.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30-aws \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30-paws \
         cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
 
     # run an event.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30-aws \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30-paws \
         handler.handle '{"some":"event"}'
 
 # CREATE MODULE LAYER

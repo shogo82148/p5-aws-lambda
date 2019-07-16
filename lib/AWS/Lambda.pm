@@ -400,11 +400,11 @@ The Layer ARN list is here.
 
 =back
 
+=back
+
 URLs for Zip archive are here.
 
-C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime.zip>
-
-=back
+C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-paws.zip>
 
 =head2 Run in Local using Docker
 
@@ -417,11 +417,11 @@ Here is prebuild docker image based on L<https://hub.docker.com/r/lambci/lambda/
 =back
 
     # Install the dependency.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30-aws \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30-paws \
         cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
 
     # run an event.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30-aws \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30-paws \
         handler.handle '{"some":"event"}'
 
 =head1 CREATE MODULE LAYER
