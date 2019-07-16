@@ -117,7 +117,7 @@ Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/]
 
     # Install the dependency.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30 \
-        cpanm --notest -L extlocal --installdeps .
+        cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
 
     # run an event.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30 \
