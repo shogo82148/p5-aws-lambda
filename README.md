@@ -107,7 +107,7 @@ The Layer ARN list is here.
 
 URLs for Zip archive are here.
 
-`https://s3-$REGION.amazonaws.com/shogo82148-lambda-perl-runtime-$REGION/perl-$VERSION-runtime.zip`
+`https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime.zip`
 
 ## Run in Local using Docker
 
@@ -206,7 +206,7 @@ The Layer ARN list is here.
 
     URLs for Zip archive are here.
 
-    `https://s3-$REGION.amazonaws.com/shogo82148-lambda-perl-runtime-$REGION/perl-$VERSION-runtime.zip`
+    `https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime.zip`
 
 ## Run in Local using Docker
 

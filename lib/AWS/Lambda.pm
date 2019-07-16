@@ -236,7 +236,7 @@ Use the layer created. For detail, see Use Prebuild Public Lambda Layer section.
 
 URLs for Zip archive are here.
 
-C<https://s3-$REGION.amazonaws.com/shogo82148-lambda-perl-runtime-$REGION/perl-$VERSION-runtime.zip>
+C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime.zip>
 
 =head2 Run in Local using Docker
 
@@ -402,7 +402,7 @@ The Layer ARN list is here.
 
 URLs for Zip archive are here.
 
-C<https://s3-$REGION.amazonaws.com/shogo82148-lambda-perl-runtime-$REGION/perl-$VERSION-runtime.zip>
+C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime.zip>
 
 =back
 
