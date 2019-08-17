@@ -11,6 +11,7 @@ use Test::Deep qw(cmp_deeply);
 use JSON::Types;
 use Encode;
 
+use AWS::Lambda::Context;
 use AWS::Lambda::PSGI;
 
 my $app = AWS::Lambda::PSGI->new;
@@ -209,6 +210,20 @@ subtest "query string enconding" => sub {
     is $req->request_uri, '/foo%20/bar?gif+ref+=', 'request uri';
     is $req->path_info, '/foo /bar', 'path info';
     is $req->query_string, 'gif+ref+=', 'query string';
+};
+
+# inject the request id that compatible with Plack::Middleware::RequestId
+subtest "request id" => sub {
+    my $context = AWS::Lambda::Context->new(
+        deadline_ms    => 1000,
+        aws_request_id => '8476a536-e9f4-11e8-9739-2dfe598c3fcd',
+        invoked_function_arn => 'arn:aws:lambda:us-east-2:123456789012:function:custom-runtime',
+    );
+    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-get-request.json"));
+    my $output = $app->format_input($input, $context);
+    my $req = Plack::Request->new($output);
+    is $req->env->{'psgix.request_id'}, '8476a536-e9f4-11e8-9739-2dfe598c3fcd', 'get request id from the env';
+    is $req->header('X-Request-Id'), '8476a536-e9f4-11e8-9739-2dfe598c3fcd', 'get request id from the header';
 };
 
 done_testing;

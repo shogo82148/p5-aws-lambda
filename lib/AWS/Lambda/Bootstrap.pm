@@ -6,6 +6,7 @@ use warnings;
 use HTTP::Tiny;
 use JSON::XS qw/decode_json encode_json/;
 use Try::Tiny;
+use AWS::Lambda;
 use AWS::Lambda::Context;
 use Scalar::Util qw(blessed);
 
@@ -70,6 +71,7 @@ sub handle_event {
     $self->_init or return;
     my ($payload, $context) = $self->lambda_next;
     my $response = try {
+        local $AWS::Lambda::context = $context;
         $self->{function}->($payload, $context);
     } catch {
         $self->lambda_error($_, $context);

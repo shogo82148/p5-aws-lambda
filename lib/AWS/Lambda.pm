@@ -6,6 +6,9 @@ use HTTP::Tiny;
 
 our $VERSION = "0.0.6";
 
+# the context of Lambda Function
+our $context;
+
 1;
 __END__
 
