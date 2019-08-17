@@ -226,6 +226,14 @@ Add the following script into your Lambda code archive.
 And then, L<Set up Lambda Proxy Integrations in API Gateway|https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html> or
 L<Lambda Functions as ALB Targets|https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html>
 
+=head1 DESCRIPTION
+
+=head2 Request ID
+
+L<AWS::Lambda::PSGI> injects the request id that compatible with L<Plack::Middleware::RequestId>.
+
+    env->{'psgix.request_id'} # It is same value with $context->aws_request_id
+
 =head1 LICENSE
 
 The MIT License (MIT)
