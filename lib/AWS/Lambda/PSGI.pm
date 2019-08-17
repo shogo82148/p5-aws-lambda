@@ -56,7 +56,11 @@ sub wrap {
 
 sub call {
     my($self, $env, $ctx) = @_;
+
+    # $ctx is added by #26
+    # fall back to $AWS::Lambda::context because of backward compatibility.
     $ctx ||= $AWS::Lambda::context;
+
     my $input = $self->format_input($env, $ctx);
     my $res = $self->app->($input);
     return $self->format_output($res);
