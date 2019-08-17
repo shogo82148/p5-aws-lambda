@@ -17,10 +17,12 @@ sub new {
     my $deadline_ms = $args{deadline_ms} // die 'deadine_ms is required';
     my $invoked_function_arn = $args{invoked_function_arn} // die 'invoked_function_arn is required';
     my $aws_request_id = $args{aws_request_id} // 'aws_request_id is required';
+    my $trace_id = $args{trace_id};
     my $self = bless +{
-        deadline_ms => +$deadline_ms,
+        deadline_ms          => +$deadline_ms,
         invoked_function_arn => $invoked_function_arn,
-        aws_request_id => $aws_request_id,
+        aws_request_id       => $aws_request_id,
+        trace_id             => $trace_id,
     }, $class;
 
     return $self;
