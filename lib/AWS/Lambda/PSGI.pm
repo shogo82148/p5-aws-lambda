@@ -55,8 +55,9 @@ sub wrap {
 }
 
 sub call {
-    my($self, $env) = @_;
-    my $input = $self->format_input($env);
+    my($self, $env, $ctx) = @_;
+    $ctx ||= $AWS::Lambda::context;
+    my $input = $self->format_input($env, $ctx);
     my $res = $self->app->($input);
     return $self->format_output($res);
 }
@@ -64,8 +65,7 @@ sub call {
 # API Gateway https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
 # Application Load Balancer https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html
 sub format_input {
-    my $self = shift;
-    my $payload = shift;
+    my ($self, $payload, $ctx) = @_;
     my $env = {};
 
     # merge queryStringParameters and multiValueQueryStringParameters
@@ -111,6 +111,12 @@ sub format_input {
     $env->{'psgi.nonblocking'}  = Plack::Util::FALSE;
     $env->{'psgix.harakiri'}    = Plack::Util::TRUE;
     $env->{'psgix.input.buffered'} = Plack::Util::TRUE;
+
+    # inject the request id that compatible with Plack::Middleware::RequestId
+    if ($ctx) {
+        $env->{'psgix.request_id'} = $ctx->aws_request_id;
+        $env->{'HTTP_X_REQUEST_ID'} = $ctx->aws_request_id;
+    }
 
     my $body = $payload->{body};
     if ($payload->{isBase64Encoded}) {
@@ -208,8 +214,7 @@ Add the following script into your Lambda code archive.
     my $func = AWS::Lambda::PSGI->wrap($app);
 
     sub handle {
-        my $payload = shift;
-        return $func->($payload);
+        return $func->(@_);
     }
 
     1;
