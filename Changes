@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - support XRay and AWS::XRay is pre-installed
+    - AWS::Lambda::PSGI injects the lambda request id into psgix.request_id
 
 0.0.6 2019-07-16T16:45:33Z
     - add Paws layer

@@ -16,4 +16,5 @@ export PERL_MB_OPT
 
 /opt/bin/cpan -T App::cpanminus
 /opt/bin/cpan -T .
+/opt/bin/cpan -T AWS::XRay
 cp script/bootstrap /opt/

@@ -243,13 +243,7 @@ C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-
 
 =head2 Run in Local using Docker
 
-Here is prebuild docker image based on L<https://hub.docker.com/r/lambci/lambda/>
-
-=over
-
-=item L<https://hub.docker.com/r/shogo82148/p5-aws-lambda>
-
-=back
+L<https://hub.docker.com/r/shogo82148/p5-aws-lambda> is pre-build docker image based on L<https://hub.docker.com/r/lambci/lambda/>
 
     # Install the dependency.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30 \
@@ -259,10 +253,36 @@ Here is prebuild docker image based on L<https://hub.docker.com/r/lambci/lambda/
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30 \
         handler.handle '{"some":"event"}'
 
+=head2 AWS XRay SUPPORT
+
+L<AWS X-Ray|https://aws.amazon.com/xray/> is a service that collects data about requests that your application serves.
+You can trace AWS Lambda requests and sends segment data with pre-install module L<AWS::XRay>.
+
+    use utf8;
+    use warnings;
+    use strict;
+    use AWS::XRay qw/ capture /;
+
+    sub handle {
+        my ($payload, $context) = @_;
+        capture "myApp" => sub {
+            capture "nested" => sub {
+                # do something ...
+            };
+        };
+        capture "another" => sub {
+            # do something ...
+        };
+        return;
+    }
+
+1;
+
+
 =head1 Paws SUPPORT
 
 If you want to call AWS API from your Lambda function,
-you can use a prebuild Lambda Layer for L<Paws> - A Perl SDK for AWS (Amazon Web Services) APIs.
+you can use a pre-build Lambda Layer for L<Paws> - A Perl SDK for AWS (Amazon Web Services) APIs.
 
 =head2 Use Prebuild Public Lambda Layer
 
@@ -411,13 +431,7 @@ C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-
 
 =head2 Run in Local using Docker
 
-Here is prebuild docker image based on L<https://hub.docker.com/r/lambci/lambda/>
-
-=over
-
-=item L<https://hub.docker.com/r/shogo82148/p5-aws-lambda>
-
-=back
+L<https://hub.docker.com/r/shogo82148/p5-aws-lambda> is pre-build docker image based on L<https://hub.docker.com/r/lambci/lambda/>
 
     # Install the dependency.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30-paws \
@@ -449,6 +463,10 @@ install the modules into C</opt/lib/perl5/site_perl> in the layer.
 =item L<AWS::Lambda::Context>
 
 =item L<AWS::Lambda::PSGI>
+
+=item L<Paws>
+
+=item L<AWS::XRay>
 
 =back
 

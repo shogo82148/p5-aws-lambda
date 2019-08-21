@@ -7,6 +7,8 @@ requires 'Plack::Middleware::ReverseProxy', '0.16';
 requires 'JSON::Types', '0.05';
 requires 'URI::Escape';
 
+recommends 'AWS::XRay', '>=0.09';
+
 on 'test' => sub {
     requires 'Test::More', '0.98';
     requires 'Test::Deep', '1.128';
