@@ -39,7 +39,7 @@ Finally, create new function using awscli.
         --handler "handler.handle" \
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-28-runtime:5"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:3"
 
 =head1 DESCRIPTION
 
@@ -295,8 +295,8 @@ Add the perl-runtime layer and the perl-paws layer into your lambda function.
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:2" \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-paws:1" 
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:3" \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-paws:2"
 
 Now, you can use L<Paws> to call AWS API from your Lambda function.
 
