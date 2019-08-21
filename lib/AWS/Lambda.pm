@@ -276,7 +276,7 @@ You can trace AWS Lambda requests and sends segment data with pre-install module
         return;
     }
 
-1;
+    1;
 
 
 =head1 Paws SUPPORT
