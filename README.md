@@ -111,9 +111,7 @@ URLs for Zip archive are here.
 
 ## Run in Local using Docker
 
-Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
-
-- [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda)
+[https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda) is pre-build docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
 
     # Install the dependency.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30 \
@@ -126,7 +124,7 @@ Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/]
 # Paws SUPPORT
 
 If you want to call AWS API from your Lambda function,
-you can use a prebuild Lambda Layer for [Paws](https://metacpan.org/pod/Paws) - A Perl SDK for AWS (Amazon Web Services) APIs.
+you can use a pre-build Lambda Layer for [Paws](https://metacpan.org/pod/Paws) - A Perl SDK for AWS (Amazon Web Services) APIs.
 
 ## Use Prebuild Public Lambda Layer
 
@@ -209,9 +207,7 @@ URLs for Zip archive are here.
 
 ## Run in Local using Docker
 
-Here is prebuild docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
-
-- [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda)
+[https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda) is pre-build docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
 
     # Install the dependency.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30-paws \
