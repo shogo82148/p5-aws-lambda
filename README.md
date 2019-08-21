@@ -121,6 +121,31 @@ URLs for Zip archive are here.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30 \
         handler.handle '{"some":"event"}'
 
+## AWS XRay SUPPORT
+
+[AWS X-Ray](https://aws.amazon.com/xray/) is a service that collects data about requests that your application serves.
+You can trace AWS Lambda requests and sends segment data with pre-install module [AWS::XRay](https://metacpan.org/pod/AWS::XRay).
+
+    use utf8;
+    use warnings;
+    use strict;
+    use AWS::XRay qw/ capture /;
+
+    sub handle {
+        my ($payload, $context) = @_;
+        capture "myApp" => sub {
+            capture "nested" => sub {
+                # do something ...
+            };
+        };
+        capture "another" => sub {
+            # do something ...
+        };
+        return;
+    }
+
+1;
+
 # Paws SUPPORT
 
 If you want to call AWS API from your Lambda function,
@@ -235,6 +260,8 @@ install the modules into `/opt/lib/perl5/site_perl` in the layer.
 - [AWS::Lambda::Bootstrap](https://metacpan.org/pod/AWS::Lambda::Bootstrap)
 - [AWS::Lambda::Context](https://metacpan.org/pod/AWS::Lambda::Context)
 - [AWS::Lambda::PSGI](https://metacpan.org/pod/AWS::Lambda::PSGI)
+- [Paws](https://metacpan.org/pod/Paws)
+- [AWS::XRay](https://metacpan.org/pod/AWS::XRay)
 
 # LICENSE
 
