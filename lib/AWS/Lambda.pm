@@ -452,7 +452,7 @@ install the modules into C</opt/lib/perl5/site_perl> in the layer.
         -v $(PATH_TO_LAYER_DIR)/lib/perl5/site_perl:/opt/lib/perl5/site_perl \
         shogo82148/p5-aws-lambda:build-5.30 \
         cpanm --notest --no-man-pages Some::Module
-    cd $(PATH_TO_LAYER_DIR) && zip zip -9 -r $(PATH_TO_DIST)/some-module.zip .
+    cd $(PATH_TO_LAYER_DIR) && zip -9 -r $(PATH_TO_DIST)/some-module.zip .
 
 =head1 SEE ALSO
 
