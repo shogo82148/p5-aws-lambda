@@ -1,6 +1,5 @@
 dist: xenial
 language: perl
-sudo: false
 perl:
   - "5.26"
   - "5.28"
