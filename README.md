@@ -24,7 +24,7 @@ Finally, create new function using awscli.
         --handler "handler.handle" \
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-28-runtime:5"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:3"
 
 # DESCRIPTION
 
@@ -144,7 +144,7 @@ You can trace AWS Lambda requests and sends segment data with pre-install module
         return;
     }
 
-1;
+    1;
 
 # Paws SUPPORT
 
@@ -162,8 +162,8 @@ Add the perl-runtime layer and the perl-paws layer into your lambda function.
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:2" \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-paws:1" 
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:3" \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-paws:2"
 
 Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your Lambda function.
 
@@ -253,7 +253,7 @@ install the modules into `/opt/lib/perl5/site_perl` in the layer.
         -v $(PATH_TO_LAYER_DIR)/lib/perl5/site_perl:/opt/lib/perl5/site_perl \
         shogo82148/p5-aws-lambda:build-5.30 \
         cpanm --notest --no-man-pages Some::Module
-    cd $(PATH_TO_LAYER_DIR) && zip zip -9 -r $(PATH_TO_DIST)/some-module.zip .
+    cd $(PATH_TO_LAYER_DIR) && zip -9 -r $(PATH_TO_DIST)/some-module.zip .
 
 # SEE ALSO
 
