@@ -56,6 +56,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-runtime:3`
     - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-runtime:3`
     - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-30-runtime:3`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-30-runtime:1`
     - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-30-runtime:3`
     - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-runtime:3`
     - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-30-runtime:3`
@@ -73,6 +74,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-28-runtime:10`
     - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-runtime:10`
     - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-28-runtime:10`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-28-runtime:1`
     - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-28-runtime:10`
     - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-28-runtime:10`
     - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-28-runtime:10`
@@ -90,6 +92,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-26-runtime:11`
     - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-26-runtime:10`
     - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-26-runtime:10`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-26-runtime:1`
     - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-26-runtime:10`
     - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-26-runtime:10`
     - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-26-runtime:10`
@@ -186,6 +189,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-paws:2`
     - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-paws:2`
     - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-30-paws:2`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-30-paws:1`
     - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-30-paws:2`
     - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-paws:2`
     - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-30-paws:2`
@@ -203,6 +207,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-28-paws:2`
     - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-paws:2`
     - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-28-paws:2`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-28-paws:1`
     - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-28-paws:2`
     - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-28-paws:2`
     - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-28-paws:2`
@@ -220,6 +225,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-26-paws:3`
     - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-26-paws:2`
     - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-26-paws:2`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-26-paws:1`
     - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-26-paws:2`
     - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-26-paws:2`
     - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-26-paws:2`
