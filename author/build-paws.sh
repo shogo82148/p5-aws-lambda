@@ -9,8 +9,8 @@ unzip "/var/task/.perl-layer/dist/perl-$TAG-runtime.zip"
 
 # install perlstrip
 # https://metacpan.org/pod/distribution/Perl-Strip/bin/perlstrip
-yum install -y parallel
-cpan -T Perl::Strip
+yum install -y parallel perl-App-cpanminus
+cpanm --notest Perl::Strip
 
 set +e # skip errors of stripping
 
