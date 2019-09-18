@@ -18,3 +18,11 @@ export PERL_MB_OPT
 /opt/bin/cpan -T .
 /opt/bin/cpan -T AWS::XRay
 cp script/bootstrap /opt/
+
+# install perlstrip
+# https://metacpan.org/pod/distribution/Perl-Strip/bin/perlstrip
+yum install -y parallel perl-App-cpanminus
+cpanm --notest Perl::Strip
+
+find /opt -type f -a -name '*.pm' -print0 | parallel -0 perlstrip -v
+find /opt -type f -a -name '*.pod' -print0 | xargs -0 rm
