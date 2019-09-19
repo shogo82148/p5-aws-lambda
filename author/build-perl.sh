@@ -24,5 +24,4 @@ cp script/bootstrap /opt/
 yum install -y parallel perl-App-cpanminus
 cpanm --notest Perl::Strip
 
-find /opt -type f -a -name '*.pm' -print0 | parallel -0 /var/task/author/perlstrip.sh
 find /opt -type f -a -name '*.pod' -print0 | xargs -0 rm
