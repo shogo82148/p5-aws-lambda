@@ -24,7 +24,7 @@ docker run --rm \
     -v "$ROOT:/var/task" \
     -v "$OPT/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
     lambci/lambda:build-provided \
-    bash -c "cd /opt && unzip /var/task/.perl-layer/dist/perl-$TAG-runtime.zip && /opt/bin/cpanm --notest --no-man-pages Paws"
+    ./author/build-paws.sh "$TAG"
 cd "$OPT"
 mkdir -p "$DIST"
 zip -9 -r "$DIST/perl-$TAG-paws.zip" .
