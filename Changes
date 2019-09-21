@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - apply perlstrip and podstrip
 
 0.0.9 2019-08-24T07:07:48Z
     - new region Middle East (Bahrain) me-south-1 is available
