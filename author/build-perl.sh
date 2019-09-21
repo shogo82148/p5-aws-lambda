@@ -19,5 +19,9 @@ export PERL_MB_OPT
 /opt/bin/cpan -T AWS::XRay
 cp script/bootstrap /opt/
 
+# autodie is included in perl core, but the system perl of the Lambda Runtime lacks it.
+yum install -y perl-autodie
+
 # remove POD(Plain Old Documentation)
-curl -s https://raw.githubusercontent.com/pplu/p5-pod-stripper/feature/fatpack/fatpacked/pod_stripper.pl | perl - /opt/lib/perl5
+curl -s https://raw.githubusercontent.com/pplu/p5-pod-stripper/feature/fatpack/fatpacked/pod_stripper.pl > /tmp/pod_stripper.pl
+perl /tmp/pod_stripper.pl /opt/lib/perl5
