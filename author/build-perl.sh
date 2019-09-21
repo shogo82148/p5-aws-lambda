@@ -19,9 +19,5 @@ export PERL_MB_OPT
 /opt/bin/cpan -T AWS::XRay
 cp script/bootstrap /opt/
 
-# install perlstrip
-# https://metacpan.org/pod/distribution/Perl-Strip/bin/perlstrip
-yum install -y parallel perl-App-cpanminus
-cpanm --notest Perl::Strip
-
-find /opt -type f -a -name '*.pod' -print0 | xargs -0 rm
+# remove POD(Plain Old Documentation)
+curl -s https://raw.githubusercontent.com/pplu/p5-pod-stripper/feature/fatpack/fatpacked/pod_stripper.pl | perl - /opt/lib/perl5
