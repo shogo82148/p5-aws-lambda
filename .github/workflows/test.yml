@@ -1,0 +1,31 @@
+name: Test
+
+on:
+- push
+- pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        perl:
+        - '5.30'
+        - '5.28'
+        - '5.26'
+    name: Perl ${{ matrix.perl }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+      - name: Install Dependencies
+        run: |
+          cpanm --notest Minilla
+          # for extra tests
+          cpanm --notest Test::CPAN::Meta Test::Pod Test::MinimumVersion::Fast
+          cpanm --notest Mojolicious Dancer2
+          cpanm --quiet --with-develop --installdeps --notest .
+      - name: Test
+        run: minil test --all
