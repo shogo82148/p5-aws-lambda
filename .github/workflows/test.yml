@@ -22,7 +22,7 @@ jobs:
           perl-version: ${{ matrix.perl }}
       - name: Install Dependencies
         run: |
-          cpanm --notest Minilla
+          cpanm --notest Minilla Software::License::MIT
           # for extra tests
           cpanm --notest Test::CPAN::Meta Test::Pod Test::MinimumVersion::Fast
           cpanm --notest Mojolicious Dancer2
