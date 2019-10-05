@@ -1,5 +1,5 @@
 name = "AWS-Lambda"
-badges = ["travis-ci.com"]
+badges = ["github-actions/Test"]
 module_maker="ModuleBuildTiny"
 static_install = "auto"
 license="mit"
