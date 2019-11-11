@@ -42,8 +42,9 @@ jobs:
           TAG=shogo82148/p5-aws-lambda:${PREFIX}${{ matrix.perl }}${SUFFIX}
           printenv PASSWORD | docker login -u "$USERNAME" --password-stdin
           docker tag perl:latest "$TAG"
-          docker push "$TAG"
+          echo "push to $TAG"
+          # docker push "$TAG"
           docker logout
-      env:
-        USERNAME: ${{ secrets.username }}
-        PASSWORD: ${{ secrets.password }}
+        env:
+          USERNAME: ${{ secrets.username }}
+          PASSWORD: ${{ secrets.password }}
