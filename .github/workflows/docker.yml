@@ -17,14 +17,33 @@ jobs:
         - '5.30'
         - '5.28'
         - '5.26'
+        flavor:
+        - run
+        - build
+        - run-paws
+        - build-paws
     name: Perl ${{ matrix.perl }}
     steps:
       - uses: actions/checkout@v1
-      - name: build run flavor
-        run: docker build -t perl author/${{ matrix.perl }}/run
-      - name: build build flavor
-        run: docker build -t build-perl author/${{ matrix.perl }}/build
-      - name: build run-paws flavor
-        run: docker build -t perl author/${{ matrix.perl }}/run-paws
-      - name: build build-paws flavor
-        run: docker build -t build-perl author/${{ matrix.perl }}/build-paws
+      - name: build ${{ matrix.flavor}} flavor
+        run: docker build -t perl:latest author/${{ matrix.perl }}/${{ matrix.flavor}}
+      - name: Publish to the Docker Hub
+        run: |
+          if echo ${{ matrix.flavor}} | -F grep build; then
+            PREFIX="build-"
+          else
+            PREFIX=""
+          fi
+          if echo ${{ matrix.flavor}} | -F grep paws; then
+            SUFFIX="-paws"
+          else
+            SUFFIX=""
+          fi
+          TAG=shogo82148/p5-aws-lambda:${PREFIX}${{ matrix.perl }}${SUFFIX}
+          printenv PASSWORD | docker login -u "$USERNAME" --password-stdin
+          docker tag perl:latest "$TAG"
+          docker push "$TAG"
+          docker logout
+      env:
+        USERNAME: ${{ secrets.username }}
+        PASSWORD: ${{ secrets.password }}
