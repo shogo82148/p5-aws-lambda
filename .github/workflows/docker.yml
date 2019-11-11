@@ -1,0 +1,30 @@
+name: Build Docker Images
+
+on:
+  - create
+  - push
+
+  # to follow lambci/lambda
+  - schedule:
+      - cron: '19 14 * * 0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        perl:
+        - '5.30'
+        - '5.28'
+        - '5.26'
+    name: Perl ${{ matrix.perl }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: build run flavor
+        run: docker build -t perl author/${{ matrix.perl }}/run
+      - name: build build flavor
+        run: docker build -t build-perl author/${{ matrix.perl }}/build
+      - name: build run-paws flavor
+        run: docker build -t perl author/${{ matrix.perl }}/run-paws
+      - name: build build-paws flavor
+        run: docker build -t build-perl author/${{ matrix.perl }}/build-paws
