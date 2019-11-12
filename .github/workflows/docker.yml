@@ -1,0 +1,47 @@
+name: Build Docker Images
+
+# to follow lambci/lambda
+on:
+  schedule:
+    - cron: '19 14 * * 0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        perl:
+        - '5.30'
+        - '5.28'
+        - '5.26'
+        flavor:
+        - run
+        - build
+        - run-paws
+        - build-paws
+    name: Perl ${{ matrix.perl }} ${{ matrix.flavor}} flavor
+    steps:
+      - uses: actions/checkout@v1
+      - name: build ${{ matrix.flavor}} flavor
+        run: docker build -t perl:latest author/${{ matrix.perl }}/${{ matrix.flavor}}
+      - name: Publish to the Docker Hub
+        run: |
+          if echo ${{ matrix.flavor}} | grep -F build; then
+            PREFIX="build-"
+          else
+            PREFIX=""
+          fi
+          if echo ${{ matrix.flavor}} | grep -F paws; then
+            SUFFIX="-paws"
+          else
+            SUFFIX=""
+          fi
+          TAG=shogo82148/p5-aws-lambda:${PREFIX}${{ matrix.perl }}${SUFFIX}
+          printenv PASSWORD | docker login -u "$USERNAME" --password-stdin
+          docker tag perl:latest "$TAG"
+          echo "push to $TAG"
+          docker push "$TAG"
+          docker logout
+        env:
+          USERNAME: ${{ secrets.username }}
+          PASSWORD: ${{ secrets.password }}
