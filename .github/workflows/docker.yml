@@ -1,7 +1,6 @@
 name: Build Docker Images
 
 on:
-  - create
   # to follow lambci/lambda
   - schedule:
     - cron: '19 14 * * 0'
