@@ -22,19 +22,19 @@ jobs:
         - build
         - run-paws
         - build-paws
-    name: Perl ${{ matrix.perl }}
+    name: Perl ${{ matrix.perl }} ${{ matrix.flavor}} flavor
     steps:
       - uses: actions/checkout@v1
       - name: build ${{ matrix.flavor}} flavor
         run: docker build -t perl:latest author/${{ matrix.perl }}/${{ matrix.flavor}}
       - name: Publish to the Docker Hub
         run: |
-          if echo ${{ matrix.flavor}} | -F grep build; then
+          if echo ${{ matrix.flavor}} | grep -F build; then
             PREFIX="build-"
           else
             PREFIX=""
           fi
-          if echo ${{ matrix.flavor}} | -F grep paws; then
+          if echo ${{ matrix.flavor}} | grep -F paws; then
             SUFFIX="-paws"
           else
             SUFFIX=""
