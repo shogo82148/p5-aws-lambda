@@ -43,7 +43,7 @@ jobs:
           printenv PASSWORD | docker login -u "$USERNAME" --password-stdin
           docker tag perl:latest "$TAG"
           echo "push to $TAG"
-          # docker push "$TAG"
+          docker push "$TAG"
           docker logout
         env:
           USERNAME: ${{ secrets.username }}
