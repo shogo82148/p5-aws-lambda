@@ -2,11 +2,9 @@ name: Build Docker Images
 
 on:
   # - create
-  - push
-
   # to follow lambci/lambda
-  # - schedule:
-  #     - cron: '19 14 * * 0'
+  - schedule:
+      - cron: '19 14 * * 0'
 
 jobs:
   build:
