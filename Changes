@@ -2,6 +2,9 @@ Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
 
+0.0.11 2019-11-13T03:04:08Z
+    - perl 5.30.1 is released
+
 0.0.10 2019-09-21T20:07:37Z
     - apply perlstrip and podstrip
 
@@ -34,6 +37,4 @@ Revision history for Perl extension aws-lambda
     - install Plack::Middleware::ReverseProxy
 
 0.0.1 2019-03-10T06:01:37Z
-
     - original version
-
