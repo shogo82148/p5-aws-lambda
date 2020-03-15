@@ -45,23 +45,23 @@ This package makes it easy to run AWS Lambda Functions written in Perl.
 The Layer ARN list is here.
 
 - Perl 5.30
-    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-30-runtime:4`
-    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-30-runtime:6`
-    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-30-runtime:6`
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-30-runtime:5`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-30-runtime:7`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-30-runtime:7`
 - Perl 5.28
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-28-runtime:6`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-runtime:13`
@@ -178,23 +178,23 @@ Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your
 The Layer ARN list is here.
 
 - Perl 5.30
-    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-30-paws:3`
-    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-30-paws:4`
-    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-30-paws:4`
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-30-paws:4`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-30-paws:5`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-30-paws:5`
 - Perl 5.28
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-28-paws:4`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-paws:4`
