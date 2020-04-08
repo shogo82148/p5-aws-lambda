@@ -1,0 +1,41 @@
+{
+    "version": "2.0",
+    "routeKey": "$default",
+    "rawPath": "/my/path",
+    "rawQueryString": "parameter1=value1&parameter1=value2&parameter2=value",
+    "headers": {
+        "accept": "*/*",
+        "content-length": "0",
+        "header1": "value1,value2",
+        "header2": "value2",
+        "host": "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com",
+        "user-agent": "curl/7.64.1",
+        "x-amzn-trace-id": "Root=1-5e8a9a35-1d1dea5e28ab3c9c2a525afc",
+        "x-forwarded-for": "192.0.2.1",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "queryStringParameters": {
+        "parameter1": "value1,value2",
+        "parameter2": "value"
+    },
+    "requestContext": {
+        "accountId": "123456789012",
+        "apiId": "xxxxxxxxxx",
+        "domainName": "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com",
+        "domainPrefix": "xxxxxxxxxx",
+        "http": {
+            "method": "GET",
+            "path": "/my/path",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "192.0.2.1",
+            "userAgent": "curl/7.64.1"
+        },
+        "requestId": "Ki0Ibj5EtjMEMJA=",
+        "routeKey": "$default",
+        "stage": "$default",
+        "time": "06/Apr/2020:02:55:49 +0000",
+        "timeEpoch": 1586141749893
+    },
+    "isBase64Encoded": false
+}

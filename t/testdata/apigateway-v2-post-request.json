@@ -1,0 +1,37 @@
+{
+    "version": "2.0",
+    "routeKey": "$default",
+    "rawPath": "/my/path",
+    "rawQueryString": "",
+    "headers": {
+        "accept": "*/*",
+        "content-length": "17",
+        "content-type": "application/json",
+        "host": "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com",
+        "user-agent": "curl/7.64.1",
+        "x-amzn-trace-id": "Root=1-5e8a9af6-43dfdbb5896d7684515eb0ba",
+        "x-forwarded-for": "192.0.2.1",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "requestContext": {
+        "accountId": "123456789012",
+        "apiId": "xxxxxxxxxx",
+        "domainName": "xxxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com",
+        "domainPrefix": "xxxxxxxxxx",
+        "http": {
+            "method": "POST",
+            "path": "/my/path",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "192.0.2.1",
+            "userAgent": "curl/7.64.1"
+        },
+        "requestId": "Ki0mjgxItjMEJJg=",
+        "routeKey": "$default",
+        "stage": "$default",
+        "time": "06/Apr/2020:02:59:02 +0000",
+        "timeEpoch": 1586141942637
+    },
+    "body": "{\"hello\":\"world\"}",
+    "isBase64Encoded": false
+}

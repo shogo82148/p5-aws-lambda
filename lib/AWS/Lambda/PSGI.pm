@@ -66,9 +66,28 @@ sub call {
     return $self->format_output($res);
 }
 
-# API Gateway https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
-# Application Load Balancer https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html
 sub format_input {
+    my ($self, $payload, $ctx) = @_;
+    if (my $context = $payload->{requestContext}) {
+        if ($context->{elb}) {
+            # Application Load Balancer https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html
+            return $self->_format_input_v1($payload, $ctx);
+        }
+    }
+    if (my $version = $payload->{version}) {
+        if ($version =~ /^1[.]/) {
+            # API Gateway for REST https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
+            return $self->_format_input_v1($payload, $ctx);
+        }
+        if ($version =~ /^2[.]/) {
+            # API Gateway for HTTP https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-develop-integrations-lambda.html
+            return $self->_format_input_v2($payload, $ctx);
+        }
+    }
+    return $self->_format_input_v1($payload, $ctx);
+}
+
+sub _format_input_v1 {
     my ($self, $payload, $ctx) = @_;
     my $env = {};
 
@@ -146,6 +165,56 @@ sub format_input {
         }
     }
 
+    return $env;
+}
+
+sub _format_input_v2 {
+    my ($self, $payload, $ctx) = @_;
+    my $env = {};
+
+    $env->{QUERY_STRING} = $payload->{rawQueryString};
+
+    my $headers = $payload->{headers} // {};
+    while (my ($key, $value) = each %$headers) {
+        $key =~ s/-/_/g;
+        $key = uc $key;
+        if ($key !~ /^(?:CONTENT_LENGTH|CONTENT_TYPE)$/) {
+            $key = "HTTP_$key";
+        }
+        $env->{$key} = $value;
+    }
+
+    $env->{'psgi.version'}      = [1, 1];
+    $env->{'psgi.errors'}       = *STDERR;
+    $env->{'psgi.run_once'}     = Plack::Util::FALSE;
+    $env->{'psgi.multithread'}  = Plack::Util::FALSE;
+    $env->{'psgi.multiprocess'} = Plack::Util::FALSE;
+    $env->{'psgi.streaming'}    = Plack::Util::FALSE;
+    $env->{'psgi.nonblocking'}  = Plack::Util::FALSE;
+    $env->{'psgix.harakiri'}    = Plack::Util::TRUE;
+    $env->{'psgix.input.buffered'} = Plack::Util::TRUE;
+
+    # inject the request id that compatible with Plack::Middleware::RequestId
+    if ($ctx) {
+        $env->{'psgix.request_id'} = $ctx->aws_request_id;
+        $env->{'HTTP_X_REQUEST_ID'} = $ctx->aws_request_id;
+    }
+
+    my $body = $payload->{body};
+    if ($payload->{isBase64Encoded}) {
+        $body = decode_base64 $body;
+    }
+    open my $input, "<", \$body;
+    $env->{'psgi.input'} = $input;
+    $env->{CONTENT_LENGTH} //= bytes::length($body);
+    my $requestContext = $payload->{requestContext};
+    $env->{REQUEST_METHOD} = $requestContext->{http}{method};
+    $env->{REQUEST_URI} = $payload->{rawPath};
+    if ($env->{QUERY_STRING}) {
+        $env->{REQUEST_URI} .= '?' . $env->{QUERY_STRING};
+    }
+    $env->{PATH_INFO} = $requestContext->{http}{path};
+    $env->{SCRIPT_NAME} = '';
     return $env;
 }
 
