@@ -20,7 +20,7 @@ rm -rf "$OPT"
 mkdir -p "$OPT"
 rm -f "$DIST/perl-$TAG-runtime.zip"
 
-docker run -v "$ROOT:/var/task" -v "$OPT:/opt" --rm lambci/lambda-base-2:build ./author/build-perl.sh "$PERL_VERSION"
+docker run -v "$ROOT:/var/task" -v "$OPT:/opt" --rm lambci/lambda:build-provided ./author/build-perl.sh "$PERL_VERSION"
 cd "$OPT"
 mkdir -p "$DIST"
 zip -9 -r "$DIST/perl-$TAG-runtime.zip" .
