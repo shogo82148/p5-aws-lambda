@@ -55,6 +55,40 @@ subtest "API Gateway Base64 encoded POST Request" => sub {
     is $req->query_string, '', 'query string';
 };
 
+subtest "API Gateway v2 GET Request" => sub {
+    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-v2-get-request.json"));
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'GET', 'method';
+    is $req->content, '', 'content';
+    is $req->request_uri, '/my/path?parameter1=value1&parameter1=value2&parameter2=value', 'request uri';
+    is $req->path_info, '/my/path', 'path info';
+    is $req->query_string, 'parameter1=value1&parameter1=value2&parameter2=value', 'query string';
+    is $req->header('Header1'), 'value1,value2', 'header';
+};
+
+subtest "API Gateway v2 POST Request" => sub {
+    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-v2-post-request.json"));
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'POST', 'method';
+    is $req->content, '{"hello":"world"}', 'content';
+    is $req->request_uri, '/my/path', 'request uri';
+    is $req->path_info, '/my/path', 'path info';
+    is $req->query_string, '', 'query string';
+};
+
+subtest "API Gateway v2 base64 Request" => sub {
+    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-v2-base64-request.json"));
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'POST', 'method';
+    is $req->content, '{"hello":"world"}', 'content';
+    is $req->request_uri, '/my/path', 'request uri';
+    is $req->path_info, '/my/path', 'path info';
+    is $req->query_string, '', 'query string';
+};
+
 subtest "ALB GET Request" => sub {
     my $input = decode_json(slurp("$FindBin::Bin/testdata/alb-get-request.json"));
     my $output = $app->format_input($input);
