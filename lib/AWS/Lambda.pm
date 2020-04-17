@@ -319,10 +319,6 @@ The Layer ARN list is here.
 
 =over
 
-=item Perl 5.30
-
-=over
-
 =item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-paws:5>
 
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-paws:5>
