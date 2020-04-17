@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.15 2020-04-17T11:53:53Z
     - fix syntax error of POD
 
 0.0.14 2020-04-11T11:37:43Z
