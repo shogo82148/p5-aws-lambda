@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - fix syntax error of POD
 
 0.0.14 2020-04-11T11:37:43Z
     - AWS::Lambda::PSGI supports API Gateway v2 now
