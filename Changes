@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.16 2020-04-23T00:23:44Z
     - new region Africa (Cape Town) af-south-1 is available
 
 0.0.15 2020-04-17T11:53:53Z

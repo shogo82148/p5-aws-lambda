@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use HTTP::Tiny;
 
-our $VERSION = "0.0.15";
+our $VERSION = "0.0.16";
 
 # the context of Lambda Function
 our $context;
