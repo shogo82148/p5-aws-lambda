@@ -95,6 +95,8 @@ The Layer ARN list is here.
 
 =over
 
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-runtime:1>
+
 =item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-runtime:8>
 
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-runtime:8>
@@ -135,6 +137,8 @@ The Layer ARN list is here.
 
 =over
 
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-28-runtime:1>
+
 =item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-28-runtime:7>
 
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-runtime:14>
@@ -174,6 +178,8 @@ The Layer ARN list is here.
 =item Perl 5.26
 
 =over
+
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-26-runtime:1>
 
 =item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-26-runtime:8>
 
@@ -319,6 +325,8 @@ The Layer ARN list is here.
 
 =over
 
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-paws:1>
+
 =item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-paws:5>
 
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-paws:5>
@@ -359,6 +367,8 @@ The Layer ARN list is here.
 
 =over
 
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-28-paws:1>
+
 =item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-28-paws:4>
 
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-paws:4>
@@ -398,6 +408,8 @@ The Layer ARN list is here.
 =item Perl 5.26
 
 =over
+
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-26-paws:1>
 
 =item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-26-paws:5>
 

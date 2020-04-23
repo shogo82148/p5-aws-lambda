@@ -45,6 +45,7 @@ This package makes it easy to run AWS Lambda Functions written in Perl.
 The Layer ARN list is here.
 
 - Perl 5.30
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-runtime:1`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-runtime:8`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-runtime:8`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-runtime:8`
@@ -63,6 +64,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-30-runtime:8`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-30-runtime:8`
 - Perl 5.28
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-28-runtime:1`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-28-runtime:7`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-runtime:14`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-runtime:14`
@@ -81,6 +83,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-28-runtime:14`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-28-runtime:14`
 - Perl 5.26
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-26-runtime:1`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-26-runtime:8`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-runtime:15`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-runtime:15`
@@ -178,6 +181,7 @@ Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your
 The Layer ARN list is here.
 
 - Perl 5.30
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-paws:1`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-paws:5`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-paws:5`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-paws:5`
@@ -196,6 +200,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-30-paws:5`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-30-paws:5`
 - Perl 5.28
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-28-paws:1`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-28-paws:4`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-28-paws:4`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-paws:4`
@@ -214,6 +219,7 @@ The Layer ARN list is here.
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-28-paws:4`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-28-paws:4`
 - Perl 5.26
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-26-paws:1`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-26-paws:5`
     - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-paws:5`
     - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-paws:5`
