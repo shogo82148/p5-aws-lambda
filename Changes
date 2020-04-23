@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - new region Africa (Cape Town) af-south-1 is available
 
 0.0.15 2020-04-17T11:53:53Z
     - fix syntax error of POD
