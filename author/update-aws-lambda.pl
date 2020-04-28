@@ -4,6 +4,7 @@ use 5.03000;
 use strict;
 use warnings;
 use FindBin;
+use Parallel::ForkManager;
 
 my $regions = do {
     open my $fh, '<', "$FindBin::Bin/regions.txt" or die "$!";
@@ -15,22 +16,33 @@ my $regions = do {
 my $versions = [sort {version->parse("v$b") <=> version->parse("v$a")} map { /(5[.][0-9]+)$/; $1; } grep { -d } glob "$FindBin::Bin/*"];
 
 my $layers = {};
+my $pm = Parallel::ForkManager->new(10);
+$pm->run_on_finish(sub {
+    my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
+    my ($version, $region, $arn) = @$data;
+    $layers->{$version} //= {};
+    $layers->{$version}{$region} = $arn;
+});
+
 for my $version (@$versions) {
-    $layers->{$version} = {};
     for my $region (@$regions) {
         say STDERR "loading $version in $region...";
+        $pm->start("$version/$region") and next;
+
         my $runtime_stack = "lambda-@{[ $version =~ s/[.]/-/r ]}-runtime";
         chomp(my $runtime_arn = `aws --region $region cloudformation describe-stacks --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
         my $paws_stack = "lambda-@{[ $version =~ s/[.]/-/r ]}-paws";
         chomp(my $paws_arn = `aws --region $region cloudformation describe-stacks --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
-        $layers->{$version}{$region} = {
+
+        $pm->finish(0, [$version, $region, {
             runtime_arn     => $runtime_arn,
             runtime_version => (split /:/, $runtime_arn)[-1],
             paws_arn        => $paws_arn,
             paws_version    => (split /:/, $paws_arn)[-1],
-        };
+        }]);
     }
 }
+$pm->wait_all_children;
 
 chomp(my $module_version = `cat $FindBin::Bin/../META.json | jq -r .version`);
 my $latest_perl = $versions->[0];
