@@ -113,6 +113,8 @@ The Layer ARN list is here.
 
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-runtime:8>
 
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-30-runtime:1>
+
 =item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-runtime:8>
 
 =item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-runtime:8>
@@ -155,6 +157,8 @@ The Layer ARN list is here.
 
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-28-runtime:14>
 
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-28-runtime:1>
+
 =item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-28-runtime:14>
 
 =item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-runtime:14>
@@ -196,6 +200,8 @@ The Layer ARN list is here.
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-26-runtime:15>
 
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-26-runtime:15>
+
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-26-runtime:1>
 
 =item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-26-runtime:15>
 
@@ -343,6 +349,8 @@ The Layer ARN list is here.
 
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-paws:5>
 
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-30-paws:1>
+
 =item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-30-paws:5>
 
 =item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-30-paws:5>
@@ -385,9 +393,11 @@ The Layer ARN list is here.
 
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-28-paws:4>
 
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-28-paws:1>
+
 =item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-28-paws:4>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-paws:4>
+^[[O=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-paws:4>
 
 =item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-28-paws:4>
 
@@ -426,6 +436,8 @@ The Layer ARN list is here.
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-26-paws:5>
 
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-26-paws:5>
+
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-26-paws:1>
 
 =item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-26-paws:5>
 
