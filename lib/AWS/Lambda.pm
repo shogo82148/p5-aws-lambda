@@ -397,7 +397,7 @@ The Layer ARN list is here.
 
 =item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-28-paws:4>
 
-^[[O=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-paws:4>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-28-paws:4>
 
 =item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-28-paws:4>
 
