@@ -26,7 +26,6 @@ Resources:
     DeletionPolicy: Retain
     UpdateReplacePolicy: Retain
     Type: AWS::Lambda::LayerVersionPermission
-    DependsOn: PerlLayer
     Properties:
       Action: lambda:GetLayerVersion
       LayerVersionArn: !Ref PerlLayer
