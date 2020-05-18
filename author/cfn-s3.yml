@@ -4,6 +4,7 @@ Description: S3 Bucket for AWS Lambda Perl Runtime
 Resources:
   LayerBucket:
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub shogo82148-lambda-perl-runtime-${AWS::Region}
