@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# helper script for build-paws-layer.sh
+# you should not run this script directly.
 
 set -uex
 
