@@ -86,7 +86,7 @@ for my $version (@$versions) {
             runtime_version => $layers->{$version}{$region}{runtime_version},
             paws_arn        => "$layers->{$version}{$region}{paws_arn}",
             paws_version    => $layers->{$version}{$region}{paws_version},
-        }
+        },
 EOS
     }
     print $fh "    },\n";
