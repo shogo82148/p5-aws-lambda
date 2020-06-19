@@ -2,6 +2,9 @@ Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
 
+0.0.18 2020-06-02T19:54:22Z
+    - Perl 5.30.3 and 5.28.3 are released
+
 0.0.17 2020-04-28T10:07:10Z
     - new region Europe (Milan) eu-south-1 is available
 

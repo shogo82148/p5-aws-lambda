@@ -4,7 +4,7 @@
       "@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.9, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.10, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "mit"
    ],
@@ -77,7 +77,7 @@
          "web" : "https://github.com/shogo82148/p5-aws-lambda"
       }
    },
-   "version" : "0.0.17",
+   "version" : "0.0.18",
    "x_contributors" : [
       "Ichinose Shogo <shogo82148@gmail.com>",
       "Jose Luis Martinez <jlmartinez@capside.com>",
