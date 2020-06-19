@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# helper script for build-perl-runtime.sh
+# you should not run this script directly.
 
 set -uex
 
