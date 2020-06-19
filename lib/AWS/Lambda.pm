@@ -360,6 +360,22 @@ our $LAYERS = {
     },
 };
 
+
+sub get_layer_info {
+    my ($version, $region) = @_;
+    return $LAYERS->{$version}{$region};
+}
+
+sub print_runtime_arn {
+    my ($version, $region) = @_;
+    print $LAYERS->{$version}{$region}{runtime_arn};
+}
+
+sub print_paws_arn {
+    my ($version, $region) = @_;
+    print $LAYERS->{$version}{$region}{paws_arn};
+}
+
 1;
 __END__
 
@@ -438,7 +454,24 @@ Upload your code and start using Perl in AWS Lambda!
 
 =back
 
-The Layer ARN list is here.
+You can get the layer ARN in your script by using C<get_layer_info>.
+
+    use AWS::Lambda;
+    my $info = AWS::Lambda::get_layer_info(
+        "5.30",      # Perl Version
+        "us-east-1", # Region
+    );
+    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-runtime:9
+    say $info->{runtime_version}; # 9
+    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-paws:6
+    say $info->{paws_version}     # 6,
+
+Or, you can use following one-liner.
+
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_runtime_arn("5.30", "us-east-1")'
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_paws_arn("5.30", "us-east-1")'
+
+All available layer ARN list is here.
 
 =over
 
@@ -674,7 +707,7 @@ Now, you can use L<Paws> to call AWS API from your Lambda function.
     my $res = $obj->MethodCall(Arg1 => $val1, Arg2 => $val2);
     print $res->AttributeFromResult;
 
-The Layer ARN list is here.
+All available layer ARN list is here.
 
 =over
 

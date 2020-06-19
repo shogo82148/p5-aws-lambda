@@ -47,8 +47,10 @@ $pm->wait_all_children;
 chomp(my $module_version = `cat $FindBin::Bin/../META.json | jq -r .version`);
 my $latest_perl = $versions->[0];
 my $latest_perl_layer = $latest_perl =~ s/[.]/-/r;
-my $latest_runtime = $layers->{$latest_perl}{'us-east-1'}{runtime_version};
-my $latest_paws = $layers->{$latest_perl}{'us-east-1'}{paws_version};
+my $latest_runtime_arn = $layers->{$latest_perl}{'us-east-1'}{runtime_arn};
+my $latest_runtime_version = $layers->{$latest_perl}{'us-east-1'}{runtime_version};
+my $latest_paws_arn = $layers->{$latest_perl}{'us-east-1'}{paws_arn};
+my $latest_paws_version = $layers->{$latest_perl}{'us-east-1'}{paws_version};
 
 open my $fh, '>', "$FindBin::Bin/../lib/AWS/Lambda.pm" or die "$!";
 
@@ -57,8 +59,10 @@ sub printfh($) {
     $contents =~ s/\@\@VERSION\@\@/$module_version/g;
     $contents =~ s/\@\@LATEST_PERL\@\@/$latest_perl/g;
     $contents =~ s/\@\@LATEST_PERL_LAYER\@\@/$latest_perl_layer/g;
-    $contents =~ s/\@\@LATEST_RUNTIME\@\@/$latest_runtime/g;
-    $contents =~ s/\@\@LATEST_PAWS\@\@/$latest_paws/g;
+    $contents =~ s/\@\@LATEST_RUNTIME_ARN\@\@/$latest_runtime_arn/g;
+    $contents =~ s/\@\@LATEST_RUNTIME_VERSION\@\@/$latest_runtime_version/g;
+    $contents =~ s/\@\@LATEST_PAWS_ARN\@\@/$latest_paws_arn/g;
+    $contents =~ s/\@\@LATEST_PAWS_VERSION\@\@/$latest_paws_version/g;
     print $fh $contents;
 }
 
@@ -94,6 +98,22 @@ EOS
 print $fh "};\n\n";
 
 printfh(<<'EOS');
+
+sub get_layer_info {
+    my ($version, $region) = @_;
+    return $LAYERS->{$version}{$region};
+}
+
+sub print_runtime_arn {
+    my ($version, $region) = @_;
+    print $LAYERS->{$version}{$region}{runtime_arn};
+}
+
+sub print_paws_arn {
+    my ($version, $region) = @_;
+    print $LAYERS->{$version}{$region}{paws_arn};
+}
+
 1;
 __END__
 
@@ -124,7 +144,7 @@ Finally, create new function using awscli.
         --handler "handler.handle" \
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-runtime:@@LATEST_RUNTIME@@"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-runtime:@@LATEST_RUNTIME_VERSION@@"
 
 =head1 DESCRIPTION
 
@@ -172,7 +192,24 @@ Upload your code and start using Perl in AWS Lambda!
 
 =back
 
-The Layer ARN list is here.
+You can get the layer ARN in your script by using C<get_layer_info>.
+
+    use AWS::Lambda;
+    my $info = AWS::Lambda::get_layer_info(
+        "@@LATEST_PERL@@",      # Perl Version
+        "us-east-1", # Region
+    );
+    say $info->{runtime_arn};     # @@LATEST_RUNTIME_ARN@@
+    say $info->{runtime_version}; # @@LATEST_RUNTIME_VERSION@@
+    say $info->{paws_arn}         # @@LATEST_PAWS_ARN@@
+    say $info->{paws_version}     # @@LATEST_PAWS_VERSION@@,
+
+Or, you can use following one-liner.
+
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_runtime_arn("@@LATEST_PERL@@", "us-east-1")'
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_paws_arn("@@LATEST_PERL@@", "us-east-1")'
+
+All available layer ARN list is here.
 
 =over
 
@@ -277,8 +314,8 @@ Add the perl-runtime layer and the perl-paws layer into your lambda function.
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-runtime:@@LATEST_RUNTIME@@" \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-paws:@@LATEST_PAWS@@"
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-runtime:@@LATEST_RUNTIME_VERSION@@" \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-paws:@@LATEST_PAWS_VERSION@@"
 
 Now, you can use L<Paws> to call AWS API from your Lambda function.
 
@@ -287,7 +324,7 @@ Now, you can use L<Paws> to call AWS API from your Lambda function.
     my $res = $obj->MethodCall(Arg1 => $val1, Arg2 => $val2);
     print $res->AttributeFromResult;
 
-The Layer ARN list is here.
+All available layer ARN list is here.
 
 =over
 
