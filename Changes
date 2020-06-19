@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - add interface for getting layers' information
 
 0.0.18 2020-06-02T19:54:22Z
     - Perl 5.30.3 and 5.28.3 are released

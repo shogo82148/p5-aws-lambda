@@ -24,7 +24,7 @@ Finally, create new function using awscli.
         --handler "handler.handle" \
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:3"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:9"
 
 # DESCRIPTION
 
@@ -42,7 +42,24 @@ This package makes it easy to run AWS Lambda Functions written in Perl.
 8. Click **Save** in the upper right.
 9. Upload your code and start using Perl in AWS Lambda!
 
-The Layer ARN list is here.
+You can get the layer ARN in your script by using `get_layer_info`.
+
+    use AWS::Lambda;
+    my $info = AWS::Lambda::get_layer_info(
+        "5.30",      # Perl Version
+        "us-east-1", # Region
+    );
+    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-runtime:9
+    say $info->{runtime_version}; # 9
+    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-paws:6
+    say $info->{paws_version}     # 6,
+
+Or, you can use following one-liner.
+
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_runtime_arn("5.30", "us-east-1")'
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_paws_arn("5.30", "us-east-1")'
+
+All available layer ARN list is here.
 
 - Perl 5.30
     - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-runtime:2`
@@ -171,8 +188,8 @@ Add the perl-runtime layer and the perl-paws layer into your lambda function.
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:3" \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-paws:2"
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:9" \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-paws:6"
 
 Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your Lambda function.
 
@@ -181,7 +198,7 @@ Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your
     my $res = $obj->MethodCall(Arg1 => $val1, Arg2 => $val2);
     print $res->AttributeFromResult;
 
-The Layer ARN list is here.
+All available layer ARN list is here.
 
 - Perl 5.30
     - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-paws:2`
