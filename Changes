@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - Perl 5.32.0 is released
 
 0.0.19 2020-06-19T23:02:01Z
     - add interface for getting layers' information
