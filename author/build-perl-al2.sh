@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# helper script for build-perl-runtime-2.sh
+# helper script for build-perl-runtime-al2.sh
 # you should not run this script directly.
 
 set -uex
