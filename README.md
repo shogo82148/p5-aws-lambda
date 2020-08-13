@@ -24,7 +24,7 @@ Finally, create new function using awscli.
         --handler "handler.handle" \
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:9"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-runtime:1"
 
 # DESCRIPTION
 
@@ -46,21 +46,41 @@ You can get the layer ARN in your script by using `get_layer_info`.
 
     use AWS::Lambda;
     my $info = AWS::Lambda::get_layer_info(
-        "5.30",      # Perl Version
+        "5.32",      # Perl Version
         "us-east-1", # Region
     );
-    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-runtime:9
-    say $info->{runtime_version}; # 9
-    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-30-paws:6
-    say $info->{paws_version}     # 6,
+    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-runtime:1
+    say $info->{runtime_version}; # 1
+    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-paws:1
+    say $info->{paws_version}     # 1,
 
 Or, you can use following one-liner.
 
-    perl -MAWS::Lambda -e 'AWS::Lambda::print_runtime_arn("5.30", "us-east-1")'
-    perl -MAWS::Lambda -e 'AWS::Lambda::print_paws_arn("5.30", "us-east-1")'
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_runtime_arn("5.32", "us-east-1")'
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_paws_arn("5.32", "us-east-1")'
 
 All available layer ARN list is here.
 
+- Perl 5.32
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-runtime:1`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-runtime:1`
 - Perl 5.30
     - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-runtime:2`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-runtime:9`
@@ -140,11 +160,11 @@ URLs for Zip archive are here.
 [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda) is pre-build docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
 
     # Install the dependency.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30 \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.32 \
         cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
 
     # run an event.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30 \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.32 \
         handler.handle '{"some":"event"}'
 
 ## AWS XRay SUPPORT
@@ -188,8 +208,8 @@ Add the perl-runtime layer and the perl-paws layer into your lambda function.
         --runtime provided \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-runtime:9" \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-30-paws:6"
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-runtime:1" \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-paws:1"
 
 Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your Lambda function.
 
@@ -200,6 +220,26 @@ Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your
 
 All available layer ARN list is here.
 
+- Perl 5.32
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-paws:1`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-paws:1`
 - Perl 5.30
     - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-paws:2`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-paws:6`
@@ -270,11 +310,11 @@ URLs for Zip archive are here.
 [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda) is pre-build docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
 
     # Install the dependency.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.30-paws \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.32-paws \
         cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
 
     # run an event.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.30-paws \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.32-paws \
         handler.handle '{"some":"event"}'
 
 # CREATE MODULE LAYER
@@ -286,7 +326,7 @@ install the modules into `/opt/lib/perl5/site_perl` in the layer.
     docker run --rm \
         -v $(PWD):/var/task \
         -v $(PATH_TO_LAYER_DIR)/lib/perl5/site_perl:/opt/lib/perl5/site_perl \
-        shogo82148/p5-aws-lambda:build-5.30 \
+        shogo82148/p5-aws-lambda:build-5.32 \
         cpanm --notest --no-man-pages Some::Module
     cd $(PATH_TO_LAYER_DIR) && zip -9 -r $(PATH_TO_DIST)/some-module.zip .
 
