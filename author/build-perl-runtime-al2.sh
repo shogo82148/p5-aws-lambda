@@ -19,7 +19,6 @@ mkdir -p "$OPT"
 rm -f "$DIST/perl-$TAG-runtime-al2.zip"
 
 # build the perl binary
-# TODO: replace lambci/lambda-base-2:build to amzn2 based build-provided image
 docker run -v "$ROOT:/var/task" -v "$OPT:/opt" --rm lambci/lambda:build-provided.al2 ./author/build-perl-al2.sh "$PERL_VERSION"
 
 # check the perl binary works on the lambci/lambda:provided image
