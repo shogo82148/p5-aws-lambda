@@ -22,7 +22,7 @@ docker run --rm \
     -v "$ROOT:/var/task" \
     -v "$OPT/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
     lambci/lambda:build-provided.al2 \
-    ./author/build-paws.sh "$TAG"
+    ./author/build-paws-al2.sh "$TAG"
 cd "$OPT"
 mkdir -p "$DIST"
 zip -9 -r "$DIST/perl-$TAG-paws-al2.zip" .
