@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# helper script for build-paws-layer.sh
+# helper script for build-paws-layer-al2.sh
 # you should not run this script directly.
 
 set -uex
@@ -10,6 +10,9 @@ unzip "/var/task/.perl-layer/dist/perl-$TAG-runtime-al2.zip"
 
 # workaround for "xlocale.h: No such file or directory"
 ln -s /usr/include/locale.h /usr/include/xlocale.h
+
+# build-provided.al2 lacks some PACKAGE-level packages
+yum install -y expat-devel openssl openssl-devel
 
 /opt/bin/cpanm --notest --no-man-pages Paws
 
