@@ -6,7 +6,7 @@ set -uex
 
 TAG=$1
 cd /opt
-unzip "/var/task/.perl-layer/dist/perl-$TAG-runtime.zip"
+unzip "/var/task/.perl-layer/dist/perl-$TAG-runtime-al2.zip"
 
 # workaround for "xlocale.h: No such file or directory"
 ln -s /usr/include/locale.h /usr/include/xlocale.h

@@ -25,6 +25,20 @@ export PERL_MB_OPT
 /opt/bin/cpan -T AWS::XRay
 cp script/bootstrap /opt/
 
+# install expat for parsing XML
+(
+    EXPAT_VERSION=2.2.9
+    cd /tmp
+    curl -sL -o expat.tar.gz "https://github.com/libexpat/libexpat/releases/download/R_${EXPAT_VERSION//[.]/_}/expat-$EXPAT_VERSION.tar.gz"
+    echo "4456e0aa72ecc7e1d4b3368cd545a5eec7f9de5133a8dc37fdb1efa6174c4947  expat.tar.gz" | sha256sum -c -
+    tar zxf expat.tar.gz
+    cd "/tmp/expat-$EXPAT_VERSION"
+    ./configure --prefix=/opt
+    make
+    make install
+)
+env EXPATLIBPATH=/opt/lib EXPATINCPATH=/opt/include /opt/bin/cpan -T XML::Parser
+
 # Many Web services are encrypted with SSL/TLS.
 # install SSL/TLS modules for convenience.
 # install OpenSSL
@@ -32,7 +46,7 @@ cp script/bootstrap /opt/
     OPENSSL_VERSION=1.1.1g
     cd /tmp
     curl -sL -o /tmp/openssl.tar.gz "https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz"
-    echo "ddb04774f1e32f0c49751e21b67216ac87852ceb056b75209af2443400636d46  openssl.tar.gz" | sha256sum -
+    echo "ddb04774f1e32f0c49751e21b67216ac87852ceb056b75209af2443400636d46  openssl.tar.gz" | sha256sum -c -
     tar zxf openssl.tar.gz
     cd "/tmp/openssl-$OPENSSL_VERSION"
     ./config --prefix=/opt
