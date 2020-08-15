@@ -22,8 +22,8 @@ Resources:
       MemorySize: 128
       Timeout: 3
       Layers:
-        - !Sub arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-32-runtime:1
-        - !Sub arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-32-paws:1
+        - !Sub arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-32-runtime-al2:1
+        - !Sub arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-32-paws-al2:1
       Policies:
         - S3CrudPolicy:
             BucketName: !Sub "${BucketNamePrefix}-get-object"
