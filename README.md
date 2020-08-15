@@ -82,7 +82,7 @@ The list of all available layer ARN is here:
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-runtime-al2:1`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-runtime-al2:1`
 
-## Use Prebuild Zip Archive
+## Use Prebuilt Zip Archives
 
 1. Login to your AWS Account and go to the Lambda Console.
 2. Create a new layer and give it a name.
