@@ -1,7 +1,7 @@
 # Perl port of https://github.com/awslabs/serverless-application-model/tree/master/examples/apps/s3-get-object
 
-AWSTemplateFormatVersion: '2010-09-09'
-Transform: 'AWS::Serverless-2016-10-31'
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
 Description: >-
   An Amazon S3 trigger that retrieves metadata for the object that has been
   updated.
@@ -11,10 +11,10 @@ Parameters:
     Default: sam-example
 Resources:
   s3getobject:
-    Type: 'AWS::Serverless::Function'
+    Type: "AWS::Serverless::Function"
     Properties:
       Handler: handler.handle
-      Runtime: provided
+      Runtime: provided.al2
       CodeUri: s3-get-object.zip
       Description: >-
         An Amazon S3 trigger that retrieves metadata for the object that has
@@ -33,8 +33,8 @@ Resources:
           Properties:
             Bucket: !Ref Bucket1
             Events:
-              - 's3:ObjectCreated:*'
+              - "s3:ObjectCreated:*"
   Bucket1:
-    Type: 'AWS::S3::Bucket'
+    Type: "AWS::S3::Bucket"
     Properties:
       BucketName: !Sub "${BucketNamePrefix}-get-object"
