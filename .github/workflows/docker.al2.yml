@@ -1,9 +1,9 @@
-name: Build Docker Images
+name: Build Docker Images on Amazon Linux 2
 
 # to follow lambci/lambda
 on:
   schedule:
-    - cron: "19 14 * * 0"
+    - cron: "31 14 * * 0"
   workflow_dispatch:
 
 jobs:
@@ -13,9 +13,6 @@ jobs:
       matrix:
         perl:
           - "5.32"
-          - "5.30"
-          - "5.28"
-          - "5.26"
         flavor:
           - run
           - build
@@ -25,20 +22,20 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: build ${{ matrix.flavor}} flavor
-        run: docker build -t perl:latest author/${{ matrix.perl }}/${{ matrix.flavor}}
+        run: docker build -t perl:latest author/${{ matrix.perl }}/${{ matrix.flavor }}.al2
       - name: Publish to the Docker Hub
         run: |
-          if echo ${{ matrix.flavor}} | grep -F build; then
+          if echo ${{ matrix.flavor }} | grep -F build; then
             PREFIX="build-"
           else
             PREFIX=""
           fi
-          if echo ${{ matrix.flavor}} | grep -F paws; then
+          if echo ${{ matrix.flavor }} | grep -F paws; then
             SUFFIX="-paws"
           else
             SUFFIX=""
           fi
-          TAG=shogo82148/p5-aws-lambda:${PREFIX}${{ matrix.perl }}${SUFFIX}
+          TAG=shogo82148/p5-aws-lambda:${PREFIX}${{ matrix.perl }}${SUFFIX}.al2
           printenv PASSWORD | docker login -u "$USERNAME" --password-stdin
           docker tag perl:latest "$TAG"
           echo "push to $TAG"
