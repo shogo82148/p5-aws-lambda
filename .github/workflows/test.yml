@@ -22,9 +22,23 @@ jobs:
         uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl }}
+
+      - name: Cache CPAN modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            local
+          key: ${{ runner.os }}-perl-${{ matrix.perl }}-${{ hashFiles('**/cpanfile') }}
+          restore-keys: |
+            ${{ runner.os }}-perl-${{ matrix.perl }}-${{ hashFiles('**/cpanfile') }}
+            ${{ runner.os }}-perl-${{ matrix.perl }}-
+
       - name: Install Dependencies
         run: |
-          cpm install Minilla Software::License::MIT Test::CPAN::Meta Test::Pod Test::MinimumVersion::Fast Mojolicious Dancer2
-          cpm install --with-develop .
+          cpm install -L local --show-build-log-on-failure Minilla Software::License::MIT Test::CPAN::Meta Test::Pod Test::MinimumVersion::Fast Mojolicious Dancer2
+          cpm install -L local --show-build-log-on-failure --with-develop .
+          echo "PERL5LIB=$(pwd)/local/lib/perl5" >> "$GITHUB_ENV"
+          echo "$(pwd)/local/bin" >> "$GITHUB_PATH"
       - name: Test
-        run: minil test --all
+        run: |
+          minil test --all
