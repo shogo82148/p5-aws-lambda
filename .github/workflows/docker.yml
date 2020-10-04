@@ -24,7 +24,7 @@ jobs:
           - build-paws
     name: Perl ${{ matrix.perl }} ${{ matrix.flavor}} flavor
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: build ${{ matrix.flavor}} flavor
         run: docker build -t perl:latest author/${{ matrix.perl }}/${{ matrix.flavor}}
       - name: Publish to the Docker Hub
