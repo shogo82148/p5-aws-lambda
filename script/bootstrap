@@ -5,5 +5,8 @@ use warnings;
 use utf8;
 use AWS::Lambda::Bootstrap;
 
-my $bootstrap = AWS::Lambda::Bootstrap->new;
+my $handler = shift;
+my $bootstrap = AWS::Lambda::Bootstrap->new(
+    handler => $handler,
+);
 $bootstrap->handle_events;
