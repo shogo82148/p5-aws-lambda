@@ -23,6 +23,9 @@ export PERL_MB_OPT
 /opt/bin/cpan -T App::cpanminus
 /opt/bin/cpan -T .
 /opt/bin/cpan -T AWS::XRay
+
+# replace shebang to the absolute path of perl
+perl -i -pe 's(^#!perl$)(#!/opt/bin/perl)' script/bootstrap
 cp script/bootstrap /opt/
 
 # autodie is included in perl core, but the system perl of the Lambda Runtime lacks it.
