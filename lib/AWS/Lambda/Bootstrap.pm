@@ -9,6 +9,17 @@ use Try::Tiny;
 use AWS::Lambda;
 use AWS::Lambda::Context;
 use Scalar::Util qw(blessed);
+use Exporter 'import';
+
+our @EXPORT = ('bootstrap');
+
+sub bootstrap {
+    my $handler = shift;
+    my $bootstrap = AWS::Lambda::Bootstrap->new(
+        handler => $handler,
+    );
+    $bootstrap->handle_events;
+}
 
 sub new {
     my $proto = shift;
@@ -165,14 +176,13 @@ AWS::Lambda::Bootstrap - It's the bootrap script for AWS Lambda Custom Runtime.
 Save the following script as C<bootstrap>, and then zip it with your perl script.
 Now, you can start using Perl in AWS Lambda!
 
-    #!/opt/bin/perl
+    #!perl
     use strict;
     use warnings;
     use utf8;
     use AWS::Lambda::Bootstrap;
 
-    my $bootstrap = AWS::Lambda::Bootstrap->new;
-    $bootstrap->handle_events;
+    bootstrap(@ARGV);
 
 Prebuild Perl Runtime Layer includes the C<bootstrap> script.
 So, if you use the Layer, no need to include the C<bootstrap> script into your zip.
