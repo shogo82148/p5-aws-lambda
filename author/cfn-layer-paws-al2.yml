@@ -23,7 +23,7 @@ Resources:
       CompatibleRuntimes:
         - provided.al2
       LayerName: !Ref Name
-      LicenseInfo: https://github.com/shogo82148/p5-aws-lambda/blob/master/LICENSE
+      LicenseInfo: https://github.com/shogo82148/p5-aws-lambda/blob/main/LICENSE
   Permission:
     DeletionPolicy: Retain
     UpdateReplacePolicy: Retain

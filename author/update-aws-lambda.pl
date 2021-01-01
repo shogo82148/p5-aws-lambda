@@ -318,7 +318,7 @@ For the "Code entry type" selection, select B<Upload a file from Amazon S3>.
 
 =item 4
 
-In the "License" section, input L<https://github.com/shogo82148/p5-aws-lambda/blob/master/LICENSE>.
+In the "License" section, input L<https://github.com/shogo82148/p5-aws-lambda/blob/main/LICENSE>.
 
 =item 5
 
