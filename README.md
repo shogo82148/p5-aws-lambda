@@ -87,7 +87,7 @@ The list of all available layer ARN is here:
 1. Login to your AWS Account and go to the Lambda Console.
 2. Create a new layer and give it a name.
 3. For the "Code entry type" selection, select **Upload a file from Amazon S3**.
-4. In the "License" section, input [https://github.com/shogo82148/p5-aws-lambda/blob/master/LICENSE](https://github.com/shogo82148/p5-aws-lambda/blob/master/LICENSE).
+4. In the "License" section, input [https://github.com/shogo82148/p5-aws-lambda/blob/main/LICENSE](https://github.com/shogo82148/p5-aws-lambda/blob/main/LICENSE).
 5. Click **Create** button.
 6. Use the layer created. For detail, see Use Prebuilt Public Lambda Layer section.
 
