@@ -14,11 +14,11 @@ Save the following Perl script as `handler.pl`.
 
 and then, zip the script.
 
-    zip handler.zip handler.pl
+    $ zip handler.zip handler.pl
 
 Finally, create new function using awscli.
 
-    aws --region "$REGION" --profile "$PROFILE" lambda create-function \
+    $ aws --region "$REGION" --profile "$PROFILE" lambda create-function \
         --function-name "hello-perl" \
         --zip-file "fileb://handler.zip" \
         --handler "handler.handle" \
@@ -30,7 +30,7 @@ Finally, create new function using awscli.
 
 This package makes it easy to run AWS Lambda Functions written in Perl.
 
-## Use Prebuild Public Lambda Layer
+## Use Prebuild Public Lambda Layers
 
 1. Login to your AWS Account and go to the Lambda Console.
 2. Create a new function and give it a name and an IAM Role.
@@ -95,9 +95,53 @@ URLs for Zip archives are here.
 
 `https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime-al2.zip`
 
+## Use Prebuilt Docker Images
+
+Prebuilt Docker Images based on [https://gallery.ecr.aws/lambda/provided](https://gallery.ecr.aws/lambda/provided) are available.
+You can pull from [https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda](https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda) or [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda),
+build your custom images and deploy them to AWS Lambda.
+
+Here is an example of Dockerfile.
+
+    FROM shogo82148/p5-aws-lambda:base-5.32.al2
+    # or if you want to use ECR Public.
+    # FROM public.ecr.aws/w2s0h5h2/p5-aws-lambda:base-5.32.al2
+    COPY handler.pl /var/task/
+    CMD [ "handler.handle" ]
+
+Build the hello-perl container image locally:
+
+    $ docker build -t hello-perl .
+
+To check if this is working, start the container image locally using the Lambda Runtime Interface Emulator:
+
+    $ docker run -p 9000:8080 hello-perl:latest
+
+Now, you can test a function invocation with cURL.
+
+    $ curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
+
+To upload the container image, you need to create a new ECR repository in your account and tag the local image to push it to ECR.
+
+    $ aws ecr create-repository --repository-name hello-perl --image-scanning-configuration scanOnPush=true
+    $ docker tag hello-perl:latest 123412341234.dkr.ecr.sa-east-1.amazonaws.com/hello-perl:latest
+    $ aws ecr get-login-password | docker login --username AWS --password-stdin 123412341234.dkr.ecr.sa-east-1.amazonaws.com
+    $ docker push 123412341234.dkr.ecr.sa-east-1.amazonaws.com/hello-perl:latest
+
+Finally, create new function using awscli.
+
+    $ aws --region "$REGION" --profile "$PROFILE" lambda create-function \
+        --function-name "hello-perl" \
+        --code ImageUri=123412341234.dkr.ecr.sa-east-1.amazonaws.com/hello-perl:latest \
+        --handler "handler.handle" \
+        --runtime provided.al2 \
+        --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role
+
 ## Run in Local using Docker
 
-[https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda) is pre-built docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
+Prebuilt Docker Images based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/) are available.
+You can pull from [https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda](https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda) or [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda),
+and build zip archives to deploy.
 
     # Install the dependency.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.32.al2 \
@@ -185,9 +229,19 @@ URLs for Zip archive are here.
 
 `https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-paws-al2.zip`
 
-## Run in Local using Docker
+## Use Prebuilt Docker Images for Paws
 
-[https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda) is pre-build docker image based on [https://hub.docker.com/r/lambci/lambda/](https://hub.docker.com/r/lambci/lambda/)
+use the `base-$VERSION-paws.al2` tag on [https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda](https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda) or [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda).
+
+    FROM shogo82148/p5-aws-lambda:base-5.32-paws.al2
+    # or if you want to use ECR Public.
+    # FROM public.ecr.aws/w2s0h5h2/p5-aws-lambda:base-5.32-paws.al2
+    COPY handler.pl /var/task/
+    CMD [ "handler.handle" ]
+
+## Run in Local using Docker for Paws
+
+use the `build-$VERSION-paws.al2` and `$VERSION-paws.al2` tag on [https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda](https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda) or [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda).
 
     # Install the dependency.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.32-paws.al2 \
@@ -214,7 +268,7 @@ install the modules into `/opt/lib/perl5/site_perl` in the layer.
 
 We also provide the layers for legacy custom runtime as known as "provided".
 
-# Prebuilt Public Lambda Layers
+## Prebuilt Public Lambda Layers for Amazon Linux
 
 The list of all available layer ARN is here:
 
@@ -382,7 +436,7 @@ And Paws layers:
     - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-26-paws:5`
     - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-26-paws:5`
 
-## Prebuilt Zip Archives
+## Prebuilt Zip Archives for Amazon Linux
 
 URLs of zip archives are here:
 
@@ -404,8 +458,8 @@ And Paws:
 
 The MIT License (MIT)
 
-Copyright (C) Ichinose Shogo.
+Copyright (C) Ichinose Shogo
 
 # AUTHOR
 
-Ichinose Shogo <shogo82148@gmail.com>
+Ichinose Shogo
