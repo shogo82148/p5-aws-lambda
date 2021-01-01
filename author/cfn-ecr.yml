@@ -60,15 +60,51 @@ Resources:
         UsageText: |
           # Build and Deploy Docker Images
 
-          TODO
+          Here is an example of Dockerfile.
 
-          # Build Zip Archives
+              FROM shogo82148/p5-aws-lambda:base-5.32.al2
+              # or if you want to use ECR Public.
+              # FROM public.ecr.aws/w2s0h5h2/p5-aws-lambda:base-5.32.al2
+              COPY handler.pl /var/task/
+              CMD [ "handler.handle" ]
 
-          TODO
+          Build the hello-perl container image locally:
 
-          # Run AWS Lambda Function on Local Machines
+              $ docker build -t hello-perl .
 
-          TODO
+          To check if this is working, start the container image locally using the Lambda Runtime Interface Emulator:
+
+              $ docker run -p 9000:8080 hello-perl:latest
+
+          Now, you can test a function invocation with cURL.
+
+              $ curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
+
+          To upload the container image, you need to create a new ECR repository in your account and tag the local image to push it to ECR.
+
+              $ aws ecr create-repository --repository-name hello-perl --image-scanning-configuration scanOnPush=true
+              $ docker tag hello-perl:latest 123412341234.dkr.ecr.sa-east-1.amazonaws.com/hello-perl:latest
+              $ aws ecr get-login-password | docker login --username AWS --password-stdin 123412341234.dkr.ecr.sa-east-1.amazonaws.com
+              $ docker push 123412341234.dkr.ecr.sa-east-1.amazonaws.com/hello-perl:latest
+
+          Finally, create new function using awscli.
+
+              $ aws --region "$REGION" --profile "$PROFILE" lambda create-function \
+                  --function-name "hello-perl" \
+                  --code ImageUri=123412341234.dkr.ecr.sa-east-1.amazonaws.com/hello-perl:latest \
+                  --handler "handler.handle" \
+                  --runtime provided.al2 \
+                  --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role
+
+          # Use lambci/lambda based images
+
+              # Install the dependency.
+              docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.32.al2 \
+                  cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
+
+              # run an event.
+              docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.32.al2 \
+                  handler.handle '{"some":"event"}'
 
   StateBucket:
     DeletionPolicy: Retain
