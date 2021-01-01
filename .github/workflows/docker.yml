@@ -30,11 +30,19 @@ jobs:
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w2s0h5h2
 
+      - name: restore state
+        run: |
+          aws s3 cp s3://shogo82148-lambda-perl-runtime-state/state.json author/state.json || true
+
       - uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: '5.32'
       - name: Build and Publish Docker Images
         run: ./author/upload-docker-images.pl build
+
+      - name: save state
+        run: |
+          aws s3 cp author/state.json s3://shogo82148-lambda-perl-runtime-state/state.json
 
       - run: docker logout
         if: always()

@@ -7,11 +7,8 @@ use utf8;
 use IPC::Open3;
 use FindBin;
 use Carp qw/croak/;
-use JSON qw/decode_json/;
+use JSON qw/decode_json encode_json/;
 use File::Path qw/mkpath/;
-
-my $current_state = {};
-my $state = {};
 
 my $perl_versions = [qw/5.26 5.28 5.30 5.32/];
 my $perl_versions_al2 = [qw/5.32/];
@@ -404,7 +401,7 @@ EOF
 sub generate {
     chdir "$FindBin::Bin" or die "failed to chdir: $!";
     for my $perl(@$perl_versions) {
-        for my $flavor(keys %$flavors) {
+        for my $flavor(sort keys %$flavors) {
             next if $flavor =~ /[.]al2$/ && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
             mkpath("$perl/$flavor");
             open my $fh, '>', "$perl/$flavor/Dockerfile";
@@ -414,7 +411,38 @@ sub generate {
     }
 }
 
+my $current_state = {};
+my $state = {};
+
 sub build {
+    # load current state
+    $current_state = load_state();
+    check_updates();
+
+    for my $perl(@$perl_versions) {
+        for my $flavor(sort keys %$flavors) {
+            next if $flavor =~ /[.]al2$/ && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
+
+            my $settings = $flavors->{$flavor};
+            my $tag = $settings->{tag}->($perl);
+            if (!needs_build($settings->{dependencies}->($perl))) {
+                say STDERR "no need to build $tag, skipping.";
+                next;
+            }
+            say STDERR "building $tag...";
+            chdir "$FindBin::Bin/$perl/$flavor" or die "failed to chdir: $!";
+            docker('build', '-t', "perl:$tag", '.');
+            docker('tag', "perl:$tag", "shogo82148/p5-aws-lambda:$tag");
+            docker('push', "shogo82148/p5-aws-lambda:$tag");
+            docker('tag', "perl:$tag", "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
+            docker('push', "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
+        }
+    }
+
+    save_state($state);
+}
+
+sub check_updates {
     # image dependencies
     my @images = (
         # for lambci provided
@@ -429,25 +457,38 @@ sub build {
         'amazon/aws-lambda-provided:alami',
         'amazon/aws-lambda-provided:al2',
     );
-    # for my $image(@images) {
-    #     docker_pull($image);
-    #     $state->{$image} = inspect_id($image);
-    # }
+    for my $image(@images) {
+        docker('pull', $image);
+        $state->{$image} = inspect_id($image);
+    }
 
-    for my $perl(@$perl_versions) {
-        for my $flavor(keys %$flavors) {
-            next if $flavor =~ /[.]al2$/ && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
+    for my $version(@$perl_versions) {
+        $version =~ s/[.]/-/;
+        my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip";
+        $state->{$runtime} = fetch_etag($runtime);
+        my $paws = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip";
+        $state->{$paws} = fetch_etag($paws);
+    }
 
-            my $settings = $flavors->{$flavor};
-            my $tag = $settings->{tag}->($perl);
-            chdir "$FindBin::Bin/$perl/$flavor" or die "failed to chdir: $!";
-            docker('build', '-t', "perl:$tag", '.');
-            docker('tag', "perl:$tag", "shogo82148/p5-aws-lambda:$tag");
-            docker('push', "shogo82148/p5-aws-lambda:$tag");
-            docker('tag', "perl:$tag", "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
-            docker('push', "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
+    for my $version(@$perl_versions_al2) {
+        $version =~ s/[.]/-/;
+        my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip";
+        $state->{$runtime} = fetch_etag($runtime);
+        my $paws = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip";
+        $state->{$paws} = fetch_etag($paws);
+    }
+}
+
+sub needs_build {
+    my @deps = @_;
+    for my $dep(@deps) {
+        my $current = $current_state->{$dep};
+        my $new = $state->{$dep};
+        if (!$current || $current ne $new) {
+            return 1;
         }
     }
+    return 0;
 }
 
 sub docker {
@@ -462,7 +503,6 @@ sub inspect_id {
 sub fetch_etag {
     my $url = shift;
     my $headers = run('curl', '-I', $url);
-    say $headers;
     $headers =~ /^ETag:\s*(\S+)/mi;
     return $1;
 }
@@ -480,6 +520,21 @@ sub run {
         croak "`$cmd` exit code: $code, message: $result";
     }
     return $result;
+}
+
+sub load_state {
+    open my $fh, '<', "$FindBin::Bin/state.json" or return {};
+    my $data = do { local $/; <$fh> };
+    close($fh);
+    return decode_json($data);
+}
+
+sub save_state {
+    my $state = shift;
+    my $json = JSON->new->utf8(1)->pretty(1)->canonical(1);
+    open my $fh, '>', "$FindBin::Bin/state.json" or return {};
+    print $fh $json->encode($state);
+    close($fh);
 }
 
 my $subcommand = shift;
