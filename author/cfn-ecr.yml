@@ -2,17 +2,73 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: ECR Repository for Perl AWS Lambda runtime
 
 Resources:
-  # TODO: import the repository
-  # the document is here: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecr-publicrepository.html
-  # but I got the following error:
-  # An error occurred (ValidationError) when calling the CreateChangeSet operation: Template format error: Unrecognized resource types: [AWS::ECR::PublicRepository]
+  Repository:
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Type: AWS::ECR::PublicRepository
+    Properties:
+      RepositoryName: p5-aws-lambda
+      RepositoryCatalogData:
+        OperatingSystems: [ Linux ]
+        Architectures: [ x86-64 ]
+        RepositoryDescription: Perl runtime for AWS Lambda
+        AboutText: |
+          This is Perl runtime for AWS Lambda based on [lambda/provided](https://gallery.ecr.aws/lambda/provided).
+          It contains pre-built [perl](https://www.perl.org/) binary and [AWS::Lambda](https://metacpan.org/pod/AWS::Lambda)
+          that is one of Lambda Runtime Interface Client for Perl.
 
-  # Repository:
-  #   DeletionPolicy: Retain
-  #   UpdateReplacePolicy: Retain
-  #   Type: AWS::ECR::PublicRepository
-  #   Properties:
-  #     RepositoryName: p5-aws-lambda
+          # IMAGE TAGS
+
+          The following tags are based on Amazon Linux 2.
+
+          - `base-<version>.al2`
+            - The image based on [lambda/provided](https://gallery.ecr.aws/lambda/provided) Amazon Linux 2
+            - You can customize this and deploy your images to AWS Lambda
+          - `base-<version>-paws.al2`
+            - The image based on [lambda/provided](https://gallery.ecr.aws/lambda/provided) Amazon Linux 2
+            - It also contains [Paws](https://metacpan.org/pod/Paws) that is a Perl SDK for AWS APIs
+          - `build-<version>.al2`
+            - The image based on [lambci/lambda](https://hub.docker.com/r/lambci/lambda/) Amazon Linux 2
+            - You can build CPAN modules on your local machines
+          - `build-<version>-paws.al2`
+            - The image based on [lambci/lambda](https://hub.docker.com/r/lambci/lambda/) Amazon Linux 2
+            - It also contains [Paws](https://metacpan.org/pod/Paws) that is a Perl SDK for AWS APIs
+          - `<version>.al2`
+            - The image based on [lambci/lambda](https://hub.docker.com/r/lambci/lambda/) Amazon Linux 2
+            - You can run your Lambda functions on your local machines
+          - `<version>-paws.al2`
+            - The image based on [lambci/lambda](https://hub.docker.com/r/lambci/lambda/) Amazon Linux 2
+            - It also contains [Paws](https://metacpan.org/pod/Paws) that is a Perl SDK for AWS APIs
+
+          These are based on Amazon Linux.
+
+          - `base-<version>`
+          - `base-<version>-paws`
+          - `build-<version>`
+          - `build-<version>-paws`
+          - `<version>`
+          - `<version>-paws`
+
+          # SEE ALSO
+
+          - [AWS::Lambda on metacpan](https://metacpan.org/pod/AWS::Lambda)
+          - [shogo82148/p5-aws-lambda on GitHub](https://github.com/shogo82148/p5-aws-lambda)
+          - [Paws](https://metacpan.org/pod/Paws)
+          - [lambda/provided](https://gallery.ecr.aws/lambda/provided)
+          - [lambci/lambda](https://hub.docker.com/r/lambci/lambda/)
+
+        UsageText: |
+          # Build and Deploy Docker Images
+
+          TODO
+
+          # Build Zip Archives
+
+          TODO
+
+          # Run AWS Lambda Function on Local Machines
+
+          TODO
 
   StateBucket:
     DeletionPolicy: Retain
