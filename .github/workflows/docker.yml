@@ -34,4 +34,6 @@ jobs:
         with:
           perl-version: '5.32'
       - name: Build and Publish Docker Images
-        run: ./author/upload-docker-images.pl upload
+        run: ./author/upload-docker-images.pl build
+
+      - run: docker logout
