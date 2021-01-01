@@ -47,11 +47,240 @@ EOF
         },
     },
 
+    'base.al2' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF";
+# Base Image for Lambda
+# You add your function code and dependencies to the base image and
+# then run it as a container image on AWS Lambda.
+
+# the amazon/aws-lambda-provided:al2 image doesn't have curl and unzip,
+# so we use the build-provided.al2 image here
+FROM lambci/lambda:build-provided.al2
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip
+
+FROM amazon/aws-lambda-provided:al2
+COPY --from=0 /opt /opt
+RUN ln -s /opt/bootstrap /var/runtime/bootstrap
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'amazon/aws-lambda-provided:al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "base-$version.al2";
+        },
+    },
+
+    'base-paws' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF";
+# Base Image for Lambda
+# You add your function code and dependencies to the base image and
+# then run it as a container image on AWS Lambda.
+
+FROM amazon/aws-lambda-provided:alami
+
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip
+RUN ln -s /opt/bootstrap /var/runtime/bootstrap
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
+    unzip paws.zip && rm paws.zip
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'amazon/aws-lambda-provided:alami',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "base-$version-paws";
+        },
+    },
+
+    'base-paws.al2' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF";
+# Base Image for Lambda
+# You add your function code and dependencies to the base image and
+# then run it as a container image on AWS Lambda.
+
+# the amazon/aws-lambda-provided:al2 image doesn't have curl and unzip,
+# so we use the build-provided.al2 image here
+FROM lambci/lambda:build-provided.al2
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
+    unzip paws.zip && rm paws.zip
+
+FROM amazon/aws-lambda-provided:al2
+COPY --from=0 /opt /opt
+RUN ln -s /opt/bootstrap /var/runtime/bootstrap
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'amazon/aws-lambda-provided:al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "base-$version-paws.al2";
+        },
+    },
+
+    'build' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF";
+FROM lambci/lambda:build-provided
+
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'lambci/lambda:build-provided',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "build-$version";
+        },
+    },
+
+    'build.al2' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF";
+FROM lambci/lambda:build-provided.al2
+
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip && \\
+    # workaround for "xlocale.h: No such file or directory"
+    ln -s /usr/include/locale.h /usr/include/xlocale.h && \\
+    # build-provided.al2 lacks some development packages
+    yum install -y expat-devel openssl openssl-devel && yum clean all
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'lambci/lambda:build-provided.al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "build-$version.al2";
+        },
+    },
+
+    'build-paws' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF";
+FROM lambci/lambda:build-provided
+
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
+    unzip paws.zip && rm paws.zip
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'lambci/lambda:build-provided',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "build-$version-paws";
+        },
+    },
+
+    'build-paws.al2' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF";
+FROM lambci/lambda:build-provided.al2
+
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip && \\
+    # workaround for "xlocale.h: No such file or directory"
+    ln -s /usr/include/locale.h /usr/include/xlocale.h && \\
+    # build-provided.al2 lacks some development packages
+    yum install -y expat-devel openssl openssl-devel && yum clean all
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
+    unzip paws.zip && rm paws.zip
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'lambci/lambda:build-provided.al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "build-$version-paws.al2";
+        },
+    },
+
     'run' => {
         'dockerfile' => sub {
             my $version = shift;
             $version =~ s/[.]/-/;
-            return <<"EOF"
+            return <<"EOF";
 FROM lambci/lambda:provided
 
 USER root
@@ -67,11 +296,11 @@ EOF
             return (
                 'lambci/lambda:provided',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
-            )
+            );
         },
         'tag' => sub {
             my $version = shift;
-            return $version;
+            return "$version";
         },
     },
 
@@ -97,11 +326,77 @@ EOF
             return (
                 'lambci/lambda:provided.al2',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
-            )
+            );
         },
         'tag' => sub {
             my $version = shift;
-            return $version;
+            return "$version.al2";
+        },
+    },
+
+    'run-paws' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF"
+FROM lambci/lambda:provided
+
+USER root
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
+    unzip paws.zip && rm paws.zip
+USER sbx_user1051
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'lambci/lambda:provided',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "$version-paws";
+        },
+    },
+
+    'run-paws.al2' => {
+        'dockerfile' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return <<"EOF"
+# the provided.al2 image doesn't have curl and unzip,
+# so we use the build-provided.al2 image here
+FROM lambci/lambda:build-provided.al2
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
+    unzip runtime.zip && rm runtime.zip
+RUN cd /opt && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
+    unzip paws.zip && rm paws.zip
+
+FROM lambci/lambda:provided.al2
+COPY --from=0 /opt /opt
+EOF
+        },
+        'dependencies' => sub {
+            my $version = shift;
+            $version =~ s/[.]/-/;
+            return (
+                'lambci/lambda:provided.al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip",
+            );
+        },
+        'tag' => sub {
+            my $version = shift;
+            return "$version-paws.al2";
         },
     },
 };
