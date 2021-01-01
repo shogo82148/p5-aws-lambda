@@ -473,16 +473,16 @@ sub check_updates {
         $state->{$image} = inspect_id($image);
     }
 
-    for my $version(@$perl_versions) {
-        $version =~ s/[.]/-/;
+    for my $perl(@$perl_versions) {
+        my $version = $perl =~ s/[.]/-/r;
         my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip";
         $state->{$runtime} = fetch_etag($runtime);
         my $paws = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip";
         $state->{$paws} = fetch_etag($paws);
     }
 
-    for my $version(@$perl_versions_al2) {
-        $version =~ s/[.]/-/;
+    for my $perl(@$perl_versions_al2) {
+        my $version = $perl =~ s/[.]/-/r;
         my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip";
         $state->{$runtime} = fetch_etag($runtime);
         my $paws = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip";
