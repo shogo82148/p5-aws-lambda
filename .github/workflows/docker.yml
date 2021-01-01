@@ -9,42 +9,32 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        perl:
-          - "5.32"
-          - "5.30"
-          - "5.28"
-          - "5.26"
-        flavor:
-          - run
-          - build
-          - run-paws
-          - build-paws
-    name: Perl ${{ matrix.perl }} ${{ matrix.flavor}} flavor
     steps:
       - uses: actions/checkout@v2
-      - name: build ${{ matrix.flavor}} flavor
-        run: docker build -t perl:latest author/${{ matrix.perl }}/${{ matrix.flavor}}
-      - name: Publish to the Docker Hub
+
+      - name: Login to Docker Hub
         run: |
-          if echo ${{ matrix.flavor}} | grep -F build; then
-            PREFIX="build-"
-          else
-            PREFIX=""
-          fi
-          if echo ${{ matrix.flavor}} | grep -F paws; then
-            SUFFIX="-paws"
-          else
-            SUFFIX=""
-          fi
-          TAG=shogo82148/p5-aws-lambda:${PREFIX}${{ matrix.perl }}${SUFFIX}
           printenv PASSWORD | docker login -u "$USERNAME" --password-stdin
-          docker tag perl:latest "$TAG"
-          echo "push to $TAG"
-          docker push "$TAG"
-          docker logout
         env:
           USERNAME: ${{ secrets.username }}
           PASSWORD: ${{ secrets.password }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Login to ECR Public Registry
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w2s0h5h2
+
+      - uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.32'
+      - name: Build and Publish Docker Images
+        run: ./author/upload-docker-images.pl build
+
+      - run: docker logout
+        if: always()
