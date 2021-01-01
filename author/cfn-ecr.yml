@@ -14,6 +14,20 @@ Resources:
   #   Properties:
   #     RepositoryName: p5-aws-lambda
 
+  StateBucket:
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: shogo82148-lambda-perl-runtime-state
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
   DeploymentUser:
     Type: AWS::IAM::User
     Properties:
@@ -32,6 +46,12 @@ Resources:
                   - "ecr-public:PutImage"
                 Resource:
                   - !Sub "arn:aws:ecr-public::${AWS::AccountId}:repository/p5-aws-lambda"
+              - Effect: Allow
+                Action:
+                  - "s3:*"
+                Resource:
+                  - !GetAtt StateBucket.Arn
+                  - !Sub "${StateBucket.Arn}/*"
   DeploymentAccessKey:
     Type: AWS::IAM::AccessKey
     Properties:
