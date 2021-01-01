@@ -9,6 +9,7 @@ use FindBin;
 use Carp qw/croak/;
 use JSON qw/decode_json encode_json/;
 use File::Path qw/mkpath/;
+use Time::Piece;
 
 my $perl_versions = [qw/5.26 5.28 5.30 5.32/];
 my $perl_versions_al2 = [qw/5.32/];
@@ -417,6 +418,10 @@ my $state = {};
 sub build {
     # load current state
     $current_state = load_state();
+
+    my $t = localtime;
+    my $date = $t->ymd(".");
+
     check_updates();
 
     for my $perl(@$perl_versions) {
@@ -432,10 +437,16 @@ sub build {
             say STDERR "building $tag...";
             chdir "$FindBin::Bin/$perl/$flavor" or die "failed to chdir: $!";
             docker('build', '-t', "perl:$tag", '.');
+
             docker('tag', "perl:$tag", "shogo82148/p5-aws-lambda:$tag");
             docker('push', "shogo82148/p5-aws-lambda:$tag");
+            docker('tag', "perl:$tag", "shogo82148/p5-aws-lambda:$tag-$date");
+            docker('push', "shogo82148/p5-aws-lambda:$tag-$date");
+
             docker('tag', "perl:$tag", "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
             docker('push', "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
+            docker('tag', "perl:$tag", "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag-$date");
+            docker('push', "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag-$date");
         }
     }
 
