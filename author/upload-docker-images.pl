@@ -147,9 +147,9 @@ sub build {
             my $tag = $settings->{tag}->($perl);
             chdir "$FindBin::Bin/$perl/$flavor" or die "failed to chdir: $!";
             docker('build', '-t', "perl:$tag", '.');
-            docker('tag', "shogo82148/p5-aws-lambda:$tag", "perl:$tag");
+            docker('tag', "perl:$tag", "shogo82148/p5-aws-lambda:$tag");
             docker('push', "shogo82148/p5-aws-lambda:$tag");
-            docker('tag', "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag", "perl:$tag");
+            docker('tag', "perl:$tag", "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
             docker('push', "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
         }
     }
