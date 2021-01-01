@@ -811,7 +811,7 @@ Prebuilt Docker Images based on L<https://gallery.ecr.aws/lambda/provided> are a
 You can pull from L<https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda> or L<https://hub.docker.com/r/shogo82148/p5-aws-lambda>,
 build your custom images and deploy them to AWS Lambda.
 
-Here is an eample of Dockerfile.
+Here is an example of Dockerfile.
 
     FROM shogo82148/p5-aws-lambda:base-5.32.al2
     # or if you want to use ECR Public.
