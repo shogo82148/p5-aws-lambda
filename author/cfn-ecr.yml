@@ -48,6 +48,10 @@ Resources:
                   - !Sub "arn:aws:ecr-public::${AWS::AccountId}:repository/p5-aws-lambda"
               - Effect: Allow
                 Action:
+                  - "ecr-public:GetAuthorizationToken"
+                Resource: "*"
+              - Effect: Allow
+                Action:
                   - "s3:*"
                 Resource:
                   - !GetAtt StateBucket.Arn
