@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ECR Repository for Perl AWS Lambda runtime
+
+Resources:
+  # TODO: import the repository
+  # the document is here: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecr-publicrepository.html
+  # but I got the following error:
+  # An error occurred (ValidationError) when calling the CreateChangeSet operation: Template format error: Unrecognized resource types: [AWS::ECR::PublicRepository]
+
+  # Repository:
+  #   DeletionPolicy: Retain
+  #   UpdateReplacePolicy: Retain
+  #   Type: AWS::ECR::PublicRepository
+  #   Properties:
+  #     RepositoryName: p5-aws-lambda
+
+  DeploymentUser:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: Deployment
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "ecr-public:Get*"
+                  - "ecr-public:Describe*"
+                  - "ecr-public:InitiateLayerUpload"
+                  - "ecr-public:UploadLayerPart"
+                  - "ecr-public:CompleteLayerUpload"
+                  - "ecr-public:PutImage"
+                Resource:
+                  - !Sub "arn:aws:ecr-public::${AWS::AccountId}:repository/p5-aws-lambda"
+  DeploymentAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      Status: Active
+      UserName: !Ref DeploymentUser
+
+Outputs:
+  DeploymentAccessKey:
+    Value: !Ref DeploymentAccessKey
+    Description: deployment access key
+  DeploymentSecretKey:
+    Value: !GetAtt DeploymentAccessKey.SecretAccessKey
+    Description: deployment secret access key
