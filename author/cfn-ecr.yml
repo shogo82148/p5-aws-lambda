@@ -38,12 +38,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - "ecr-public:Get*"
-                  - "ecr-public:Describe*"
-                  - "ecr-public:InitiateLayerUpload"
-                  - "ecr-public:UploadLayerPart"
-                  - "ecr-public:CompleteLayerUpload"
-                  - "ecr-public:PutImage"
+                  - "ecr-public:*"
                 Resource:
                   - !Sub "arn:aws:ecr-public::${AWS::AccountId}:repository/p5-aws-lambda"
               - Effect: Allow
