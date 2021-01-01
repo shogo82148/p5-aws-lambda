@@ -101,7 +101,7 @@ Prebuilt Docker Images based on [https://gallery.ecr.aws/lambda/provided](https:
 You can pull from [https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda](https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda) or [https://hub.docker.com/r/shogo82148/p5-aws-lambda](https://hub.docker.com/r/shogo82148/p5-aws-lambda),
 build your custom images and deploy them to AWS Lambda.
 
-Here is an eample of Dockerfile.
+Here is an example of Dockerfile.
 
     FROM shogo82148/p5-aws-lambda:base-5.32.al2
     # or if you want to use ECR Public.
@@ -458,8 +458,8 @@ And Paws:
 
 The MIT License (MIT)
 
-Copyright (C) Ichinose Shogo.
+Copyright (C) Ichinose Shogo
 
 # AUTHOR
 
-Ichinose Shogo <shogo82148@gmail.com>
+Ichinose Shogo

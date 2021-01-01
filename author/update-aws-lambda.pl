@@ -568,11 +568,11 @@ C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-
 
 The MIT License (MIT)
 
-Copyright (C) Ichinose Shogo.
+Copyright (C) Ichinose Shogo
 
 =head1 AUTHOR
 
-Ichinose Shogo E<lt>shogo82148@gmail.comE<gt>
+Ichinose Shogo
 
 =cut
 EOS
