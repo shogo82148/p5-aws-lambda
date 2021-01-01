@@ -30,5 +30,8 @@ jobs:
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w2s0h5h2
 
+      - uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: '5.32'
       - name: Build and Publish Docker Images
         run: ./author/upload-docker-images.pl upload
