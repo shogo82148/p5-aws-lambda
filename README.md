@@ -24,7 +24,7 @@ Finally, create new function using awscli.
         --handler "handler.handle" \
         --runtime provided.al2 \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-runtime-al2:2"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-runtime-al2:3"
 
 # DESCRIPTION
 
@@ -49,10 +49,10 @@ You can get the layer ARN in your script by using `get_layer_info`.
         "5.32",      # Perl Version
         "us-east-1", # Region
     );
-    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-runtime-al2:2
-    say $info->{runtime_version}; # 2
-    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-paws-al2:2
-    say $info->{paws_version}     # 2,
+    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-runtime-al2:3
+    say $info->{runtime_version}; # 3
+    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-paws-al2:3
+    say $info->{paws_version}     # 3,
 
 Or, you can use following one-liner.
 
@@ -62,25 +62,25 @@ Or, you can use following one-liner.
 The list of all available layer ARN is here:
 
 - Perl 5.32
-    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-runtime-al2:2`
-    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-runtime-al2:2`
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-runtime-al2:3`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-runtime-al2:3`
 
 ## Use Prebuilt Zip Archives
 
@@ -192,8 +192,8 @@ Add the perl-runtime layer and the perl-paws layer into your lambda function.
         --runtime provided.al2 \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-runtime-al2:2" \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-paws-al2:2"
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-runtime-al2:3" \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-5-32-paws-al2:3"
 
 Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your Lambda function.
 
@@ -205,25 +205,25 @@ Now, you can use [Paws](https://metacpan.org/pod/Paws) to call AWS API from your
 The list of all available layer ARN is here:
 
 - Perl 5.32
-    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-paws-al2:2`
-    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-paws-al2:2`
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-paws-al2:3`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-paws-al2:3`
 
 URLs for Zip archive are here.
 
@@ -273,25 +273,25 @@ We also provide the layers for legacy custom runtime as known as "provided".
 The list of all available layer ARN is here:
 
 - Perl 5.32
-    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-runtime:2`
-    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-runtime:2`
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-runtime:3`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-runtime:3`
 - Perl 5.30
     - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-runtime:3`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-runtime:10`
@@ -356,25 +356,25 @@ The list of all available layer ARN is here:
 And Paws layers:
 
 - Perl 5.32
-    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-paws:2`
-    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-paws:2`
+    - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:me-south-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:us-east-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:us-east-2:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:us-west-1:445285296882:layer:perl-5-32-paws:3`
+    - `arn:aws:lambda:us-west-2:445285296882:layer:perl-5-32-paws:3`
 - Perl 5.30
     - `arn:aws:lambda:af-south-1:445285296882:layer:perl-5-30-paws:3`
     - `arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-30-paws:7`
