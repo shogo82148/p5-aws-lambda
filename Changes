@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - perl 5.32.1 is released
 
 0.0.23 2021-01-02T02:20:42Z
     - support Container Image format https://aws.amazon.com/jp/blogs/aws/new-for-aws-lambda-container-image-support/
