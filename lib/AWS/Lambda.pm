@@ -35,6 +35,12 @@ our $LAYERS = {
             paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws:3",
             paws_version    => 3,
         },
+        'ap-northeast-3' => {
+            runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-32-runtime:1",
+            runtime_version => 1,
+            paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-32-paws:1",
+            paws_version    => 1,
+        },
         'ap-south-1' => {
             runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime:3",
             runtime_version => 3,
@@ -150,6 +156,12 @@ our $LAYERS = {
             runtime_version => 10,
             paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-paws:7",
             paws_version    => 7,
+        },
+        'ap-northeast-3' => {
+            runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-30-runtime:1",
+            runtime_version => 1,
+            paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-30-paws:1",
+            paws_version    => 1,
         },
         'ap-south-1' => {
             runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-runtime:10",
@@ -267,6 +279,12 @@ our $LAYERS = {
             paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-paws:6",
             paws_version    => 6,
         },
+        'ap-northeast-3' => {
+            runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-28-runtime:1",
+            runtime_version => 1,
+            paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-28-paws:1",
+            paws_version    => 1,
+        },
         'ap-south-1' => {
             runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-runtime:16",
             runtime_version => 16,
@@ -382,6 +400,12 @@ our $LAYERS = {
             runtime_version => 17,
             paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-paws:7",
             paws_version    => 7,
+        },
+        'ap-northeast-3' => {
+            runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-26-runtime:1",
+            runtime_version => 1,
+            paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-26-paws:1",
+            paws_version    => 1,
         },
         'ap-south-1' => {
             runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-runtime:17",
@@ -501,6 +525,12 @@ our $LAYERS_AL2 = {
             runtime_version => 3,
             paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws-al2:3",
             paws_version    => 3,
+        },
+        'ap-northeast-3' => {
+            runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-32-runtime-al2:1",
+            runtime_version => 1,
+            paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-32-paws-al2:1",
+            paws_version    => 1,
         },
         'ap-south-1' => {
             runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime-al2:3",
@@ -737,6 +767,8 @@ The list of all available layer ARN is here:
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-runtime-al2:3>
 
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-32-runtime-al2:1>
+
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime-al2:3>
 
 =item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime-al2:3>
@@ -929,6 +961,8 @@ The list of all available layer ARN is here:
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws-al2:3>
 
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-32-paws-al2:1>
+
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws-al2:3>
 
 =item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws-al2:3>
@@ -1024,6 +1058,8 @@ The list of all available layer ARN is here:
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-runtime:3>
 
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-32-runtime:1>
+
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime:3>
 
 =item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime:3>
@@ -1067,6 +1103,8 @@ The list of all available layer ARN is here:
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-runtime:10>
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-runtime:10>
+
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-30-runtime:1>
 
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-runtime:10>
 
@@ -1112,6 +1150,8 @@ The list of all available layer ARN is here:
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-runtime:16>
 
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-28-runtime:1>
+
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-runtime:16>
 
 =item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-28-runtime:16>
@@ -1155,6 +1195,8 @@ The list of all available layer ARN is here:
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-runtime:17>
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-runtime:17>
+
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-26-runtime:1>
 
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-runtime:17>
 
@@ -1206,6 +1248,8 @@ And Paws layers:
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-32-paws:3>
 
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-32-paws:1>
+
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws:3>
 
 =item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws:3>
@@ -1249,6 +1293,8 @@ And Paws layers:
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-30-paws:7>
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-30-paws:7>
+
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-30-paws:1>
 
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-paws:7>
 
@@ -1294,6 +1340,8 @@ And Paws layers:
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-28-paws:6>
 
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-28-paws:1>
+
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-paws:6>
 
 =item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-28-paws:6>
@@ -1337,6 +1385,8 @@ And Paws layers:
 =item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-26-paws:7>
 
 =item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-26-paws:7>
+
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-26-paws:1>
 
 =item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-paws:7>
 
