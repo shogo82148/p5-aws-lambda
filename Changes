@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - new region Asia Pacific (Osaka) ap-northeast-3 is available
 
 0.0.24 2021-01-25T10:18:13Z
     - perl 5.32.1 is released
