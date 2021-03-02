@@ -2,6 +2,8 @@ Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
     - new region Asia Pacific (Osaka) ap-northeast-3 is available
+    - custom registry name https://gallery.ecr.aws/shogo82148/p5-aws-lambda is now available
+      - old one https://gallery.ecr.aws/w2s0h5h2/p5-aws-lambda is still alive
 
 0.0.24 2021-01-25T10:18:13Z
     - perl 5.32.1 is released

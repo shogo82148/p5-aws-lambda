@@ -443,10 +443,10 @@ sub build {
             docker('tag', "perl:$tag", "shogo82148/p5-aws-lambda:$tag-$date");
             docker('push', "shogo82148/p5-aws-lambda:$tag-$date");
 
-            docker('tag', "perl:$tag", "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
-            docker('push', "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag");
-            docker('tag', "perl:$tag", "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag-$date");
-            docker('push', "public.ecr.aws/w2s0h5h2/p5-aws-lambda:$tag-$date");
+            docker('tag', "perl:$tag", "public.ecr.aws/shogo82148/p5-aws-lambda:$tag");
+            docker('push', "public.ecr.aws/shogo82148/p5-aws-lambda:$tag");
+            docker('tag', "perl:$tag", "public.ecr.aws/shogo82148/p5-aws-lambda:$tag-$date");
+            docker('push', "public.ecr.aws/shogo82148/p5-aws-lambda:$tag-$date");
         }
     }
 
