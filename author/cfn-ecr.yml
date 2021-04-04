@@ -120,6 +120,48 @@ Resources:
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
 
+  DeploymentRole:
+    Type: AWS::IAM::Role
+    Properties:
+      # trust policy for using https://github.com/shogo82148/actions-aws-assume-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: arn:aws:iam::053160724612:root
+            Action:
+              - 'sts:AssumeRole'
+            Condition:
+              StringEquals:
+                "sts:ExternalId": shogo82148/p5-aws-lambda
+          - Effect: Allow
+            Principal:
+              AWS: arn:aws:iam::053160724612:root
+            Action:
+              - 'sts:TagSession'
+      Policies:
+        - PolicyName: Deployment
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "ecr-public:*"
+                Resource:
+                  - !Sub "arn:aws:ecr-public::${AWS::AccountId}:repository/p5-aws-lambda"
+              - Effect: Allow
+                Action:
+                  - "ecr-public:GetAuthorizationToken"
+                  - "sts:GetServiceBearerToken"
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - "s3:*"
+                Resource:
+                  - !GetAtt StateBucket.Arn
+                  - !Sub "${StateBucket.Arn}/*"
+
   DeploymentUser:
     Type: AWS::IAM::User
     Properties:
