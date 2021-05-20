@@ -4,6 +4,7 @@ ROOT=$(cd "$(dirname "$0")/../" && pwd)
 
 if [[ $# -eq 0 ]]; then
     $0 5.32.1 5-32
+    $0 5.34.0 5-34
     exit 0
 fi
 
