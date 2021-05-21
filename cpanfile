@@ -16,3 +16,13 @@ on 'test' => sub {
     requires 'Test::SharedFork';
     requires 'File::Slurp', '9999.25';
 };
+
+on 'develop' => sub {
+    requires 'Minilla';
+    requires 'Software::License::MIT';
+    requires 'Test::CPAN::Meta';
+    requires 'Test::Pod';
+    requires 'Test::MinimumVersion::Fast';
+    requires 'Mojolicious';
+    requires 'Dancer2';
+};
