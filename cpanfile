@@ -19,6 +19,7 @@ on 'test' => sub {
 
 on 'develop' => sub {
     requires 'Minilla';
+    requires 'Version::Next';
     requires 'Software::License::MIT';
     requires 'Test::CPAN::Meta';
     requires 'Test::Pod';
