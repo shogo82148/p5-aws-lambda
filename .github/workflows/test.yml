@@ -24,14 +24,6 @@ jobs:
           perl-version: ${{ matrix.perl }}
           install-modules-with: cpm
           install-modules-args: --with-develop
-          install-modules: |
-            Minilla
-            Software::License::MIT
-            Test::CPAN::Meta
-            Test::Pod
-            Test::MinimumVersion::Fast
-            Mojolicious
-            Dancer2
       - name: Test
         run: |
           minil test --all

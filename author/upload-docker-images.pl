@@ -11,8 +11,8 @@ use JSON qw/decode_json encode_json/;
 use File::Path qw/mkpath/;
 use Time::Piece;
 
-my $perl_versions = [qw/5.26 5.28 5.30 5.32/];
-my $perl_versions_al2 = [qw/5.32/];
+my $perl_versions = [qw/5.26 5.28 5.30 5.32 5.34/];
+my $perl_versions_al2 = [qw/5.32 5.34/];
 my $flavors = {
     'base' => {
         'dockerfile' => sub {

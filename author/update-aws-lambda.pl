@@ -14,6 +14,7 @@ my $regions = do {
 };
 
 my $versions = [
+    "5.34",
     "5.32",
     "5.30",
     "5.28",
@@ -22,6 +23,7 @@ my $versions = [
 $versions = [sort {version->parse("v$b") <=> version->parse("v$a")} @$versions];
 
 my $versions_al2 = [
+    "5.34",
     "5.32",
 ];
 $versions_al2 = [sort {version->parse("v$b") <=> version->parse("v$a")} @$versions_al2];
