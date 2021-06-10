@@ -1,17 +1,97 @@
-﻿<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>WwwCounter Ver3.16利用メモ</title>
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link rel="stylesheet" href="style3.css">
+<meta http-equiv="Content-type" content="text/html; charset=Shift_JIS">
+<title>WwwCounter Ver3.15利用メモ - とほほのWWW入門</title>
+<style type="text/css">
+<!--
+BODY {
+    color: #333333;
+}
+H2 {
+    width: 100%;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #8484ee;
+    border: 1px none #8888f8;
+    border-top: 1px solid #8888f8;
+    border-left: 1px solid #8888f8;
+    border-right: 1px solid #666699;
+    border-bottom: 1px solid #666699;
+    padding: 5px 3px 3px 0.5em;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+H3 {
+    width: 100%;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.3em;
+    background-color: #8484ee;
+    border: 1px none #8888f8;
+    border-top: 1px solid #8888f8;
+    border-left: 1px solid #8888f8;
+    border-right: 1px solid #666699;
+    border-bottom: 1px solid #666699;
+    padding: 7px 3px 5px 0.5em;
+}
+H4 {
+    width: 100%;
+    font-weight: bold;
+    font-size: 1em;
+    color: #ffffff;
+    background-color: #8484ee;
+    border: 1px none #8888f8;
+    border-top: 1px solid #ccccff;
+    border-left: 1px solid #ccccff;
+    border-right: 1px solid #666699;
+    border-bottom: 1px solid #666699;
+    padding: 5px 3px 3px 0.5em;
+}
+P {
+    text-indent: 1em;
+}
+PRE.c {
+    border: 1px solid gray;
+    padding: 5px;
+    white-space: pre;
+    width: 100%;
+    background-color: #fffff0;
+}
+DT {
+    font-weight: bold;
+}
+OL LI P {
+    text-indent: 0em;
+    margin-top: 0em;
+}
+OL LI {
+    margin-top: 1em;
+}
+UL LI {
+    margin-top: 0em;
+}
+.i {
+    margin: 0em 1em 0em 1em;
+}
+A:link {
+    color: #000099;
+}
+A:visited {
+    color: #000099;
+}
+A:hover {
+    color: #ff0000;
+}
+-->
+</style>
 </head>
 <body>
-<h2>WwwCounter Ver3.16 利用メモ</h2>
-<h4>目次</h4>
+<h2 align=center>WwwCounter Ver3.15 利用メモ</h2>
+<h4>■ 目次</h4>
 <ul>
 <li><a href="#WhatIs">WwwCounterとは？</a>
 <li><a href="#Download">ダウンロード</a>
+<li><a href="#Sample">動作イメージ</a>
 <li><a href="#Files">添付ファイル</a>
 <li><a href="#History">更新履歴</a>
 <li><a href="#Cgi">CGIグラフィックモードの設置方法</a>
@@ -27,7 +107,7 @@
 <li><a href="#gifcat.pl">gifcat.plについて</a>
 </ul>
 
-<h4 id="WhatIs">WwwCounterとは？</h4>
+<h4>■ <a name="WhatIs">WwwCounterとは？</a></h4>
 <div class=i>
 <p>WwwCounter は、以下の機能・特徴をもったWeb用カウンターです。</p>
 <dl>
@@ -48,14 +128,20 @@
 </dl>
 </div>
 
-<h4 id="Download">ダウンロード</h4>
+<h4>■ <a name="Download">ダウンロード</a></h4>
 <div class=i>
 <ul>
-<li><a href="http://www.tohoho-web.com/soft/wcnt316.zip">wcnt316.zip</a> - WwwCounter Ver3.16
+<li><a href="http://www.tohoho-web.com/soft/wcnt315.zip">wcnt315.zip</a> - WwwCounter Ver3.15
 </ul>
+<p>ダウンロード後、<a href="http://www.digitalpad.co.jp/~takechin/">Lhasa</a> などの解凍ツールで解凍してください。</p>
 </div>
 
-<h4 id="Files">添付ファイル</h4>
+<h4>■ <a name="Sample">実行イメージ</a></h4>
+<div class=i>
+<p>実行イメージは、<a href="http://www.tohoho-web.com/www.htm">「とほほのＷＷＷ入門」</a> のトップページ右下をご覧ください。</p>
+</div>
+
+<h4>■ <a name="Files">添付ファイル</a></h4>
 <div class=i>
 <ul>
 <li>readme.htm - このファイル。
@@ -70,43 +156,42 @@
 </ul>
 </div>
 
-<h4 id="History">更新履歴</h4>
+<h4>■ <a name="History">更新履歴</a></h4>
 <div class=i>
 <pre>
-2018-11-11 perl 5.26に対応。(Ver3.16)
-2003-03-23 フォルダ変更時のテストがうまく動作しなかったのを修正。(Ver3.15)
-2002-06-10 SSIモードでREFERERをロギングするように修正。(Ver3.14)
-2002-06-10 @ARGVの代わりに$ENV{QUERY_STRING}を参照。(Ver3.14)
-2002-06-10 gifcat.plの改版(Netscape 6.*のバグ対応)。(Ver3.14)
-2002-03-24 From: を指定可能に。(Ver3.13)
-2001-05-01 説明文などの変更。(Ver3.11)
-2000-12-03 IPアドレスからホスト名への変換機能をサポート。(Ver3.10)
-2000-01-03 2000年問題対応。(Ver3.07)
-1999-12-12 nameオプションのセキュリティホール対処が誤っていた（Ver3.06)
-1999-10-03 時刻も記録するよう変更。(Ver3.05)
-1999-10-03 nameオプションのセキュリティホールに対処。(Ver3.04)
-1999-10-03 誤ってロックファイルを消してしまうことがあるバグを修正。(Ver3.03)
-1999-06-27 同一アドレスチェック機能の初期値をオフに修正。(Ver3.02)
-1999-06-06 ロックファイルのパーミッションを755から0755に修正。(Ver3.01)
-1999-05-30 nkfを使用しないようにした。(Ver3.00)
-1999-01-17 日付ファイルが空だとレポートが送れないバグ対応。(Ver2.92)
-1999-01-17 複数カウンターのバグ対応。(Ver2.91)
-1998-12-20 カウンター破壊対処/SIGPIPE対応。(Ver2.81)
-1998-11-29 複数カウンターに対応した。(Ver2.80)
-1998-09-20 SSIで使用する際に text の引数を不要とした。(Ver2.70)
-1998-02-15 セキュリティ改善。hide+で.gifしか読み取れないようにした。(Ver2.60)
-1997-10-19 自己診断機能の強化。(Ver2.50)
-1997-09-14 メールのサブジェクトに前日のアクセス件数を表示。(Ver2.40)
-1997-07-06 10分以上古いロックファイルを消すようにした。(Ver2.30)
-1997-05-11 %7E や \~ を ~ に変換/自URLは表示しないようにした。(Ver2.20)
-1997-05-08 ロックファイルが残ってしまうバグを修正。(Ver2.10)
-1997-04-28 大幅改造/テスト機能追加/GIF連結機能。(Ver2.00)
-1997-04-10 シグナル処理の追加。(Ver1.10)
-1997-03-16 初版。(Ver1.00)
+1997.03.16 初版。(Ver1.00)
+1997.04.10 シグナル処理の追加。(Ver1.10)
+1997.04.28 大幅改造/テスト機能追加/GIF連結機能。(Ver2.00)
+1997.05.08 ロックファイルが残ってしまうバグを修正。(Ver2.10)
+1997.05.11 %7E や \~ を ~ に変換/自URLは表示しないようにした。(Ver2.20)
+1997.07.06 10分以上古いロックファイルを消すようにした。(Ver2.30)
+1997.09.14 メールのサブジェクトに前日のアクセス件数を表示。(Ver2.40)
+1997.10.19 自己診断機能の強化。(Ver2.50)
+1998.02.15 セキュリティ改善。hide+で.gifしか読み取れないようにした。(Ver2.60)
+1998.09.20 SSIで使用する際に text の引数を不要とした。(Ver2.70)
+1998.11.29 複数カウンターに対応した。(Ver2.80)
+1998.12.20 カウンター破壊対処/SIGPIPE対応。(Ver2.81)
+1999.01.17 複数カウンターのバグ対応。(Ver2.91)
+1999.01.17 日付ファイルが空だとレポートが送れないバグ対応。(Ver2.92)
+1999.05.30 nkfを使用しないようにした。(Ver3.00)
+1999.06.06 ロックファイルのパーミッションを755から0755に修正。(Ver3.01)
+1999.06.27 同一アドレスチェック機能の初期値をオフに修正。(Ver3.02)
+1999.10.03 誤ってロックファイルを消してしまうことがあるバグを修正。(Ver3.03)
+1999.10.03 nameオプションのセキュリティホールに対処。(Ver3.04)
+1999.10.03 時刻も記録するよう変更。(Ver3.05)
+1999.12.12 nameオプションのセキュリティホール対処が誤っていた（Ver3.06)
+2000.01.03 2000年問題対応。(Ver3.07)
+2000.12.03 IPアドレスからホスト名への変換機能をサポート。(Ver3.10)
+2001.05.01 説明文などの変更。(Ver3.11)
+2002.03.24 From: を指定可能に。(Ver3.13)
+2002.06.10 gifcat.plの改版(Netscape 6.*のバグ対応)。(Ver3.14)
+2002.06.10 @ARGVの代わりに$ENV{QUERY_STRING}を参照。(Ver3.14)
+2002.06.10 SSIモードでREFERERをロギングするように修正。(Ver3.14)
+2003.03.23 フォルダ変更時のテストがうまく動作しなかったのを修正。(Ver3.15)
 </pre>
 </div>
 
-<h4 id="Cgi">CGIグラフィックモードの設置方法</h4>
+<h4>■ <a name="Cgi">CGIグラフィックモードの設置方法</a></h4>
 <div class=i>
 <ol>
 <li><p>Webサーバーが、Perl による CGI をサポートしている必要があります。CGI を設置するのが初めての方は最初に、簡単な CGI の設置を練習してみてください。（参考：「<a href="http://www.tohoho-web.com/wwwcgi.htm">とほほのCGI入門</a>」）</p>
@@ -126,11 +211,15 @@
 <pre class=c>
 &lt;img src="wwwcount.cgi?gif" width=96 height=18 alt="Counter"&gt;
 </pre>
-<li><p>カウンター用の画像は別途入手した画像ファイルを、0.gif ～ 9.gif という名前にして、上記のものと置き換えても構いません。</p>
+<li><p>カウンター用の画像は下記のサイトなどに数多くあります。入手した画像ファイルを、0.gif ～ 9.gif という名前にして、上記のものと置き換えても構いません。</p>
+<ul>
+<li><a href="http://nmr.gayou.org/">http://nmr.gayou.org/</a> (By がゆぅさん)
+<li><a href="http://www.digitmania.holowww.com/">Digit mania</a>
+</ul>
 </ol>
 </div>
 
-<h4 id="Ssi">SSIテキストモードの設置方法</h4>
+<h4>■ <a name="Ssi">SSIテキストモードの設置方法</a></h4>
 <div class=i>
 <ol>
 <li><p>Webサーバーが、Perl による CGI をサポートし、かつ、SSI をサポートしている必要があります。SSI を設置するのが初めての方は最初に、簡単な SSI の練習をしてみてください。（参考：「<a href="http://www.tohoho-web.com/wwwssi.htm">とほほのSSI入門</a>」）</p>
@@ -146,7 +235,7 @@
 </ol>
 </div>
 
-<h4 id="InitValue">カウンターの初期値を変更する</h4>
+<h4>■ <a name="InitValue">カウンターの初期値を変更する</a></h4>
 <div class=i>
 <p>wwwcount.cnt ファイルに 100 と記述しておけば、カウンターの初期値を 100 からはじめることができます。</p>
 <pre class=c>
@@ -154,7 +243,7 @@
 </pre>
 </div>
 
-<h4 id="Report">レポート送信機能</h4>
+<h4>■ <a name="Report">レポート送信機能</a></h4>
 <div class=i>
 <p>その日の最初のアクセスがあった時点で、前日までのアクセスログが自分宛にメール送信されてくる機能をサポートしています。実行には、サーバー側に sendmail コマンドが必要です。レポート送信機能を使用する場合は、wwwcount.cgi の ★項目のうち、下記の値を適切に設定してください。</p>
 <pre class=c>
@@ -167,7 +256,7 @@ $my_url = '';
 </pre>
 </div>
 
-<h4 id="Hidden">隠しカウンタ機能</h4>
+<h4>■ <a name="Hidden">隠しカウンタ機能</a></h4>
 <div class=i>
 <p>隠しカウンタ機能とは、一見カウンタとは思えないアイコン（ネコやウサギなど）を表示しているけど、実はそれがカウンタ・・・というものです。CGIグラフィックモードで使用可能です。「wwwcount.cgi?gif」の gif の代わりに、「hide+画像名」を指定してください。例えば、neko.gif を表示するには次のようにしてください。</p>
 <pre class=c>
@@ -177,12 +266,11 @@ $my_url = '';
 <p>隠しカウンタのカウント数は、レポート機能や、wwwcount.cnt ファイルを直接参照することで確認できます。</p>
 </div>
 
-<h4 id="RefFind">リンク元発見機能</h4>
+<h4>■ <a name="RefFind">リンク元発見機能</a></h4>
 <div class=i>
 <p>CGIグラフィックカウンターを以下のように呼び出すと、自分のホームページがどこからリンクされているのか発見することができます。</p>
 <pre class=c>
-&lt;script type="text/javascript"&gt;
-&lt;!--
+&lt;script&gt;
 xx = escape(document.referrer);
 yy = "";
 for (i = 0; i &lt; xx.length; i++) {
@@ -192,7 +280,6 @@ for (i = 0; i &lt; xx.length; i++) {
 document.write('&lt;img width=96 height=19 ');
 document.write('src="wwwcount.cgi?gif');
 document.write('+ref+', yy, '"&gt;');
-// --&gt;
 &lt;/script&gt;
 &lt;noscript&gt;
 &lt;img width=96 height=19 src="wwwcount.cgi?gif"&gt;
@@ -202,12 +289,12 @@ document.write('+ref+', yy, '"&gt;');
 <p>ただし、JavaScript をサポートしたブラウザが、JavaScript をオフにして参照した場合、カウントアップされないという制限が発生しますのでご注意ください。また、ブラウザによっては、リンク元の情報を送ってこなかったり、嘘のリンク元情報を送ってくるものがあります。この場合は正確なリンク元は取得できませんので、ご了承ください。</p>
 </div>
 
-<h4 id="Figure">表示桁数を変更するには？</h4>
+<h4>■ <a name="Figure">表示桁数を変更するには？</a></h4>
 <div class=i>
 <p>wwwcount.cgi の中の「$figure = 5;」という行の 5 を 6 に変更すれば、カウンターを6桁で表示できるようになります。この時、&lt;img&gt; タグの width 属性を調整するようにしてください。</p>
 </div>
 
-<h4 id="Multi">カウンターを複数設置するには？</h4>
+<h4>■ <a name="Multi">カウンターを複数設置するには？</a></h4>
 <div class=i>
 <p>まず、wwwcount.cnt、wwwcount.acc、wwwcount.dat と同じ要領で、サーバー側に wwwcount2.cnt、wwwcount2.acc、wwwcount2.dat ファイルを作成してください。カウンターを貼り付ける部分を、次のように変更することで、別のカウンターとして動作させることができます。</p>
 <p>CGIグラフィックカウンターの場合：</p>
@@ -223,7 +310,7 @@ document.write('+ref+', yy, '"&gt;');
 <p>wwwcount2 を、wwwcount3、wwwcount4... としていけば、3個目、4個目のカウンターを設置することができます。名前は、wwwcount2 でも、aabbcc のようなまったく別の名前でも構いません。</p>
 </div>
 
-<h4 id="Point">注意事項</h4>
+<h4>■ <a name="Point">注意事項</a></h4>
 <div class=i>
 <ol>
 <li><p>ブラウザがアニメーションGIFに対応していなかったり、アニメーションGIF機能がオフになっている場合、カウンターの１桁目しか表示されません。</p>
@@ -236,7 +323,7 @@ document.write('+ref+', yy, '"&gt;');
 </ol>
 </div>
 
-<h4 id="Trouble">動かないときは</h4>
+<h4>■ <a name="Trouble">動かないときは</a></h4>
 <div class=i>
 <p>カウンターがうまく動かない時は以下の手順に従って調べて見てください。</p>
 <ol>
@@ -276,7 +363,7 @@ document.write('+ref+', yy, '"&gt;');
 <p>その外、再表示をちゃんと行っているか、画像の読み込みモードはオンになっているかなど、「とほほのCGI入門」の「CGIスクリプト作成時の注意」を参照してください。それでもうまく動かないときは、質問メールを受け付けています。上記のテスト結果など詳しい状況を記載の上、「<a href="http://www.tohoho-web.com/wwwquest.htm">杜甫々へメールを送る</a>」を参照して送付ください。</p>
 </div>
 
-<h4 id="gifcat.pl">gifcat.plについて</h4>
+<h4>■ <a name="gifcat.pl">gifcat.plについて</a></h4>
 <div class=i>
 <p><a href="http://www.tohoho-web.com/wwwsoft.htm">gifcat.pl</a> は、GIF 画像を連結するPerl用フリーソフトライブラリです。改造、利用、転載、再配布など自由です。GIF アニメーションの機能を用いて、同じ大きさの複数の画像を横方向に並べます。Unisys 社の特許には抵触しないことを確認済みです。以下のように使用します。</p>
 <pre class=c>
@@ -287,8 +374,8 @@ print &amp;gifcat'gifcat("xxx.gif", "yyy.gif", "zzz.gif");
 </div>
 
 <hr>
-<div>Copyright (C) 1996-2018 杜甫々</div>
-<div>最終更新：2018年11月11日</div>
+<div>Copyright (C) 1996-2003 杜甫々</div>
+<div>最終更新：2003年3月23日</div>
 <div>http://www.tohoho-web.com/soft/wcnt.htm</div>
 </body>
 </html>

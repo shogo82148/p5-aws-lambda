@@ -1,439 +1,574 @@
-#!/usr/bin/env perl
+#!/usr/local/bin/perl
+
+use strict;
 
 #==================================================================
-# –¼ÌF WwwCount Ver3.16
-# ìÒF “m•áX
-# ÅV”Å“üèæF http://tohoho.wakusei.ne.jp/wwwsoft.htm
-# æ‚èˆµ‚¢F ƒtƒŠ[ƒ\ƒtƒgB—˜—p/‰ü‘¢/Ä”z•z‰Â”\BŠm”Fƒ[ƒ‹•s—vB
-# ’˜ìŒ FCopyright (C) 1996-2018 “m•áX
+# åç§°ï¼š WwwCount 4.0
+# ä½œè€…ï¼š æœç”«ã€…
+# æœ€æ–°ç‰ˆå…¥æ‰‹å…ˆï¼š https://www.tohoho-web.com/wwwsoft.htm
+# å–ã‚Šæ‰±ã„ï¼š ãƒ•ãƒªãƒ¼ã‚½ãƒ•ãƒˆã€‚åˆ©ç”¨/æ”¹é€ /å†é…å¸ƒå¯èƒ½ã€‚ç¢ºèªãƒ¡ãƒ¼ãƒ«ä¸è¦ã€‚
+# è‘—ä½œæ¨©ï¼šCopyright (C) 1996-2021 æœç”«ã€…
 #==================================================================
 
 #==================================================================
-# g‚¢‚©‚½F
+# ä½¿ã„ã‹ãŸï¼š
 #==================================================================
-#   (‘®1) wwwcount.cgi?test
-#	CGI‚ªg—p‚Å‚«‚é‚©ƒeƒXƒg‚ğs‚¤B
+#   (æ›¸å¼1) wwwcount.cgi?test
+#	CGIãŒä½¿ç”¨ã§ãã‚‹ã‹ãƒ†ã‚¹ãƒˆã‚’è¡Œã†ã€‚
 #
-#   (‘®2) wwwcount.cgi?text
-#	ƒJƒEƒ“ƒgƒAƒbƒv‚ğs‚¢AƒJƒEƒ“ƒ^‚ğƒeƒLƒXƒg‚Å•\¦‚·‚éB
+#   (æ›¸å¼2) wwwcount.cgi?text
+#	ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã‚’è¡Œã„ã€ã‚«ã‚¦ãƒ³ã‚¿ã‚’ãƒ†ã‚­ã‚¹ãƒˆã§è¡¨ç¤ºã™ã‚‹ã€‚
 #
-#   (‘®3) wwwcount.cgi?gif
-#	ƒJƒEƒ“ƒgƒAƒbƒv‚ğs‚¢AƒJƒEƒ“ƒ^‚ğGIF‚Å•\¦‚·‚éB
+#   (æ›¸å¼3) wwwcount.cgi?gif
+#	ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã‚’è¡Œã„ã€ã‚«ã‚¦ãƒ³ã‚¿ã‚’GIFã§è¡¨ç¤ºã™ã‚‹ã€‚
 #
-#   (‘®4) wwwcount.cgi?hide+xxx.gif
-#	ƒJƒEƒ“ƒgƒAƒbƒv‚ğs‚¢Axxx.gif‚ğ•\¦‚·‚éB
-
-#==================================================================
-# ƒJƒXƒ^ƒ}ƒCƒYF
-#==================================================================
-
-# š ‚±‚Ìƒtƒ@ƒCƒ‹‚Ì 1s–Ú‚Ìu#!/usr/local/bin/perlv‚ğ perl ‚ÌƒpƒX
-#    –¼‚É‚ ‚í‚¹‚Ä“KØ‚É‘‚«Š·‚¦‚Ä‚­‚¾‚³‚¢BƒpƒX–¼‚ª•ª‚ç‚È‚¢ê‡‚ÍA
-#    ƒvƒƒoƒCƒ_‚âƒT[ƒo[ŠÇ—Ò‚É–â‚¢‡‚í‚¹‚Ä‚­‚¾‚³‚¢B#! ‚Ì‘O‚É‚Í
-#    ‹ós‚àƒXƒy[ƒX•¶š‚à“ü‚ê‚È‚¢‚æ‚¤‚É‚µ‚Ä‚­‚¾‚³‚¢Bi•K{j
-
-# š Windows NT ‚Å IIS ‚ğg—p‚·‚éê‡‚ÍAwwwcount.cgi ‚ªƒCƒ“ƒXƒg[
-#    ƒ‹‚³‚ê‚Ä‚¢‚éƒtƒHƒ‹ƒ_–¼‚ğ 'C:/HomePage/cgi-bin' ‚È‚Ç‚Ì‚æ‚¤‚Éw
-#    ’è‚µ‚Ä‚­‚¾‚³‚¢Bi•K{j
-$chdir = '';
-
-# š SSI‚ÌƒeƒLƒXƒgƒ‚[ƒh‚Åg—p‚·‚éê‡‚ÍA$mode = "text"; ‚Æ‚µ‚Ä‚­
-#    ‚¾‚³‚¢Bi•K{j
-$mode = "";
-
-# š CGI‚Æ‚µ‚Ä‚Í“®‚¢‚Ä‚¢‚é‚Ì‚ÉAwwwcount.cgi?test ‚ÅƒeƒXƒg‚Å‚«‚È‚¢
-#    ê‡A‰º‹L‚Ì1s‚Ìæ“ª‚Ì # ‚ğíœ‚µ‚Ä‚İ‚Ä‚­‚¾‚³‚¢B
-#@ARGV = split(/\+/, $ENV{'QUERY_STRING'});
-
-# š •\¦Œ…”‚ğ—á‚¦‚Î5Œ…‚Éw’è‚·‚éê‡‚Íu$figure = 5;v‚Ì‚æ‚¤‚Éw
-#    ’è‚µ‚Ä‚­‚¾‚³‚¢B0 ‚ğw’è‚·‚é‚ÆŒ…”©“®’²®‚É‚È‚è‚Ü‚·B
-$figure = 6;
-
-# š ƒtƒ@ƒCƒ‹ƒƒbƒN‹@”\‚ğƒIƒ“‚É‚·‚éê‡‚Í 1 ‚ğAƒIƒt‚É‚·‚éê‡‚Í 0
-#    ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B’Êí‚Í 1 ‚Å‚æ‚¢‚Å‚µ‚å‚¤B
-$do_file_lock = 1;
-
-# š “¯ƒAƒhƒŒƒXƒ`ƒFƒbƒN‹@”\‚ğƒIƒ“‚É‚·‚éê‡‚Í 1 ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B
-#    “¯‚¶“ú‚É“¯‚¶ IP ƒAƒhƒŒƒX‚©‚ç‚ÌƒAƒNƒZƒX‚ğƒJƒEƒ“ƒgƒAƒbƒv‚µ‚È‚­
-#    ‚È‚è‚Ü‚·B
-$do_address_check = 0;
-
-# š ƒŒƒ|[ƒg‹@”\‚ğg‚¤ê‡‚Íu$mailto = 'abc@xxx.yyy.zzz';v‚Ì‚æ‚¤
-#    ‚É©•ª‚Ìƒ[ƒ‹ƒAƒhƒŒƒX‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢BƒT[ƒo[‚Å sendmail
-#    ƒRƒ}ƒ“ƒh‚ªƒTƒ|[ƒg‚³‚ê‚Ä‚¢‚é•K—v‚ª‚ ‚è‚Ü‚·B
-$mailto  = '';
-
-# š ƒŒƒ|[ƒg‹@”\‚Ì‘—MŒ³ƒ[ƒ‹ƒAƒhƒŒƒXi’Êí‚Í©•ª‚ÌƒAƒhƒŒƒXj‚ğ
-#    w’è‚µ‚Ä‚­‚¾‚³‚¢BÈ—ª‚ÍƒJƒEƒ“ƒ^–¼‚É‚È‚è‚Ü‚·‚ªAƒvƒƒoƒCƒ_
-#    ‚É‚æ‚Á‚Ä‚ÍA‘—MŒ³ƒ[ƒ‹ƒAƒhƒŒƒX‚ª“KØ‚È‚à‚Ì‚©ƒ`ƒFƒbƒN‚µ‚Ä‚¢
-#    ‚éƒP[ƒX‚ª‚ ‚è‚Ü‚·B
-$mailfrom = '';
-
-# š ƒŒƒ|[ƒg‹@”\‚ÅAsendmail ƒRƒ}ƒ“ƒh‚ÌƒpƒX–¼‚ª /usr/lib/sendmail
-#    ‚ÆˆÙ‚È‚éê‡‚ÍA“KØ‚ÉC³‚µ‚Ä‚­‚¾‚³‚¢B
-$sendmail = '/usr/lib/sendmail';
-
-# š ƒŒƒ|[ƒg‹@”\‚ÅAÚ×î•ñ‚ğ“Y•t‚¹‚¸AƒAƒNƒZƒXŒ”‚Ì‚İ‚ğƒŒƒ|[
-#    ƒg‚·‚éê‡‚ÍA0 ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B
-$account_detail = 1;
-
-# š ƒŒƒ|[ƒg‹@”\‚ÅAƒAƒNƒZƒXŒ³‚ÌƒzƒXƒg–¼‚ğæ“¾‚Å‚«‚È‚¢ê‡‚ÉA‚ÍA
-#    ‚±‚Ì’l‚ğ 1 ‚É•ÏX‚·‚é‚ÆAIPƒAƒhƒŒƒX‚©‚çƒzƒXƒg–¼‚Ö‚Ì•ÏŠ·‚ğ‚İ
-#    ‚é‚æ‚¤‚É‚È‚è‚Ü‚·BƒzƒXƒg–¼•ÏŠ·‚ÍAƒT[ƒo[•‰‰×‚ÌŒ´ˆö‚É‚à‚È‚é‚Ì
-#    ‚Å‚²’ˆÓ‚­‚¾‚³‚¢B
-$do_addr_to_host = 0;
-
-# š ƒŒƒ|[ƒg‹@”\‚É‚¨‚¢‚ÄAu$my_url = 'http://www.yyy.zzz/';v‚Æ‚·
-#    ‚é‚ÆA‚±‚ÌƒAƒhƒŒƒX‚Éƒ}ƒbƒ`‚·‚éƒTƒCƒg‚©‚ç‚Ì FROM ‚Í•\¦‚µ‚È‚­‚È
-#    ‚è‚Ü‚·B
-$my_url = '';
-
-# š ƒŒƒ|[ƒg‹@”\‚ÅA%7E ‚È‚Ç‚ÌƒGƒ“ƒR[ƒh•¶š‚ğƒfƒR[ƒh‚µ‚Ä‹L˜^‚·‚é
-#    ê‡‚Í 1 ‚ğA‚»‚Ì‚Ü‚Ü‹L˜^‚·‚éê‡‚Í 0 ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B
-$do_decode_url = 0;
-
-# ƒJƒEƒ“ƒ^[‚ÌŒ‹‰Ê‚ğ‘‚«‚ŞƒpƒX
-$count_dir = $ENV{WWWCOUNT_DIR} // ".";
-
-# š È—ª‚ÌƒJƒEƒ“ƒ^[–¼‚ğw’è‚µ‚Ü‚·BƒJƒEƒ“ƒ^[–¼‚Í *.cnt ‚â *.dat
-#    ‚È‚Ç‚Ìƒtƒ@ƒCƒ‹–¼‚É‘Î‰‚µ‚Ä‚¢‚Ü‚·B
-$count_name = "wwwcount";
+#   (æ›¸å¼4) wwwcount.cgi?hide+xxx.gif
+#	ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã‚’è¡Œã„ã€xxx.gifã‚’è¡¨ç¤ºã™ã‚‹ã€‚
+#
+#   (ã‚ªãƒ—ã‚·ãƒ§ãƒ³) wwwcount.cgi?(ç•¥)+name+counter2
+#   è¤‡æ•°ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’è¨­ç½®ã™ã‚‹å ´åˆã«ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼åã‚’æŒ‡å®šã™ã‚‹ã€‚
+#
+#   (ã‚ªãƒ—ã‚·ãƒ§ãƒ³) wwwcount.cgi?(ç•¥)+ref+xxxxxx
+#   ãƒªãƒ³ã‚¯å…ƒæƒ…å ±ã‚’ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã«ä¼ãˆã‚‹
 
 #==================================================================
-# ˆ—•”F
+# ã‚«ã‚¹ã‚¿ãƒã‚¤ã‚ºï¼š
+#==================================================================
+
+# â˜… ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã® 1è¡Œç›®ã®ã€Œ#!/usr/local/bin/perlã€ã‚’ perl ã®ãƒ‘ã‚¹
+#    åã«ã‚ã‚ã›ã¦é©åˆ‡ã«æ›¸ãæ›ãˆã¦ãã ã•ã„ã€‚ãƒ‘ã‚¹åãŒåˆ†ã‚‰ãªã„å ´åˆã¯ã€
+#    ãƒ—ãƒ­ãƒã‚¤ãƒ€ã‚„ã‚µãƒ¼ãƒãƒ¼ç®¡ç†è€…ã«å•ã„åˆã‚ã›ã¦ãã ã•ã„ã€‚#! ã®å‰ã«ã¯
+#    ç©ºè¡Œã‚‚ã‚¹ãƒšãƒ¼ã‚¹æ–‡å­—ã‚‚å…¥ã‚Œãªã„ã‚ˆã†ã«ã—ã¦ãã ã•ã„ã€‚ï¼ˆå¿…é ˆï¼‰
+
+# â˜… Windows NT ã§ IIS ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã¯ã€wwwcount.cgi ãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼
+#    ãƒ«ã•ã‚Œã¦ã„ã‚‹ãƒ•ã‚©ãƒ«ãƒ€åã‚’ 'C:/HomePage/cgi-bin' ãªã©ã®ã‚ˆã†ã«æŒ‡
+#    å®šã—ã¦ãã ã•ã„ã€‚ï¼ˆå¿…é ˆï¼‰
+my $g_chdir = '';
+
+# â˜… SSIã®ãƒ†ã‚­ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰ã§ä½¿ç”¨ã™ã‚‹å ´åˆã¯ã€$g_mode = "text"; ã¨ã—ã¦ã
+#    ã ã•ã„ã€‚ï¼ˆå¿…é ˆï¼‰
+my $g_mode = "";
+
+# â˜… è¡¨ç¤ºæ¡æ•°ã‚’ä¾‹ãˆã°5æ¡ã«æŒ‡å®šã™ã‚‹å ´åˆã¯ã€Œ$g_figure = 5;ã€ã®ã‚ˆã†ã«æŒ‡
+#    å®šã—ã¦ãã ã•ã„ã€‚0 ã‚’æŒ‡å®šã™ã‚‹ã¨æ¡æ•°è‡ªå‹•èª¿æ•´ã«ãªã‚Šã¾ã™ã€‚
+my $g_figure = 6;
+
+# â˜… ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒƒã‚¯æ©Ÿèƒ½ã‚’ã‚ªãƒ³ã«ã™ã‚‹å ´åˆã¯ 1 ã‚’ã€ã‚ªãƒ•ã«ã™ã‚‹å ´åˆã¯ 0
+#    ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚é€šå¸¸ã¯ 1 ã§ã‚ˆã„ã§ã—ã‚‡ã†ã€‚
+my $g_lock_flag = 1;
+
+# â˜… åŒã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚§ãƒƒã‚¯æ©Ÿèƒ½ã‚’ã‚ªãƒ³ã«ã™ã‚‹å ´åˆã¯ 1 ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
+#    åŒã˜æ—¥ã«åŒã˜ IP ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ã‚’ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã—ãªã
+#    ãªã‚Šã¾ã™ã€‚
+my $g_address_check = 0;
+
+# â˜… çœç•¥æ™‚ã®ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼åã‚’æŒ‡å®šã—ã¾ã™ã€‚ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼åã¯ *.cnt ã‚„ *.dat
+#    ãªã©ã®ãƒ•ã‚¡ã‚¤ãƒ«åã«å¯¾å¿œã—ã¦ã„ã¾ã™ã€‚
+my $g_counter_name = "wwwcount";
+
+# â˜… ãƒ¬ãƒãƒ¼ãƒˆæ©Ÿèƒ½ã‚’ä½¿ã†å ´åˆã¯ã€Œ$g_mailto = 'admin@example.com';ã€ã®
+#    ã‚ˆã†ã«è‡ªåˆ†ã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨­å®šã—ã¦ãã ã•ã„ã€‚ã‚µãƒ¼ãƒãƒ¼ã§
+#    sendmailã‚³ãƒãƒ³ãƒ‰ãŒã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+#    ãƒ¬ãƒãƒ¼ãƒˆæ©Ÿèƒ½ã‚’ä½¿ç”¨ã—ãªã„å ´åˆã¯ç©ºæ–‡å­—('')ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
+my $g_mailto  = '';
+
+# â˜… ãƒ¬ãƒãƒ¼ãƒˆæ©Ÿèƒ½ã®é€ä¿¡å…ƒãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼ˆé€šå¸¸ã¯è‡ªåˆ†ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼‰ã‚’
+#    æŒ‡å®šã—ã¦ãã ã•ã„ã€‚çœç•¥æ™‚ã¯ã‚«ã‚¦ãƒ³ã‚¿åã«ãªã‚Šã¾ã™ãŒã€ãƒ—ãƒ­ãƒã‚¤ãƒ€
+#    ã«ã‚ˆã£ã¦ã¯ã€é€ä¿¡å…ƒãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒé©åˆ‡ãªã‚‚ã®ã‹ãƒã‚§ãƒƒã‚¯ã—ã¦ã„
+#    ã‚‹ã‚±ãƒ¼ã‚¹ãŒã‚ã‚Šã¾ã™ã€‚
+my $g_mailfrom = 'admin <admin@example.com>';
+
+# â˜… ãƒ¬ãƒãƒ¼ãƒˆæ©Ÿèƒ½ã§ã€sendmail ã‚³ãƒãƒ³ãƒ‰ã®ãƒ‘ã‚¹åãŒ /usr/lib/sendmail
+#    ã¨ç•°ãªã‚‹å ´åˆã¯ã€é©åˆ‡ã«ä¿®æ­£ã—ã¦ãã ã•ã„ã€‚
+my $g_sendmail = '/usr/sbin/sendmail';
+
+# â˜… ãƒ¬ãƒãƒ¼ãƒˆæ©Ÿèƒ½ã§ã€è©³ç´°æƒ…å ±ã‚’æ·»ä»˜ã›ãšã€ã‚¢ã‚¯ã‚»ã‚¹ä»¶æ•°ã®ã¿ã‚’ãƒ¬ãƒãƒ¼
+#    ãƒˆã™ã‚‹å ´åˆã¯ã€0 ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
+my $g_report_detail = 1;
+
+# â˜… ãƒ¬ãƒãƒ¼ãƒˆæ©Ÿèƒ½ã§ã€ã‚¢ã‚¯ã‚»ã‚¹å…ƒã®ãƒ›ã‚¹ãƒˆåã‚’å–å¾—ã§ããªã„å ´åˆã«ã€ã¯ã€
+#    ã“ã®å€¤ã‚’ 1 ã«å¤‰æ›´ã™ã‚‹ã¨ã€IPã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰ãƒ›ã‚¹ãƒˆåã¸ã®å¤‰æ›ã‚’è©¦ã¿
+#    ã‚‹ã‚ˆã†ã«ãªã‚Šã¾ã™ã€‚ãŸã ã—ã€ãƒ›ã‚¹ãƒˆåå¤‰æ›ã¯ã€ã‚µãƒ¼ãƒãƒ¼è² è·ã®åŸå› 
+#    ã«ãªã‚‹ã®ã§ã”æ³¨æ„ãã ã•ã„ã€‚
+my $g_addr_to_host = 0;
+
+# â˜… ãƒ¬ãƒãƒ¼ãƒˆæ©Ÿèƒ½ã«ãŠã„ã¦ã€ã€Œ$g_my_url = 'http://www.yyy.zzz/';ã€ã¨ã™
+#    ã‚‹ã¨ã€ã“ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã«ãƒãƒƒãƒã™ã‚‹ã‚µã‚¤ãƒˆã‹ã‚‰ã® FROM ã¯è¡¨ç¤ºã—ãªããª
+#    ã‚Šã¾ã™ã€‚
+my $g_my_url = '';
+
+# â˜… ãƒ¬ãƒãƒ¼ãƒˆæ©Ÿèƒ½ã§ã€%7E ãªã©ã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ–‡å­—ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ã¦è¨˜éŒ²ã™ã‚‹
+#    å ´åˆã¯ 1 ã‚’ã€ãã®ã¾ã¾è¨˜éŒ²ã™ã‚‹å ´åˆã¯ 0 ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
+my $g_decode_url = 1;
+
+# â˜… ãƒ­ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã™ã‚‹ãƒ•ã‚©ãƒ«ãƒ€åã‚’æŒ‡å®šã—ã¾ã™ã€‚
+my $g_lock_dir = "lock";
+
+#==================================================================
+# ãã®ä»–å¤‰æ•°
+#==================================================================
+
+# éš ã—ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã§è¡¨ç¤ºã™ã‚‹GIFãƒ•ã‚¡ã‚¤ãƒ«å
+my $g_gif_file = "";
+
+# ã‚¢ã‚¯ã‚»ã‚¹å…ƒæƒ…å ±
+my $g_referer = "";
+
+# ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«å(*.cnt)
+my $g_file_count = "${g_counter_name}.cnt";
+
+# æœ€çµ‚ã‚¢ã‚¯ã‚»ã‚¹æ—¥è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«å(*.dat)
+my $g_file_date = "${g_counter_name}.dat";
+
+# ã‚¢ã‚¯ã‚»ã‚¹æƒ…å ±è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«å(*.acc)
+my $g_file_access = "${g_counter_name}.acc";
+
+# ãƒ­ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«å(*.loc)
+my $g_file_lock = "${g_lock_dir}/${g_counter_name}.loc";
+
+#==================================================================
+# å‡¦ç†éƒ¨ï¼š
 #==================================================================
 
 #
-# ƒJƒŒƒ“ƒgƒtƒHƒ‹ƒ_‚ğ•ÏX‚·‚éB
+# ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒãƒ³
 #
-if ($chdir ne "") {
-	chdir($chdir);
-}
+{ 
+	my($count, $last_access_date, $now_date, $now_time, $do_countup);
 
-#
-# ŠÖ˜A‚·‚éƒtƒ@ƒCƒ‹‚ğô‚¢o‚µ‚Ä‚¨‚­
-#
-$file_count  = "$count_dir/" . "$count_name" . ".cnt";
-$file_date   = "$count_dir/" . "$count_name" . ".dat";
-$file_access = "$count_dir/" . "$count_name" . ".acc";
-$file_lock   = "$count_dir/" . "lock/$count_name" . ".loc";
+	# ç’°å¢ƒå¤‰æ•°TZã‚’æ—¥æœ¬æ™‚é–“ã«è¨­å®šã™ã‚‹
+	$ENV{'TZ'} = "JST-9";
 
-#
-# ˆø”‚ğ‰ğß‚·‚é
-#
-@ARGV = split(/\+/, $ENV{'QUERY_STRING'} =~ s/=//rg);
-for ($i = 0; $i <= $#ARGV; $i++) {
-	if ($ARGV[$i] eq "test") {
+	# ã‚«ãƒ¬ãƒ³ãƒˆãƒ•ã‚©ãƒ«ãƒ€ã‚’å¤‰æ›´ã™ã‚‹ã€‚
+	if ($g_chdir ne "") {
+		chdir($g_chdir);
+	}
+
+	# å¼•æ•°ã‚’è§£é‡ˆã™ã‚‹
+	parseArguments();
+
+	# ãƒ†ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰ã§ã‚ã‚Œã°ãƒ†ã‚¹ãƒˆã‚’å‘¼ã³å‡ºã™
+	if ($g_mode eq "test") {
 		test();
-	} elsif ($ARGV[$i] eq "text") {
-		$mode = "text";
-	} elsif ($ARGV[$i] eq "gif") {
-		$mode = "gif";
-	} elsif ($ARGV[$i] eq "hide") {
-		$mode = "hide";
-		$giffile = $ARGV[++$i];
-		if (!($giffile =~ /\.gif$/i)) {
-			exit(1);
+		exit(0);
+	}
+
+	# ãƒ­ãƒƒã‚¯ã‚’ã‹ã‘ã‚‹
+	doLock();
+
+	# ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’èª­ã¿ã ã™
+	$count = readCount();
+
+	# æœ€çµ‚ã‚¢ã‚¯ã‚»ã‚¹æ—¥ã‚’èª­ã¿ã ã™
+	$last_access_date = readLastAccessDate();
+
+	# ä»Šæ—¥ã®æ—¥ä»˜ã¨æ™‚åˆ»ã‚’å¾—ã‚‹
+	($now_date, $now_time) = getCurrentDateAndTime();
+
+	# æ—¥ä»˜ãŒç•°ãªã‚‹ã€ã¤ã¾ã‚Šã€ä»Šæ—¥åˆã‚ã¦ã®ã‚¢ã‚¯ã‚»ã‚¹ã§ã‚ã‚Œã°
+	if ($last_access_date ne $now_date) {
+
+		# ãƒ¬ãƒãƒ¼ãƒˆãƒ¡ãƒ¼ãƒ«ã‚’é€ä¿¡ã™ã‚‹
+		sendReportMail($last_access_date);
+
+		# ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
+		clearAccessLog();
+
+		# ä»Šæ—¥ã®æ—¥ä»˜ã‚’æ—¥ä»˜ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãå‡ºã™
+		saveLastAccessDate($now_date);
+	}
+
+	# åŒä¸€IPã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ã¯ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã—ãªã„ãƒ¢ãƒ¼ãƒ‰ã®å ´åˆã€
+	# ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã™ã‚‹ã‹å¦ã‹ã‚’ç¢ºèªã™ã‚‹ã€‚
+	$do_countup = checkCountup();
+
+	# ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã™ã‚‹å ´åˆ
+	if ($do_countup) {
+
+		# ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã™ã‚‹
+		$count++;
+
+		# ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’è¨˜éŒ²ã™ã‚‹
+		saveCount($count);
+
+		# ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°ã‚’è¨˜éŒ²ã™ã‚‹
+		saveAccessLog($count, $now_time);
+	}
+
+	# CGIã®çµæœã¨ã—ã¦ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’æ›¸ãå‡ºã™
+	outputCounter($count);
+
+	# ãƒ­ãƒƒã‚¯ã‚’è§£æ”¾ã™ã‚‹
+	unlockLock();
+}
+
+#
+# å¼•æ•°ã‚’è§£é‡ˆã™ã‚‹
+#
+sub parseArguments {
+	my(@argv) = split(/\+/, $ENV{'QUERY_STRING'});
+
+	for (my $i = 0; $i <= $#argv; $i++) {
+		# ãƒ†ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰
+		if ($argv[$i] eq "test") {
+			$g_mode = "test";
+
+		# ãƒ†ã‚­ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰
+		} elsif ($argv[$i] eq "text") {
+			$g_mode = "text";
+
+		# GIFãƒ¢ãƒ¼ãƒ‰
+		} elsif ($argv[$i] eq "gif") {
+			$g_mode = "gif";
+
+		# éš ã—ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ãƒ¢ãƒ¼ãƒ‰
+		} elsif ($argv[$i] eq "hide") {
+			$g_mode = "hide";
+			$g_gif_file = $argv[++$i];
+			if (!($g_gif_file =~ /\.gif$/i)) {
+				exit(1);
+			}
+			if ($g_gif_file =~ /[<>|&]/) {
+				exit(1);
+			}
+
+		# ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼å
+		} elsif ($argv[$i] eq "name") {
+			$g_counter_name = $argv[++$i];
+			if ($g_counter_name !~ /^[a-zA-Z0-9]+$/) {
+				exit(1);
+			}
+			$g_file_count  = "$g_counter_name" . ".cnt";
+			$g_file_date   = "$g_counter_name" . ".dat";
+			$g_file_access = "$g_counter_name" . ".acc";
+			$g_file_lock   = "$g_lock_dir/$g_counter_name" . ".loc";
+
+		# ãƒªãƒ³ã‚¯å…ƒ
+		} elsif ($argv[$i] eq "ref") {
+			$g_referer = $argv[++$i];
 		}
-		if ($giffile =~ /[<>|&]/) {
-			exit(1);
-		}
-	} elsif ($ARGV[$i] eq "name") {
-		$count_name = $ARGV[++$i];
-		if ($count_name !~ /^[a-zA-Z0-9]+$/) {
-			exit(1);
-		}
-		$file_count  = "$count_dir/" . "$count_name" . ".cnt";
-		$file_date   = "$count_dir/" . "$count_name" . ".dat";
-		$file_access = "$count_dir/" . "$count_name" . ".acc";
-	} elsif ($ARGV[$i] eq "ref") {
-		$reffile = $ARGV[++$i];
 	}
 }
 
 #
-# ŠÂ‹«•Ï”TZ‚ğ“ú–{ŠÔ‚Éİ’è‚·‚é
+# ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼å€¤ã‚’èª­ã¿å‡ºã™ã€‚
 #
-$ENV{'TZ'} = "JST-9";
+sub readCount {
+	my($count) = 0;
+	local(*IN);
 
-#
-# ƒƒbƒNŒ ‚ğ“¾‚é
-#
-if ($do_file_lock) {
-	foreach $i ( 1, 2, 3, 4, 5, 6 ) {
-		if (mkdir("$file_lock", 0755)) {
-			# ƒƒbƒN¬Œ÷BŸ‚Ìˆ—‚ÖB
-			last;
-		} elsif ($i == 1) {
-			# 10•ªˆÈãŒÃ‚¢ƒƒbƒNƒtƒ@ƒCƒ‹‚Ííœ‚·‚éB
-			($mtime) = (stat($file_lock))[9];
-			if ($mtime < time() - 600) {
-				rmdir($file_lock);
-			}
-		} elsif ($i < 6) {
-			# ƒƒbƒN¸”sB1•b‘Ò‚Á‚ÄÄƒgƒ‰ƒCB
-			sleep(1);
-		} else {
-			# ‰½“x‚â‚Á‚Ä‚àƒƒbƒN¸”sB‚ ‚«‚ç‚ß‚éB
-			exit(1);
-		}
-	}
-}
-
-#
-# “r’†‚ÅI—¹‚µ‚Ä‚àƒƒbƒNƒtƒ@ƒCƒ‹‚ªc‚ç‚È‚¢‚æ‚¤‚É‚·‚é
-#
-sub sigexit { rmdir($file_lock); exit(0); }
-$SIG{'PIPE'} = $SIG{'INT'} = $SIG{'HUP'} = $SIG{'QUIT'} = $SIG{'TERM'} = "sigexit";
-
-#
-# ƒJƒEƒ“ƒ^[ƒtƒ@ƒCƒ‹‚©‚çƒJƒEƒ“ƒ^[’l‚ğ“Ç‚İo‚·B
-#
-if (open(IN, "< $file_count")) {
-	$count = <IN>;
-	close(IN);
-} else {
-	$count = -1;
-}
-
-#
-# “ú•tƒtƒ@ƒCƒ‹‚©‚çÅIƒAƒNƒZƒX“ú•t‚ğ“Ç‚İo‚·B
-#
-if (open(IN, "< $file_date")) {
-	$date_log = <IN>;
-	close(IN);
-} else {
-	$date_log = "";
-}
-
-#
-# ¡“ú‚Ì“ú•t‚ğ“¾‚é
-#
-($sec, $min, $hour, $mday, $mon, $year) = localtime(time());
-$date_now = sprintf("%04d/%02d/%02d", 1900 + $year, $mon + 1, $mday);
-$time_now = sprintf("%02d:%02d:%02d", $hour, $min, $sec);
-
-#
-# “ú•t‚ªˆÙ‚È‚éA‚Â‚Ü‚èA¡“ú‰‚ß‚Ä‚ÌƒAƒNƒZƒX‚Å‚ ‚ê‚Î
-#
-if ($date_log ne $date_now) {
-
-	#
-	# ƒAƒNƒZƒXƒƒO‚ğƒ[ƒ‹‚Å‘—M‚·‚é
-	#
-	if ($mailto ne "") {
-		$tmp_count = 0;
-		open(IN, "< $file_access");
-		while (<IN>) {
-			if (/^COUNT/) {
-				$tmp_count++;
-			}
-		}
+	if (open(IN, "< $g_file_count")) {
+		$count = <IN>;
 		close(IN);
-		$msg = "";
-		$msg .= "To: $mailto\n";
-		if ($mailfrom eq "") {
-			$msg .= "From: $count_name\n";
-		} else {
-			$msg .= "From: $mailfrom\n";
-		}
-		$msg .= "Subject: ACCESS $date_log $tmp_count\n";
-		$msg .= "\n";
-		if ($account_detail) {
-			open(IN, "< $file_access");
-			while (<IN>) {
-				$msg .= $_;
-			}
-			close(IN);
-		} else {
-			$msg .= "Access = $tmp_count\n";
-		}
-		open(OUT, "| $sendmail $mailto");
-		print OUT $msg;
-		close(OUT);
 	}
-
-	#
-	# ƒAƒNƒZƒXƒƒO‚ğ‰Šú‰»‚·‚é
-	#
-	open(OUT, "> $file_access");
-	close(OUT);
-
-	#
-	# ¡“ú‚Ì“ú•t‚ğ“ú•tƒƒOƒtƒ@ƒCƒ‹‚É‘‚«o‚·
-	#
-	open(OUT, "> $file_date");
-	print(OUT "$date_now");
-	close(OUT);
+	return $count;
 }
 
 #
-# ‚·‚Å‚É“¯ƒAƒhƒŒƒX‚©‚ç‚ÌƒAƒNƒZƒX‚ª‚ ‚ê‚ÎƒJƒEƒ“ƒgƒAƒbƒv‚µ‚È‚¢
+# ã‚«ã‚¦ãƒ³ã‚¿ã‚’ã‚«ã‚¦ãƒ³ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãæˆ»ã™
 #
-$count_up = 1;
-if ($do_address_check) {
-	open(IN, "$file_access");
-	while (<IN>) {
-		if ($_ eq "ADDR  = [ $ENV{'REMOTE_ADDR'} ]\n") {
-			$count_up = 0;
-			last;
-		}
-	}
-	close(IN);
-}
+sub saveCount {
+	my($count) = @_;
 
-#
-# ƒJƒEƒ“ƒgƒAƒbƒvˆ—
-#
-if (($count >= 0) && ($count_up == 1)) {
-
-	#
-	# ƒJƒEƒ“ƒ^‚ğ‚Ğ‚Æ‚ÂƒCƒ“ƒNƒŠƒƒ“ƒg‚·‚é
-	#
-	$count++;
-
-	#
-	# ƒAƒNƒZƒXƒƒO‚ğ‹L˜^‚·‚é
-	#
-	open(OUT, ">> $file_access");
-
-	# ƒJƒEƒ“ƒg
-	print(OUT "COUNT = [ $count ]\n");
-
-	# 
-	print(OUT "TIME  = [ $time_now ]\n");
-
-	# IPƒAƒhƒŒƒX
-	$addr = $ENV{'REMOTE_ADDR'};
-	print(OUT "ADDR  = [ $addr ]\n");
-
-	# ƒzƒXƒg–¼
-	$host = $ENV{'REMOTE_HOST'};
-	if ($do_addr_to_host && (($host eq "") || ($host eq $addr))) {
-		$host = gethostbyaddr(pack("C4", split(/\./, $addr)), 2);
-	}
-	if (($host ne "") && ($host ne $addr)) {
-		print(OUT "HOST  = [ $host ]\n");
-	}
-
-	# ƒG[ƒWƒFƒ“ƒg–¼
-	print(OUT "AGENT = [ $ENV{'HTTP_USER_AGENT'} ]\n");
-
-	# ƒŠƒ“ƒNŒ³(SSI)
-	$referer = $ENV{'HTTP_REFERER'};
-	if (($mode eq "text") && ($referer ne "")) {
-		if ($do_decode_url eq 1) {
-			$referer =~ s/%([0-9a-fA-F][0-9a-fA-F])/pack("C", hex($1))/eg;
-		}
-		print(OUT "REFER = [ $referer ]\n");
-	}
-
-	# ƒŠƒ“ƒNŒ³(CGI)
-	$reffile =~ s/\\//g;
-	if ($reffile && (!$my_url || ($reffile !~ /$my_url/))) {
-		if ($do_decode_url eq 1) {
-			$reffile =~ s/%([0-9a-fA-F][0-9a-fA-F])/pack("C", hex($1))/eg;
-		}
-		print(OUT "FROM  = [ $reffile ]\n");
-	}
-
-	print(OUT "\n");
-	close(OUT);
-
-	#
-	# ƒJƒEƒ“ƒ^‚ğƒJƒEƒ“ƒ^ƒtƒ@ƒCƒ‹‚É‘‚«–ß‚·
-	#
-	if (open(OUT, "> $file_count")) {
+	if (open(OUT, "> $g_file_count")) {
 		print(OUT "$count");
 		close(OUT);
 	}
 }
 
 #
-# CGIƒXƒNƒŠƒvƒg‚ÌŒ‹‰Ê‚Æ‚µ‚ÄƒJƒEƒ“ƒ^[‚ğ‘‚«o‚·
+# æ—¥ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰æœ€çµ‚ã‚¢ã‚¯ã‚»ã‚¹æ—¥ä»˜ã‚’èª­ã¿å‡ºã™ã€‚
 #
-if ($count == -1) {
-	$count = 0;
-}
-if ($figure != 0) {
-	$cntstr = sprintf(sprintf("%%0%dld", $figure), $count);
-} else {
-	$cntstr = sprintf("%ld", $count);
-}
-if ($mode eq "text") {
-	printf("Content-type: text/html\n");
-	printf("\n");
-	printf("$cntstr\n");
-} elsif ($mode eq "gif") {
-	printf("Content-type: image/gif\n");
-	printf("\n");
-	@files = ();
-	for ($i = 0; $i < length($cntstr); $i++) {
-		$n = substr($cntstr, $i, 1);
-		push(@files, "$n.gif");
+sub readLastAccessDate {
+	my $last_access_date;
+	if (open(IN, "< $g_file_date")) {
+		$last_access_date = <IN>;
+		close(IN);
+	} else {
+		$last_access_date = "";
 	}
-	require "./gifcat.pl";
-	binmode(STDOUT);
-	print &gifcat'gifcat(@files);
-} elsif ($mode eq "hide") {
-	printf("Content-type: image/gif\n");
-	printf("\n");
-	$size = -s $giffile;
-	open(IN, $giffile);
-	binmode(IN);
-	binmode(STDOUT);
-	read(IN, $buf, $size);
-	print $buf;
+	return $last_access_date;
+}
+
+#
+# ä»Šæ—¥ã®æ—¥ä»˜ã‚’æ—¥ä»˜ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãå‡ºã™
+#
+sub saveLastAccessDate {
+	my($now_date) = @_;
+
+	open(OUT, "> $g_file_date");
+	print(OUT "$now_date");
+	close(OUT);
+}
+
+#
+# ä»Šæ—¥ã®æ—¥ä»˜ã‚’å¾—ã‚‹
+#
+sub getCurrentDateAndTime {
+	my($sec, $min, $hour, $mday, $mon, $year) = localtime(time());
+	my($now_date) = sprintf("%04d/%02d/%02d", 1900 + $year, $mon + 1, $mday);
+	my($now_time) = sprintf("%02d:%02d:%02d", $hour, $min, $sec);
+	return $now_date, $now_time;
+}
+
+#
+# ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°ã‚’åˆæœŸåŒ–ã™ã‚‹
+#
+sub clearAccessLog {
+	open(OUT, "> $g_file_access");
+	close(OUT);
+}
+
+#
+# ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°ã‚’è¨˜éŒ²ã™ã‚‹
+#
+sub saveAccessLog {
+	my($count, $now_time) = @_;
+	my($addr, $host, $referer);
+	local(*OUT);
+
+	open(OUT, ">> $g_file_access");
+
+	# ã‚«ã‚¦ãƒ³ãƒˆ
+	print(OUT "COUNT = [ $count ]\n");
+
+	# æ™‚åˆ»
+	print(OUT "TIME  = [ $now_time ]\n");
+
+	# IPã‚¢ãƒ‰ãƒ¬ã‚¹
+	$addr = $ENV{'REMOTE_ADDR'};
+	print(OUT "ADDR  = [ $addr ]\n");
+
+	# ãƒ›ã‚¹ãƒˆå
+	$host = $ENV{'REMOTE_HOST'};
+	if ($g_addr_to_host && (($host eq "") || ($host eq $addr))) {
+		$host = gethostbyaddr(pack("C4", split(/\./, $addr)), 2);
+	}
+	if (($host ne "") && ($host ne $addr)) {
+		print(OUT "HOST  = [ $host ]\n");
+	}
+
+	# ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆå
+	print(OUT "AGENT = [ $ENV{'HTTP_USER_AGENT'} ]\n");
+
+	# ãƒªãƒ³ã‚¯å…ƒ(SSI)
+	$referer = $ENV{'HTTP_REFERER'};
+	if (($g_mode eq "text") && ($referer ne "")) {
+		if ($g_decode_url) {
+			$referer =~ s/%([0-9a-fA-F][0-9a-fA-F])/pack("C", hex($1))/eg;
+		}
+		print(OUT "REFER = [ $referer ]\n");
+	}
+
+	# ãƒªãƒ³ã‚¯å…ƒ(CGI)
+	$g_referer =~ s/\\//g;
+	if ($g_referer && (!$g_my_url || ($g_referer !~ /$g_my_url/))) {
+		if ($g_decode_url) {
+			$g_referer =~ s/%([0-9a-fA-F][0-9a-fA-F])/pack("C", hex($1))/eg;
+		}
+		print(OUT "FROM  = [ $g_referer ]\n");
+	}
+
+	print(OUT "\n");
+	close(OUT);
+}
+
+#
+# ã‚¢ã‚¯ã‚»ã‚¹ãƒ­ã‚°ã‚’ãƒ¡ãƒ¼ãƒ«ã§é€ä¿¡ã™ã‚‹
+#
+sub sendReportMail {
+	my($last_access_date) = @_;
+	my($access_count);
+	local(*IN, *OUT);
+
+	if ($g_mailto eq "") {
+		return;
+	}
+
+	# ã‚¢ã‚¯ã‚»ã‚¹ä»¶æ•°ã‚’èª­ã¿å–ã‚‹
+	open(IN, "< $g_file_access");
+	$access_count = 0;
+	while (<IN>) {
+		if (/^COUNT/) {
+			$access_count++;
+		}
+	}
 	close(IN);
+
+	# ãƒ¬ãƒãƒ¼ãƒˆãƒ¡ãƒ¼ãƒ«ã‚’é€ä¿¡ã™ã‚‹
+	open(OUT, "| $g_sendmail -t -i");
+	print OUT "To: $g_mailto\n";
+	if ($g_mailfrom eq "") {
+		print OUT "From: $g_counter_name\n";
+	} else {
+		print OUT "From: $g_mailfrom\n";
+	}
+	print OUT "Subject: ACCESS $last_access_date $access_count\n";
+	print OUT "\n";
+	if ($g_report_detail) {
+		open(IN, "< $g_file_access");
+		while (<IN>) {
+			print OUT $_;
+		}
+		close(IN);
+	} else {
+		print OUT "Access = $access_count\n";
+	}
+	close(OUT);
 }
 
 #
-# ƒƒbƒNŒ ‚ğŠJ•ú‚·‚é
+# ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã™ã‚‹ã‹å¦ã‹ã‚’åˆ¤æ–­ã™ã‚‹
+# ã™ã§ã«åŒã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ãŒã‚ã‚Œã°ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã—ãªã„
 #
-if ($do_file_lock) {
-	rmdir($file_lock);
+sub checkCountup {
+	my($do_countup) = 1;
+	local(*IN);
+
+	if ($g_address_check) {
+		open(IN, "$g_file_access");
+		while (<IN>) {
+			if ($_ eq "ADDR  = [ $ENV{'REMOTE_ADDR'} ]\n") {
+				$do_countup = 0;
+				last;
+			}
+		}
+		close(IN);
+	}
+	return $do_countup;
 }
 
 #
-# CGI‚ªg—p‚Å‚«‚é‚©ƒeƒXƒg‚ğs‚¤B
+# CGIã‚¹ã‚¯ãƒªãƒ—ãƒˆã®çµæœã¨ã—ã¦ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’æ›¸ãå‡ºã™
+#
+sub outputCounter {
+	my($count) = @_;
+	my($count_str, @files, $size, $n, $buf);
+
+	# ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼æ–‡å­—åˆ—(ä¾‹:000123)ã‚’å¾—ã‚‹
+	if ($g_figure != 0) {
+		$count_str = sprintf(sprintf("%%0%dld", $g_figure), $count);
+	} else {
+		$count_str = sprintf("%ld", $count);
+	}
+
+	# ãƒ†ã‚­ã‚¹ãƒˆãƒ¢ãƒ¼ãƒ‰
+	if ($g_mode eq "text") {
+		printf("Content-type: text/html\n");
+		printf("\n");
+		printf("$count_str\n");
+
+	# GIFãƒ¢ãƒ¼ãƒ‰
+	} elsif ($g_mode eq "gif") {
+		printf("Content-type: image/gif\n");
+		printf("\n");
+		@files = ();
+		for (my $i = 0; $i < length($count_str); $i++) {
+			$n = substr($count_str, $i, 1);
+			push(@files, "$n.gif");
+		}
+		require "./gifcat.pl";
+		binmode(STDOUT);
+		print gifcat'gifcat(@files);
+
+	# éš ã—ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ãƒ¢ãƒ¼ãƒ‰
+	} elsif ($g_mode eq "hide") {
+		printf("Content-type: image/gif\n");
+		printf("\n");
+		$size = -s $g_gif_file;
+		open(IN, $g_gif_file);
+		binmode(IN);
+		binmode(STDOUT);
+		read(IN, $buf, $size);
+		print $buf;
+		close(IN);
+	}
+}
+
+#
+# ãƒ­ãƒƒã‚¯ã‚’å¾—ã‚‹
+#
+sub doLock {
+	my($mtime);
+
+	if ($g_lock_flag) {
+		for (my $i = 1; $i <= 6; $i++) {
+			if (mkdir("$g_file_lock", 0755)) {
+				# ãƒ­ãƒƒã‚¯æˆåŠŸã€‚æ¬¡ã®å‡¦ç†ã¸ã€‚
+				last;
+			} elsif ($i == 1) {
+				# 10åˆ†ä»¥ä¸Šå¤ã„ãƒ­ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ã¯å‰Šé™¤ã™ã‚‹ã€‚
+				($mtime) = (stat($g_file_lock))[9];
+				if ($mtime < time() - 600) {
+					rmdir($g_file_lock);
+				}
+			} elsif ($i < 6) {
+				# ãƒ­ãƒƒã‚¯å¤±æ•—ã€‚1ç§’å¾…ã£ã¦å†ãƒˆãƒ©ã‚¤ã€‚
+				sleep(1);
+			} else {
+				# ä½•åº¦ã‚„ã£ã¦ã‚‚ãƒ­ãƒƒã‚¯å¤±æ•—ã€‚ã‚ãã‚‰ã‚ã‚‹ã€‚
+				exit(1);
+			}
+		}
+	}
+
+	# é€”ä¸­ã§çµ‚äº†ã—ã¦ã‚‚ãƒ­ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ®‹ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
+	sub sigexit { rmdir($g_file_lock); exit(0); }
+	$SIG{'PIPE'} = $SIG{'INT'} = $SIG{'HUP'} = $SIG{'QUIT'} = $SIG{'TERM'} = "sigexit";
+}
+
+#
+# ãƒ­ãƒƒã‚¯ã‚’é–‹æ”¾ã™ã‚‹
+#
+sub unlockLock {
+	if ($g_lock_flag) {
+		rmdir($g_file_lock);
+	}
+}
+
+#
+# CGIãŒä½¿ç”¨ã§ãã‚‹ã‹ãƒ†ã‚¹ãƒˆã‚’è¡Œã†ã€‚
 #
 sub test {
 	print "Content-type: text/html\n";
 	print "\n";
+	print "<!doctype html>\n";
 	print "<html>\n";
 	print "<head>\n";
+	print "<meta charset='utf-8'>\n";
     print "<title>Test</title>\n";
     print "</head>\n";
 	print "<body>\n";
-	print "<p>OK. CGIƒXƒNƒŠƒvƒg‚Í³í‚É“®‚¢‚Ä‚¢‚Ü‚·B</p>\n";
-	if ($mailto ne "") {
-		if (! -f $sendmail) {
-			print "<p>ERROR: $sendmail ‚ª‘¶İ‚µ‚Ü‚¹‚ñB</p>\n";
+	print "<p>OK. CGIã‚¹ã‚¯ãƒªãƒ—ãƒˆã¯æ­£å¸¸ã«å‹•ã„ã¦ã„ã¾ã™ã€‚</p>\n";
+	if ($g_mailto ne "") {
+		if (! -f $g_sendmail) {
+			print "<p>ERROR: $g_sendmail ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚</p>\n";
 		}
 	}
-	if (-d $file_lock) {
-		print "<p>ERROR: $file_lock ‚ªc‚Á‚Ä‚¢‚Ü‚·B</p>\n";
+	if (!-d $g_lock_dir) {
+		print "<p>ERROR: $g_lock_dir ãƒ•ã‚©ãƒ«ãƒ€ãŒã‚ã‚Šã¾ã›ã‚“ã€‚</p>\n";
 	}
-	if (! -r $file_count) {
-		print "<p>ERROR: $file_count ‚ª‘¶İ‚µ‚Ü‚¹‚ñB</p>\n";
-	} elsif (! -w $file_count) {
-		print "<p>ERROR: $file_count ‚ª‘‚«‚İ‰Â”\‚Å‚Í‚ ‚è‚Ü‚¹‚ñB</p>\n";
+	if (-d $g_file_lock) {
+		print "<p>ERROR: $g_file_lock ãŒæ®‹ã£ã¦ã„ã¾ã™ã€‚</p>\n";
 	}
-	if (! -r $file_date) {
-		print "<p>ERROR: $file_date ‚ª‘¶İ‚µ‚Ü‚¹‚ñB</p>\n";
-	} elsif (! -w $file_date) {
-		print "<p>ERROR: $file_date ‚ª‘‚«‚İ‰Â”\‚Å‚Í‚ ‚è‚Ü‚¹‚ñB</p>\n";
+	if (! -r $g_file_count) {
+		print "<p>ERROR: $g_file_count ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚</p>\n";
+	} elsif (! -w $g_file_count) {
+		print "<p>ERROR: $g_file_count ãŒæ›¸ãè¾¼ã¿å¯èƒ½ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚</p>\n";
 	}
-	if (! -r $file_access) {
-		print "<p>ERROR: $file_access ‚ª‘¶İ‚µ‚Ü‚¹‚ñB</p>\n";
-	} elsif (! -w $file_access) {
-		print "<p>ERROR: $file_access ‚ª‘‚«‚İ‰Â”\‚Å‚Í‚ ‚è‚Ü‚¹‚ñB</p>\n";
+	if (! -r $g_file_date) {
+		print "<p>ERROR: $g_file_date ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚</p>\n";
+	} elsif (! -w $g_file_date) {
+		print "<p>ERROR: $g_file_date ãŒæ›¸ãè¾¼ã¿å¯èƒ½ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚</p>\n";
 	}
-	if (($chdir ne "") && (! -d $chdir)) {
-		print "<p>ERROR: $chdir ‚ª‘¶İ‚µ‚Ü‚¹‚ñB</p>\n";
+	if (! -r $g_file_access) {
+		print "<p>ERROR: $g_file_access ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚</p>\n";
+	} elsif (! -w $g_file_access) {
+		print "<p>ERROR: $g_file_access ãŒæ›¸ãè¾¼ã¿å¯èƒ½ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚</p>\n";
+	}
+	if (($g_chdir ne "") && (! -d $g_chdir)) {
+		print "<p>ERROR: $g_chdir ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚</p>\n";
 	}
 	print "</body>\n";
 	print "</html>\n";
-	exit(0);
 }
-
