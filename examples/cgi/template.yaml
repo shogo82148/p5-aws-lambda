@@ -66,7 +66,7 @@ Resources:
       Runtime: provided.al2
       Environment:
         Variables:
-          WWWCOUNT_DIR: /tmp
+          WWWCOUNT_DIR: /mnt/efs0
       Layers:
         - arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-34-runtime-al2:1
       Events:
