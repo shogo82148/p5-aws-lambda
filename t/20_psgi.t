@@ -8,11 +8,19 @@ use JSON::XS qw/decode_json encode_json/;
 use File::Slurp qw(slurp);
 use Plack::Request;
 use Test::Deep qw(cmp_deeply);
+use Test::Warn;
 use JSON::Types;
 use Encode;
 
 use AWS::Lambda::Context;
 use AWS::Lambda::PSGI;
+
+sub slurp_fh {
+    my $fh = $_[0];
+    local $/;
+    my $v = <$fh>;
+    defined $v ? $v : '';
+}
 
 my $app = AWS::Lambda::PSGI->new;
 
@@ -21,7 +29,9 @@ subtest "API Gateway GET Request" => sub {
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
-    is $req->content, '', 'content';
+    my $content;
+    warning_is { $content = slurp_fh($req->input) } undef, 'no warning';
+    is $content, '', 'content';
     is $req->request_uri, '/foo%20/bar?query=hoge&query=fuga', 'request uri';
     is $req->path_info, '/foo /bar', 'path info';
     is $req->query_string, 'query=hoge&query=fuga', 'query string';
@@ -34,7 +44,9 @@ subtest "API Gateway POST Request" => sub {
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
     is $req->content_type, 'application/json', 'content-type';
-    is $req->content, '{"hello":"world"}', 'content';
+    my $content;
+    warning_is { $content = slurp_fh($req->input) } undef, 'no warning';
+    is $content, '{"hello":"world"}', 'content';
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
     is $req->query_string, '', 'query string';
@@ -49,7 +61,9 @@ subtest "API Gateway Base64 encoded POST Request" => sub {
     # You have to add 'application/octet-stream' to binary media types.
     # https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-payload-encodings-configure-with-console.html
     is $req->content_type, 'application/octet-stream', 'content-type';
-    is $req->content, '{"hello":"world"}', 'content';
+    my $content;
+    warning_is { $content = slurp_fh($req->input) } undef, 'no warning';
+    is $content, '{"hello":"world"}', 'content';
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
     is $req->query_string, '', 'query string';
@@ -60,7 +74,9 @@ subtest "API Gateway v2 GET Request" => sub {
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
-    is $req->content, '', 'content';
+    my $content;
+    warning_is { $content = slurp_fh($req->input) } undef, 'no warning';
+    is $content, '', 'content';
     is $req->request_uri, '/my/path?parameter1=value1&parameter1=value2&parameter2=value', 'request uri';
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, 'parameter1=value1&parameter1=value2&parameter2=value', 'query string';
@@ -72,7 +88,9 @@ subtest "API Gateway v2 POST Request" => sub {
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
-    is $req->content, '{"hello":"world"}', 'content';
+    my $content;
+    warning_is { $content = slurp_fh($req->input) } undef, 'no warning';
+    is $content, '{"hello":"world"}', 'content';
     is $req->request_uri, '/my/path', 'request uri';
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, '', 'query string';
@@ -83,7 +101,9 @@ subtest "API Gateway v2 base64 Request" => sub {
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
-    is $req->content, '{"hello":"world"}', 'content';
+    my $content;
+    warning_is { $content = slurp_fh($req->input) } undef, 'no warning';
+    is $content, '{"hello":"world"}', 'content';
     is $req->request_uri, '/my/path', 'request uri';
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, '', 'query string';
@@ -94,7 +114,7 @@ subtest "ALB GET Request" => sub {
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
-    is $req->content, '', 'content';
+    is slurp_fh($req->input), '', 'content';
     is $req->request_uri, '/foo/bar?query=hoge&query=fuga', 'request uri';
     is $req->path_info, '/foo/bar', 'path info';
     is $req->query_string, 'query=hoge&query=fuga', 'query string';
@@ -107,7 +127,7 @@ subtest "ALB POST Request" => sub {
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
     is $req->content_type, 'application/json', 'content-type';
-    is $req->content, '{"hello":"world"}', 'content';
+    is slurp_fh($req->input), '{"hello":"world"}', 'content';
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
     is $req->query_string, '', 'query string';
@@ -119,7 +139,7 @@ subtest "ALB POST Request" => sub {
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
     is $req->content_type, 'application/octet-stream', 'content-type';
-    is $req->content, '{"hello":"world"}', 'content';
+    is slurp_fh($req->input), '{"hello":"world"}', 'content';
     is $req->request_uri, '/foo/bar', 'request uri';
     is $req->path_info, '/foo/bar', 'path info';
     is $req->query_string, '', 'query string';
