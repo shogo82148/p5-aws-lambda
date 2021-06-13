@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.28 2021-06-13T15:46:13Z
     - Fix mojibake when the input and the output are utf8 encoded
     - Update WwwCounter v4.0.0 in the examples
 
