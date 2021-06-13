@@ -86,7 +86,9 @@ sub handle_event {
         local $ENV{_X_AMZN_TRACE_ID} = $context->{trace_id};
         $self->{function}->($payload, $context);
     } catch {
-        $self->lambda_error($_, $context);
+        my $err = $_;
+        print STDERR "$err";
+        $self->lambda_error($err, $context);
         bless {}, 'AWS::Lambda::ErrorSentinel';
     };
     if (ref($response) eq 'AWS::Lambda::ErrorSentinel') {
