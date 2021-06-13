@@ -136,6 +136,7 @@ subtest "plain text response" => sub {
         [
             "Hello",
             "World",
+            encode_utf8("こんにちは世界"),
         ]
     ];
     my $res = $app->format_output($response);
@@ -150,7 +151,7 @@ subtest "plain text response" => sub {
             'header-name' => ['value1', 'value2'],
         },
         statusCode => 200,
-        body => "HelloWorld",
+        body => "HelloWorldこんにちは世界",
     };
     diag encode_json $res;
 };

@@ -246,12 +246,13 @@ sub format_output {
     if ($isBase64Encoded) {
         $content = encode_base64 $content, '';
     } else {
-        try {
-            # is valid utf-8 string?
+        $content = try {
+            # is valid utf-8 string? try to decode as utf-8.
             decode_utf8($content, Encode::FB_CROAK | Encode::LEAVE_SRC);
         } catch {
+            # it looks not utf-8 encoding. fallback to base64 encoding.
             $isBase64Encoded = 1;
-            $content = encode_base64 $content, '';
+            encode_base64 $content, '';
         };
     }
 
