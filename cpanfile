@@ -14,6 +14,7 @@ on 'test' => sub {
     requires 'Test::Deep', '1.128';
     requires 'Test::TCP', '2.19';
     requires 'Test::SharedFork';
+    requires 'Test::Warn';
     requires 'File::Slurp', '9999.25';
 };
 

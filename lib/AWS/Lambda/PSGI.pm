@@ -141,7 +141,7 @@ sub _format_input_v1 {
         $env->{'HTTP_X_REQUEST_ID'} = $ctx->aws_request_id;
     }
 
-    my $body = $payload->{body};
+    my $body = encode_utf8($payload->{body} // '');
     if ($payload->{isBase64Encoded}) {
         $body = decode_base64 $body;
     }
@@ -200,7 +200,7 @@ sub _format_input_v2 {
         $env->{'HTTP_X_REQUEST_ID'} = $ctx->aws_request_id;
     }
 
-    my $body = $payload->{body};
+    my $body = encode_utf8($payload->{body} // '');
     if ($payload->{isBase64Encoded}) {
         $body = decode_base64 $body;
     }

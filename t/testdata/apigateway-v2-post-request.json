@@ -32,6 +32,6 @@
         "time": "06/Apr/2020:02:59:02 +0000",
         "timeEpoch": 1586141942637
     },
-    "body": "{\"hello\":\"world\"}",
+    "body": "{\"hello\":\"こんにちは世界\"}",
     "isBase64Encoded": false
 }
