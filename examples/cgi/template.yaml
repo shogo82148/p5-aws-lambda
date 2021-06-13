@@ -21,9 +21,9 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       GroupDescription: "mnt target sg"
-      SecurityGroupEgress:
+      SecurityGroupIngress:
       - IpProtocol: "-1"
-        CidrIp: "0.0.0.0/0"
+        CidrIp: 0.0.0.0/0
   FileSystem:
     Type: AWS::EFS::FileSystem
     Properties:
@@ -50,6 +50,11 @@ Resources:
           Permissions: "0777"
         Path: "/data"
 
+  LambdaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref VPC
+      GroupDescription: "lambda sg"
   WwwCounter:
     Type: AWS::Serverless::Function
     Metadata:
@@ -67,6 +72,11 @@ Resources:
       Events:
         CatchAll:
           Type: HttpApi
-      # FileSystemConfigs:
-      #   - Arn: !GetAtt AccessPoint.Arn
-      #     LocalMountPath: "/mnt/efs0"
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref LambdaSecurityGroup
+        SubnetIds:
+          - !Ref Subnet1
+      FileSystemConfigs:
+        - Arn: !GetAtt AccessPoint.Arn
+          LocalMountPath: "/mnt/efs0"
