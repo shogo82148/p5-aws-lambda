@@ -15,17 +15,22 @@ use Encode;
 use AWS::Lambda::Context;
 use AWS::Lambda::PSGI;
 
+sub slurp_json {
+    my $name = $_[0];
+    return decode_json(slurp("$FindBin::Bin/$name"));
+}
+
 sub slurp_fh {
     my $fh = $_[0];
     local $/;
     my $v = <$fh>;
-    defined $v ? $v : '';
+    defined $v ? decode_utf8($v) : '';
 }
 
 my $app = AWS::Lambda::PSGI->new;
 
 subtest "API Gateway GET Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-get-request.json"));
+    my $input = slurp_json("testdata/apigateway-get-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
@@ -39,21 +44,21 @@ subtest "API Gateway GET Request" => sub {
 };
 
 subtest "API Gateway POST Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-post-request.json"));
+    my $input = slurp_json("testdata/apigateway-post-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
     is $req->content_type, 'application/json', 'content-type';
     my $content;
     warning_is { $content = slurp_fh($req->input) } undef, 'no warning';
-    is $content, '{"hello":"world"}', 'content';
+    is $content, '{"hello":"こんにちは世界"}', 'content';
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
     is $req->query_string, '', 'query string';
 };
 
 subtest "API Gateway Base64 encoded POST Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-base64-request.json"));
+    my $input = slurp_json("testdata/apigateway-base64-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
@@ -70,7 +75,7 @@ subtest "API Gateway Base64 encoded POST Request" => sub {
 };
 
 subtest "API Gateway v2 GET Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-v2-get-request.json"));
+    my $input = slurp_json("testdata/apigateway-v2-get-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
@@ -84,20 +89,20 @@ subtest "API Gateway v2 GET Request" => sub {
 };
 
 subtest "API Gateway v2 POST Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-v2-post-request.json"));
+    my $input = slurp_json("testdata/apigateway-v2-post-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
     my $content;
     warning_is { $content = slurp_fh($req->input) } undef, 'no warning';
-    is $content, '{"hello":"world"}', 'content';
+    is $content, '{"hello":"こんにちは世界"}', 'content';
     is $req->request_uri, '/my/path', 'request uri';
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, '', 'query string';
 };
 
 subtest "API Gateway v2 base64 Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-v2-base64-request.json"));
+    my $input = slurp_json("testdata/apigateway-v2-base64-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
@@ -110,7 +115,7 @@ subtest "API Gateway v2 base64 Request" => sub {
 };
 
 subtest "ALB GET Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/alb-get-request.json"));
+    my $input = slurp_json("testdata/alb-get-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'GET', 'method';
@@ -122,19 +127,19 @@ subtest "ALB GET Request" => sub {
 };
 
 subtest "ALB POST Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/alb-post-request.json"));
+    my $input = slurp_json("testdata/alb-post-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
     is $req->content_type, 'application/json', 'content-type';
-    is slurp_fh($req->input), '{"hello":"world"}', 'content';
+    is slurp_fh($req->input), '{"hello":"こんにちは世界"}', 'content';
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
     is $req->query_string, '', 'query string';
 };
 
-subtest "ALB POST Request" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/alb-base64-request.json"));
+subtest "ALB POST Base64 Request" => sub {
+    my $input = slurp_json("testdata/alb-base64-request.json");
     my $output = $app->format_input($input);
     my $req = Plack::Request->new($output);
     is $req->method, 'POST', 'method';
@@ -251,7 +256,7 @@ subtest "EUC-JP encoded response" => sub {
 };
 
 subtest "query string enconding" => sub {
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-get-request.json"));
+    my $input = slurp_json("testdata/apigateway-get-request.json");
     $input->{queryStringParameters} = {
         "gif+ref+" => "",
     };
@@ -274,7 +279,7 @@ subtest "request id" => sub {
         aws_request_id => '8476a536-e9f4-11e8-9739-2dfe598c3fcd',
         invoked_function_arn => 'arn:aws:lambda:us-east-2:123456789012:function:custom-runtime',
     );
-    my $input = decode_json(slurp("$FindBin::Bin/testdata/apigateway-get-request.json"));
+    my $input = slurp_json("testdata/apigateway-get-request.json");
     my $output = $app->format_input($input, $context);
     my $req = Plack::Request->new($output);
     is $req->env->{'psgix.request_id'}, '8476a536-e9f4-11e8-9739-2dfe598c3fcd', 'get request id from the env';
