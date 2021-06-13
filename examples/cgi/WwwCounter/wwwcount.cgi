@@ -101,8 +101,10 @@ my $g_my_url = '';
 #    場合は 1 を、そのまま記録する場合は 0 を指定してください。
 my $g_decode_url = 1;
 
+my $count_dir = $ENV{WWWCOUNT_DIR} // ".";
+
 # ★ ロックファイルを作成するフォルダ名を指定します。
-my $g_lock_dir = "lock";
+my $g_lock_dir = "$count_dir/lock";
 
 #==================================================================
 # その他変数
@@ -115,13 +117,13 @@ my $g_gif_file = "";
 my $g_referer = "";
 
 # カウンターファイル名(*.cnt)
-my $g_file_count = "${g_counter_name}.cnt";
+my $g_file_count = "$count_dir/${g_counter_name}.cnt";
 
 # 最終アクセス日記録ファイル名(*.dat)
-my $g_file_date = "${g_counter_name}.dat";
+my $g_file_date = "$count_dir/${g_counter_name}.dat";
 
 # アクセス情報記録ファイル名(*.acc)
-my $g_file_access = "${g_counter_name}.acc";
+my $g_file_access = "$count_dir/${g_counter_name}.acc";
 
 # ロックファイル名(*.loc)
 my $g_file_lock = "${g_lock_dir}/${g_counter_name}.loc";
