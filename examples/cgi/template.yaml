@@ -59,6 +59,9 @@ Resources:
       CodeUri: ./WwwCounter/
       Handler: handler.handle
       Runtime: provided.al2
+      Environment:
+        Variables:
+          WWWCOUNT_DIR: /tmp
       Layers:
         - arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-34-runtime-al2:1
       Events:
