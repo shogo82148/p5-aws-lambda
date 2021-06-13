@@ -15,6 +15,7 @@ mkdir "$count_dir/lock", 0777;
 return builder {
     mount '/wwwcount.cgi' => Plack::App::WrapCGI->new(
         script => "./wwwcount.cgi",
+        execute => 1,
     )->to_app;
     mount '/' => Plack::App::File->new(
         file => "./sample.html",
