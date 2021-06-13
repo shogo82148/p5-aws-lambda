@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WwwCounterサンプル - とほほのWWW入門</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<style>
+.i { margin-left: 1rem; }
+</style>
+</head>
+<body>
+<h2 align="center">WwwCounterサンプル</h2>
+<hr>
+
+<h4>設置テスト</h4>
+<div class="i">
+<a href="wwwcount.cgi?test">wwwcount.cgi?test</a>
+</div>
+
+<h4>CGIグラフィックカウンター</h4>
+<div class="i">
+あなたは
+<img src="wwwcount.cgi?gif" width=96 height=18 alt="Counter">
+人目のお客様です。
+</div>
+
+<h4>SSIテキストカウンター</h4>
+<div class="i">
+あなたは <!--#exec cgi="wwwcount.cgi text"--> 人目のお客様です。<br>
+(SSI がサポートされている場合のみ表示されます。)
+</div>
+
+<h4>リンク元発見機能（CGI版）</h4>
+<div class="i">
+あなたは
+<script>
+console.log(document.referrer);
+var ref = document.referrer;
+ref = ref.replace(/ /, "%20");
+ref = ref.replace(/\+/, "%2B");
+ref = ref.replace(/\?/, "%3F");
+console.log(ref);
+document.write("<img width=96 height=18 src='wwwcount.cgi?gif+ref+" + ref + "' alt='counter'>");
+</script>
+人目のお客様です。
+</div>
+
+<h4>隠しカウンター</h4>
+<div class="i">
+<img src="wwwcount.cgi?hide+trees.gif" width=25 height=25>
+</div>
+
+<hr>
+<div>Copyright (C) 1996-2021 杜甫々</div>
+<div>https://www.tohoho-web.com/soft/wwwcounter/sample.html</div>
+</body>
+</html>

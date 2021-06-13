@@ -1,0 +1,10 @@
+version = 0.1
+[author]
+[author.deploy]
+[author.deploy.parameters]
+stack_name = "www-counter"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-10nboesix5it7"
+s3_prefix = "www-counter"
+region = "ap-northeast-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"

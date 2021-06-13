@@ -18,7 +18,7 @@ return builder {
         execute => 1,
     )->to_app;
     mount '/' => Plack::App::File->new(
-        file => "./wwwcount.htm",
-        encoding => "shift_jis",
+        file => "./sample.html",
+        encoding => "utf-8",
     )->to_app;
 };
