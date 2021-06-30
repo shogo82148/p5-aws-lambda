@@ -20,7 +20,7 @@ jobs:
           PASSWORD: ${{ secrets.password }}
 
       - name: Configure AWS Credentials
-        uses: shogo82148/actions-aws-assume-role@v1
+        uses: fuller-inc/actions-aws-assume-role@v1
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::445285296882:role/lambda-perl5-runtime-ecr-DeploymentRole-199JZ5SP862Q0
