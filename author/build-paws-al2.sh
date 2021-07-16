@@ -14,7 +14,7 @@ ln -s /usr/include/locale.h /usr/include/xlocale.h
 # build-provided.al2 lacks some development packages
 yum install -y expat-devel openssl openssl-devel
 
-/opt/bin/cpanm --notest --no-man-pages Paws
+/opt/bin/cpanm --notest --no-man-pages Paws@0.44
 
 # install perlstrip
 # https://metacpan.org/pod/distribution/Perl-Strip/bin/perlstrip

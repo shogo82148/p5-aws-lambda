@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - bump Paws 0.44
 
 0.0.28 2021-06-13T15:46:13Z
     - Fix mojibake when the input and the output are utf8 encoded
