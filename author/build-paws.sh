@@ -7,7 +7,7 @@ set -uex
 TAG=$1
 cd /opt
 unzip "/var/task/.perl-layer/dist/perl-$TAG-runtime.zip"
-/opt/bin/cpanm --notest --no-man-pages Paws
+/opt/bin/cpanm --notest --no-man-pages Paws@0.44
 
 # install perlstrip
 # https://metacpan.org/pod/distribution/Perl-Strip/bin/perlstrip
