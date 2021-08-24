@@ -25,6 +25,9 @@ my $flavors = {
 
 FROM amazon/aws-lambda-provided:alami
 
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
     unzip runtime.zip && rm runtime.zip
@@ -62,6 +65,10 @@ RUN cd /opt && \\
     unzip runtime.zip && rm runtime.zip
 
 FROM amazon/aws-lambda-provided:al2
+
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 COPY --from=0 /opt /opt
 RUN ln -s /opt/bootstrap /var/runtime/bootstrap
 EOF
@@ -90,6 +97,9 @@ EOF
 # then run it as a container image on AWS Lambda.
 
 FROM amazon/aws-lambda-provided:alami
+
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
@@ -130,13 +140,20 @@ FROM lambci/lambda:build-provided.al2
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
     unzip runtime.zip && rm runtime.zip
+
+FROM lambci/lambda:build-provided.al2
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
     unzip paws.zip && rm paws.zip
 
 FROM amazon/aws-lambda-provided:al2
+
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 COPY --from=0 /opt /opt
 RUN ln -s /opt/bootstrap /var/runtime/bootstrap
+COPY --from=1 /opt /opt
 EOF
         },
         'dependencies' => sub {
@@ -160,6 +177,9 @@ EOF
             $version =~ s/[.]/-/;
             return <<"EOF";
 FROM lambci/lambda:build-provided
+
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
@@ -186,6 +206,9 @@ EOF
             $version =~ s/[.]/-/;
             return <<"EOF";
 FROM lambci/lambda:build-provided.al2
+
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
@@ -217,6 +240,9 @@ EOF
             return <<"EOF";
 FROM lambci/lambda:build-provided
 
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
     unzip runtime.zip && rm runtime.zip
@@ -246,6 +272,9 @@ EOF
             $version =~ s/[.]/-/;
             return <<"EOF";
 FROM lambci/lambda:build-provided.al2
+
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
@@ -375,12 +404,15 @@ FROM lambci/lambda:build-provided.al2
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
     unzip runtime.zip && rm runtime.zip
+
+FROM lambci/lambda:build-provided.al2
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
     unzip paws.zip && rm paws.zip
 
 FROM lambci/lambda:provided.al2
 COPY --from=0 /opt /opt
+COPY --from=1 /opt /opt
 EOF
         },
         'dependencies' => sub {
@@ -556,4 +588,4 @@ if ($subcommand eq 'build') {
     build();
 }
 
-1
+1;

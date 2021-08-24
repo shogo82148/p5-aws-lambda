@@ -10,5 +10,9 @@ RUN cd /opt && \
     unzip runtime.zip && rm runtime.zip
 
 FROM amazon/aws-lambda-provided:al2
+
+# Use the custom runtime perl in preference to the system perl
+ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 COPY --from=0 /opt /opt
 RUN ln -s /opt/bootstrap /var/runtime/bootstrap
