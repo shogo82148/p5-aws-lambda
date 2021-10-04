@@ -23,12 +23,22 @@ mkdir -p "$OPT"
 rm -f "$DIST/perl-$TAG-runtime.zip"
 
 # build the perl binary
-docker run -v "$ROOT:/var/task" -v "$OPT:/opt" --rm public.ecr.aws/sam/build-provided:latest ./author/build-perl.sh "$PERL_VERSION"
+docker run \
+    -v "$ROOT:/var/task" \
+    -v "$OPT:/opt" \
+    --rm --platform linux/amd64 \
+    public.ecr.aws/sam/build-provided:latest \
+    ./author/build-perl.sh "$PERL_VERSION"
 
 # check the perl binary works on the emulation image
-docker run -v "$OPT:/opt" -v "$ROOT/examples/hello:/var/task" --rm public.ecr.aws/sam/emulation-provided.al2:latest handler.handle '{}'
+docker run \
+    -v "$OPT:/opt" \
+    --rm --platform linux/amd64 \
+    --entrypoint /opt/bin/perl \
+    public.ecr.aws/sam/emulation-provided:latest \
+    -V
 
 # create zip archive
 cd "$OPT"
 mkdir -p "$DIST"
-zip -9 -r "$DIST/perl-$TAG-runtime.zip" .
+zip -9 -r "$DIST/perl-$TAG-runtime-x86_64.zip" .

@@ -45,7 +45,6 @@ docker run \
     public.ecr.aws/sam/emulation-provided.al2:latest-x86_64 -V
 docker run \
     -v "$OPT-arm64:/opt" \
-    -v "$ROOT/examples/hello:/var/task" \
     --rm --platform linux/arm64 \
     --entrypoint /opt/bin/perl \
     public.ecr.aws/sam/emulation-provided.al2:latest-arm64 -V
