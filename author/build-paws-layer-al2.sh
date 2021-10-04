@@ -3,8 +3,8 @@
 ROOT=$(cd "$(dirname "$0")/../" && pwd)
 
 if [[ $# -eq 0 ]]; then
-    $0 5.32.1 5-32
     $0 5.34.0 5-34
+    $0 5.32.1 5-32
     exit 0
 fi
 
@@ -15,15 +15,30 @@ DIST="$ROOT/.perl-layer/dist"
 set -uex
 
 # clean up
-rm -rf "$OPT"
-mkdir -p "$OPT/lib/perl5/site_perl"
-rm -f "$DIST/perl-$TAG-paws-al2.zip"
+rm -rf "$OPT-x86_64"
+rm -rf "$OPT-arm64"
+mkdir -p "$OPT-x86_64/lib/perl5/site_perl"
+mkdir -p "$OPT-arm64/lib/perl5/site_perl"
+rm -f "$DIST/perl-$TAG-paws-al2-x86_64.zip"
+rm -f "$DIST/perl-$TAG-paws-al2-arm64.zip"
 
 docker run --rm \
     -v "$ROOT:/var/task" \
-    -v "$OPT/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
-    lambci/lambda:build-provided.al2 \
+    -v "$OPT-arm64/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
+    --platform linux/arm64 \
+    public.ecr.aws/sam/build-provided.al2:latest-arm64 \
     ./author/build-paws-al2.sh "$TAG"
-cd "$OPT"
+docker run --rm \
+    -v "$ROOT:/var/task" \
+    -v "$OPT-x86_64/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
+    --platform linux/amd64 \
+    public.ecr.aws/sam/build-provided.al2:latest-x86_64 \
+    ./author/build-paws-al2.sh "$TAG"
+
+cd "$OPT-x86_64"
 mkdir -p "$DIST"
-zip -9 -r "$DIST/perl-$TAG-paws-al2.zip" .
+zip -9 -r "$DIST/perl-$TAG-paws-al2-x86_64.zip" .
+
+cd "$OPT-arm64"
+mkdir -p "$DIST"
+zip -9 -r "$DIST/perl-$TAG-paws-al2-arm64.zip" .

@@ -9,7 +9,7 @@ use File::Basename 'basename';
 use JSON qw(decode_json);
 
 my $regions = do {
-    open my $fh, '<', "$FindBin::Bin/regions.txt" or die "$!";
+    open my $fh, '<', "$FindBin::Bin/regions-x86_64.txt" or die "$!";
     my @regions = sort { $a cmp $b } map { chomp; $_; } <$fh>;
     close($fh);
     \@regions;
@@ -19,7 +19,7 @@ sub publish {
     my ($suffix) = @_;
     my $pm = Parallel::ForkManager->new(10);
 
-    for my $zip(glob "$FindBin::Bin/../.perl-layer/dist/perl-*-$suffix.zip") {
+    for my $zip(glob "$FindBin::Bin/../.perl-layer/dist/perl-*-$suffix-x86_64.zip") {
         chomp(my $md5 = `openssl dgst -md5 -binary "$zip" | openssl enc -base64`);
         my $name = basename($zip, '.zip');
         next unless $name =~ /^perl-([0-9]+)-([0-9]+)/;
@@ -55,4 +55,4 @@ publish("paws");
 publish("runtime-al2");
 publish("paws-al2");
 
-1
+1;

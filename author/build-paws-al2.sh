@@ -5,14 +5,21 @@
 set -uex
 
 TAG=$1
+
+# provided.al2 lacks some development packages
+yum install -y expat-devel
+
+case $(uname -m) in
+  "x86_64")
+    ARCH=x86_64;;
+  "aarch64")
+    ARCH=arm64;;
+  *)
+    echo "unknown architecture: $(uname -m)"
+esac
+
 cd /opt
-unzip "/var/task/.perl-layer/dist/perl-$TAG-runtime-al2.zip"
-
-# workaround for "xlocale.h: No such file or directory"
-ln -s /usr/include/locale.h /usr/include/xlocale.h
-
-# build-provided.al2 lacks some development packages
-yum install -y expat-devel openssl openssl-devel
+unzip "/var/task/.perl-layer/dist/perl-$TAG-runtime-al2-$ARCH.zip"
 
 /opt/bin/cpanm --notest --no-man-pages Paws@0.44
 

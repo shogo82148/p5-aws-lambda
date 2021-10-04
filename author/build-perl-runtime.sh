@@ -3,11 +3,11 @@
 ROOT=$(cd "$(dirname "$0")/../" && pwd)
 
 if [[ $# -eq 0 ]]; then
-    $0 5.26.3 5-26
-    $0 5.28.3 5-28
-    $0 5.30.3 5-30
-    $0 5.32.1 5-32
     $0 5.34.0 5-34
+    $0 5.32.1 5-32
+    $0 5.30.3 5-30
+    $0 5.28.3 5-28
+    $0 5.26.3 5-26
     exit 0
 fi
 
@@ -23,10 +23,10 @@ mkdir -p "$OPT"
 rm -f "$DIST/perl-$TAG-runtime.zip"
 
 # build the perl binary
-docker run -v "$ROOT:/var/task" -v "$OPT:/opt" --rm lambci/lambda:build-provided ./author/build-perl.sh "$PERL_VERSION"
+docker run -v "$ROOT:/var/task" -v "$OPT:/opt" --rm public.ecr.aws/sam/build-provided:latest ./author/build-perl.sh "$PERL_VERSION"
 
-# check the perl binary works on the lambci/lambda:provided image
-docker run -v "$OPT:/opt" -v "$ROOT/examples/hello:/var/task" --rm lambci/lambda:provided handler.handle '{}'
+# check the perl binary works on the emulation image
+docker run -v "$OPT:/opt" -v "$ROOT/examples/hello:/var/task" --rm public.ecr.aws/sam/emulation-provided.al2:latest handler.handle '{}'
 
 # create zip archive
 cd "$OPT"

@@ -7,7 +7,7 @@ use FindBin;
 use Parallel::ForkManager;
 
 my $regions = do {
-    open my $fh, '<', "$FindBin::Bin/regions.txt" or die "$!";
+    open my $fh, '<', "$FindBin::Bin/regions-x86_64.txt" or die "$!";
     my @regions = sort { $a cmp $b } map { chomp; $_; } <$fh>;
     close($fh);
     \@regions;
