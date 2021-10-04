@@ -20,7 +20,7 @@ set -uex
 # clean up
 rm -rf "$OPT"
 mkdir -p "$OPT"
-rm -f "$DIST/perl-$TAG-runtime.zip"
+rm -f "$DIST/perl-$TAG-runtime-x86_64.zip"
 
 # build the perl binary
 docker run \

@@ -20,8 +20,6 @@ Resources:
         S3Key: !Sub ${Name}.zip
         S3ObjectVersion: !Ref ObjectVersion
       Description: !Sub "Perl ${PerlVersion} Runtime Layer on Amazon Linux 2"
-      CompatibleRuntimes:
-        - provided.al2
       LayerName: !Ref Name
       LicenseInfo: https://github.com/shogo82148/p5-aws-lambda/blob/main/LICENSE
   Permission:

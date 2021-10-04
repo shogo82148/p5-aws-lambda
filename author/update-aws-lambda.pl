@@ -6,12 +6,14 @@ use warnings;
 use FindBin;
 use Parallel::ForkManager;
 
-my $regions = do {
-    open my $fh, '<', "$FindBin::Bin/regions-x86_64.txt" or die "$!";
+my $archs = ['x86_64', 'arm64'];
+my $regions = +{ map {
+    my $arch = $_;
+    open my $fh, '<', "$FindBin::Bin/regions-$arch.txt" or die "$!";
     my @regions = sort { $a cmp $b } map { chomp; $_; } <$fh>;
     close($fh);
-    \@regions;
-};
+    ($arch => \@regions);
+} @$archs };
 
 my $versions = [
     "5.34",
@@ -39,7 +41,7 @@ $pm->run_on_finish(sub {
 });
 
 for my $version (@$versions) {
-    for my $region (@$regions) {
+    for my $region (@{$regions->{x86_64}}) {
         say STDERR "loading $version in $region...";
         $pm->start("$version/$region") and next;
 
@@ -59,26 +61,26 @@ for my $version (@$versions) {
 $pm->wait_all_children;
 
 # get the list of layers on Amazon Linux 2
-my $layers_al2 = {};
-my $pm_al2 = Parallel::ForkManager->new(10);
-$pm_al2->run_on_finish(sub {
+my $layers_al2_x86_64 = {};
+my $pm_al2_x86_64 = Parallel::ForkManager->new(10);
+$pm_al2_x86_64->run_on_finish(sub {
     my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
     my ($version, $region, $arn) = @$data;
-    $layers_al2->{$version} //= {};
-    $layers_al2->{$version}{$region} = $arn;
+    $layers_al2_x86_64->{$version} //= {};
+    $layers_al2_x86_64->{$version}{$region} = $arn;
 });
 
 for my $version (@$versions_al2) {
-    for my $region (@$regions) {
+    for my $region (@{$regions->{x86_64}}) {
         say STDERR "loading $version in $region...";
-        $pm_al2->start("$version/$region") and next;
+        $pm_al2_x86_64->start("$version/$region") and next;
 
-        my $runtime_stack = "lambda-@{[ $version =~ s/[.]/-/r ]}-runtime-al2";
+        my $runtime_stack = "lambda-$version-runtime-al2" =~ s/[._]/-/gr;
         chomp(my $runtime_arn = `aws --region $region cloudformation describe-stacks --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
-        my $paws_stack = "lambda-@{[ $version =~ s/[.]/-/r ]}-paws-al2";
+        my $paws_stack = "lambda-$version-paws-al2" =~ s/[._]/-/gr;
         chomp(my $paws_arn = `aws --region $region cloudformation describe-stacks --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
 
-        $pm_al2->finish(0, [$version, $region, {
+        $pm_al2_x86_64->finish(0, [$version, $region, {
             runtime_arn     => $runtime_arn,
             runtime_version => (split /:/, $runtime_arn)[-1],
             paws_arn        => $paws_arn,
@@ -86,15 +88,48 @@ for my $version (@$versions_al2) {
         }]);
     }
 }
+$pm_al2_x86_64->wait_all_children;
+
+# get the list of layers on Amazon Linux 2
+my $layers_al2 = {};
+my $pm_al2 = Parallel::ForkManager->new(10);
+$pm_al2->run_on_finish(sub {
+    my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
+    my ($version, $region, $arch, $arn) = @$data;
+    $layers_al2->{$version} //= {};
+    $layers_al2->{$version}{$region} //= {};
+    $layers_al2->{$version}{$region}{$arch} = $arn;
+});
+
+for my $version (@$versions_al2) {
+    for my $arch (@$archs) {
+        for my $region (@{$regions->{$arch}}) {
+            say STDERR "loading $version in $region...";
+            $pm_al2->start("$version/$region/$arch") and next;
+
+            my $runtime_stack = "lambda-$version-runtime-al2-$arch" =~ s/[._]/-/gr;
+            chomp(my $runtime_arn = `aws --region $region cloudformation describe-stacks --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
+            my $paws_stack = "lambda-$version-paws-al2-$arch" =~ s/[._]/-/gr;
+            chomp(my $paws_arn = `aws --region $region cloudformation describe-stacks --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
+
+            $pm_al2->finish(0, [$version, $region, $arch, {
+                runtime_arn     => $runtime_arn,
+                runtime_version => (split /:/, $runtime_arn)[-1],
+                paws_arn        => $paws_arn,
+                paws_version    => (split /:/, $paws_arn)[-1],
+            }]);
+        }
+    }
+}
 $pm_al2->wait_all_children;
 
 chomp(my $module_version = `cat $FindBin::Bin/../META.json | jq -r .version`);
 my $latest_perl = $versions_al2->[0];
 my $latest_perl_layer = $latest_perl =~ s/[.]/-/r;
-my $latest_runtime_arn = $layers_al2->{$latest_perl}{'us-east-1'}{runtime_arn};
-my $latest_runtime_version = $layers_al2->{$latest_perl}{'us-east-1'}{runtime_version};
-my $latest_paws_arn = $layers_al2->{$latest_perl}{'us-east-1'}{paws_arn};
-my $latest_paws_version = $layers_al2->{$latest_perl}{'us-east-1'}{paws_version};
+my $latest_runtime_arn = $layers_al2->{$latest_perl}{'us-east-1'}{x86_64}{runtime_arn};
+my $latest_runtime_version = $layers_al2->{$latest_perl}{'us-east-1'}{x86_64}{runtime_version};
+my $latest_paws_arn = $layers_al2->{$latest_perl}{'us-east-1'}{x86_64}{paws_arn};
+my $latest_paws_version = $layers_al2->{$latest_perl}{'us-east-1'}{x86_64}{paws_version};
 
 open my $fh, '>', "$FindBin::Bin/../lib/AWS/Lambda.pm" or die "$!";
 
@@ -127,7 +162,7 @@ print $fh "# This list is auto generated by authors/update-aws-lambda.pl; DO NOT
 print $fh "our \$LAYERS = {\n";
 for my $version (@$versions) {
     print $fh "    '$version' => {\n";
-    for my $region (@$regions) {
+    for my $region (@{$regions->{x86_64}}) {
         print $fh <<EOS
         '$region' => {
             runtime_arn     => "$layers->{$version}{$region}{runtime_arn}",
@@ -144,15 +179,19 @@ print $fh "};\n\n";
 print $fh "our \$LAYERS_AL2 = {\n";
 for my $version (@$versions_al2) {
     print $fh "    '$version' => {\n";
-    for my $region (@$regions) {
-        print $fh <<EOS
-        '$region' => {
-            runtime_arn     => "$layers_al2->{$version}{$region}{runtime_arn}",
-            runtime_version => $layers_al2->{$version}{$region}{runtime_version},
-            paws_arn        => "$layers_al2->{$version}{$region}{paws_arn}",
-            paws_version    => $layers_al2->{$version}{$region}{paws_version},
-        },
+    for my $arch (@$archs) {
+        print $fh "        '$arch' => {\n";
+        for my $region (@{$regions->{$arch}}) {
+            print $fh <<EOS
+            '$region' => {
+                runtime_arn     => "$layers_al2->{$version}{$region}{$arch}{runtime_arn}",
+                runtime_version => $layers_al2->{$version}{$region}{$arch}{runtime_version},
+                paws_arn        => "$layers_al2->{$version}{$region}{$arch}{paws_arn}",
+                paws_version    => $layers_al2->{$version}{$region}{$arch}{paws_version},
+            },
 EOS
+        }
+        print $fh "        },\n";
     }
     print $fh "    },\n";
 }
@@ -176,18 +215,21 @@ sub print_paws_arn {
 }
 
 sub get_layer_info_al2 {
-    my ($version, $region) = @_;
-    return $LAYERS_AL2->{$version}{$region};
+    my ($version, $region, $arch) = @_;
+    $arch //= 'x86_64';
+    return $LAYERS_AL2->{$version}{$arch}{$region};
 }
 
 sub print_runtime_arn_al2 {
-    my ($version, $region) = @_;
-    print $LAYERS_AL2->{$version}{$region}{runtime_arn};
+    my ($version, $region, $arch) = @_;
+    $arch //= 'x86_64';
+    print $LAYERS_AL2->{$version}{$arch}{$region}{runtime_arn};
 }
 
 sub print_paws_arn_al2 {
-    my ($version, $region) = @_;
-    print $LAYERS_AL2->{$version}{$region}{paws_arn};
+    my ($version, $region, $arch) = @_;
+    $arch //= 'x86_64';
+    print $LAYERS_AL2->{$version}{$arch}{$region}{paws_arn};
 }
 
 1;
@@ -207,6 +249,7 @@ Save the following Perl script as C<handler.pl>.
         my ($payload, $context) = @_;
         return $payload;
     }
+    1;
 
 and then, zip the script.
 
@@ -220,13 +263,13 @@ Finally, create new function using awscli.
         --handler "handler.handle" \
         --runtime provided.al2 \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-runtime-al2:@@LATEST_RUNTIME_VERSION@@"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-runtime-al2-x86_64:@@LATEST_RUNTIME_VERSION@@"
 
 =head1 DESCRIPTION
 
 This package makes it easy to run AWS Lambda Functions written in Perl.
 
-=head2 Use Prebuild Public Lambda Layers
+=head2 Use Pre-built Public Lambda Layers
 
 =over
 
@@ -248,7 +291,7 @@ In the "Designer" section of your function dashboard, select the B<Layers> box.
 
 =item 5
 
-Scroll down to the "Referenced Layers" section and click B<Add a layer>.
+Scroll down to the "Layers" section and click B<Add a layer>.
 
 =item 6
 
@@ -274,6 +317,7 @@ You can get the layer ARN in your script by using C<get_layer_info>.
     my $info = AWS::Lambda::get_layer_info_al2(
         "@@LATEST_PERL@@",      # Perl Version
         "us-east-1", # Region
+        "x86_64",    # Architecture ("x86_64" or "arm64", optional, the default is "x86_64")
     );
     say $info->{runtime_arn};     # @@LATEST_RUNTIME_ARN@@
     say $info->{runtime_version}; # @@LATEST_RUNTIME_VERSION@@
@@ -293,8 +337,12 @@ EOS
 
 for my $version (@$versions_al2) {
     print $fh "=item Perl $version\n\n=over\n\n";
-    for my $region (@$regions) {
-        print $fh "=item C<$layers_al2->{$version}{$region}{runtime_arn}>\n\n";
+    for my $arch(@$archs) {
+        print $fh "=item $arch architecture\n\n=over\n\n";
+        for my $region (@{$regions->{$arch}}) {
+            print $fh "=item C<$layers_al2->{$version}{$region}{$arch}{runtime_arn}>\n\n";
+        }
+        print $fh "=back\n\n";
     }
     print $fh "=back\n\n";
 }
@@ -302,7 +350,7 @@ for my $version (@$versions_al2) {
 printfh(<<'EOS');
 =back
 
-=head2 Use Prebuilt Zip Archives
+=head2 Use Pre-built Zip Archives
 
 =over
 
@@ -334,9 +382,9 @@ Use the layer created. For detail, see Use Prebuilt Public Lambda Layer section.
 
 URLs for Zip archives are here.
 
-C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime-al2.zip>
+C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime-al2-$ARCHITECTURE.zip>
 
-=head2 Use Prebuilt Docker Images
+=head2 Use Pre-built Docker Images
 
 Prebuilt Docker Images based on L<https://gallery.ecr.aws/lambda/provided> are available.
 You can pull from L<https://gallery.ecr.aws/shogo82148/p5-aws-lambda> or L<https://hub.docker.com/r/shogo82148/p5-aws-lambda>,
@@ -392,7 +440,7 @@ and build zip archives to deploy.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:@@LATEST_PERL@@.al2 \
         handler.handle '{"some":"event"}'
 
-=head2 AWS XRay SUPPORT
+=head2 AWS X-Ray SUPPORT
 
 L<AWS X-Ray|https://aws.amazon.com/xray/> is a service that collects data about requests that your application serves.
 You can trace AWS Lambda requests and sends segment data with pre-install module L<AWS::XRay>.
@@ -434,8 +482,8 @@ Add the perl-runtime layer and the perl-paws layer into your lambda function.
         --runtime provided.al2 \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-runtime-al2:@@LATEST_RUNTIME_VERSION@@" \
-            "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-paws-al2:@@LATEST_PAWS_VERSION@@"
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-runtime-al2-x86_64:@@LATEST_RUNTIME_VERSION@@" \
+            "arn:aws:lambda:$REGION:445285296882:layer:perl-@@LATEST_PERL_LAYER@@-paws-al2-x86_64:@@LATEST_PAWS_VERSION@@"
 
 Now, you can use L<Paws> to call AWS API from your Lambda function.
 
@@ -452,8 +500,12 @@ EOS
 
 for my $version (@$versions_al2) {
     print $fh "=item Perl $version\n\n=over\n\n";
-    for my $region (@$regions) {
-        print $fh "=item C<$layers_al2->{$version}{$region}{paws_arn}>\n\n";
+    for my $arch(@$archs) {
+        print $fh "=item $arch architecture\n\n=over\n\n";
+        for my $region (@{$regions->{$arch}}) {
+            print $fh "=item C<$layers_al2->{$version}{$region}{$arch}{paws_arn}>\n\n";
+        }
+        print $fh "=back\n\n";
     }
     print $fh "=back\n\n";
 }
@@ -463,7 +515,7 @@ printfh(<<'EOS');
 
 URLs for Zip archive are here.
 
-C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-paws-al2.zip>
+C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-paws-al2-$ARCHITECTURE.zip>
 
 =head2 Use Prebuilt Docker Images for Paws
 
@@ -503,8 +555,11 @@ install the modules into C</opt/lib/perl5/site_perl> in the layer.
 =head1 LEGACY CUSTOM RUNTIME ON AMAZON LINUX
 
 We also provide the layers for legacy custom runtime as known as "provided".
+These layers are only for backward compatibility.
+We recommend to migrate to Amazon Linux 2.
+We may stop maintenance without any notice.
 
-=head2 Prebuilt Public Lambda Layers for Amazon Linux
+=head2 Pre-built Public Lambda Layers for Amazon Linux
 
 The list of all available layer ARN is here:
 
@@ -514,7 +569,7 @@ EOS
 
 for my $version (@$versions) {
     print $fh "=item Perl $version\n\n=over\n\n";
-    for my $region (@$regions) {
+    for my $region (@{$regions->{x86_64}}) {
         print $fh "=item C<$layers->{$version}{$region}{runtime_arn}>\n\n";
     }
     print $fh "=back\n\n";
@@ -531,7 +586,7 @@ EOS
 
 for my $version (@$versions) {
     print $fh "=item Perl $version\n\n=over\n\n";
-    for my $region (@$regions) {
+    for my $region (@{$regions->{x86_64}}) {
         print $fh "=item C<$layers->{$version}{$region}{paws_arn}>\n\n";
     }
     print $fh "=back\n\n";
@@ -540,7 +595,7 @@ for my $version (@$versions) {
 printfh(<<'EOS');
 =back
 
-=head2 Prebuilt Zip Archives for Amazon Linux
+=head2 Pre-built Zip Archives for Amazon Linux
 
 URLs of zip archives are here:
 
@@ -549,6 +604,59 @@ C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-
 And Paws:
 
 C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-paws.zip>
+
+=head1 LEGACY CUSTOM RUNTIME ON AMAZON LINUX 2
+
+Previously, we provided the layers that named without CPU architectures.
+These layers are compatible with x86_64 and only for backward compatibility.
+We recommend to specify the CPU architecture.
+We may stop maintenance without any notice.
+
+=head2 Pre-built Legacy Public Lambda Layers for Amazon Linux 2
+
+The list of all available layer ARN is here:
+
+=over
+
+EOS
+
+for my $version (@$versions_al2) {
+    print $fh "=item Perl $version\n\n=over\n\n";
+    for my $region (@{$regions->{x86_64}}) {
+        print $fh "=item C<$layers_al2_x86_64->{$version}{$region}{runtime_arn}>\n\n";
+    }
+    print $fh "=back\n\n";
+}
+
+printfh(<<'EOS');
+=back
+
+And Paws layers:
+
+=over
+
+EOS
+
+for my $version (@$versions_al2) {
+    print $fh "=item Perl $version\n\n=over\n\n";
+    for my $region (@{$regions->{x86_64}}) {
+        print $fh "=item C<$layers_al2_x86_64->{$version}{$region}{paws_arn}>\n\n";
+    }
+    print $fh "=back\n\n";
+}
+
+printfh(<<'EOS');
+=back
+
+=head2 Pre-built Legacy Zip Archives for Amazon Linux 2 x86_64
+
+URLs of zip archives are here:
+
+C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-runtime-al2.zip>
+
+And Paws:
+
+C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-paws-al2.zip>
 
 =head1 SEE ALSO
 

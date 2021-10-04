@@ -28,4 +28,5 @@ on 'develop' => sub {
     requires 'Test::MinimumVersion::Fast';
     requires 'Mojolicious';
     requires 'Dancer2';
+    requires 'Parallel::ForkManager';
 };

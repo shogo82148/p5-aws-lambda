@@ -20,7 +20,7 @@ set -uex
 # clean up
 rm -rf "$OPT"
 mkdir -p "$OPT/lib/perl5/site_perl"
-rm -f "$DIST/perl-$TAG-paws.zip"
+rm -f "$DIST/perl-$TAG-paws-x86_64.zip"
 
 docker run --rm \
     -v "$ROOT:/var/task" \
@@ -29,4 +29,4 @@ docker run --rm \
     ./author/build-paws.sh "$TAG"
 cd "$OPT"
 mkdir -p "$DIST"
-zip -9 -r "$DIST/perl-$TAG-paws.zip" .
+zip -9 -r "$DIST/perl-$TAG-paws-x86_64.zip" .
