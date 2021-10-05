@@ -2,14 +2,16 @@
 # You add your function code and dependencies to the base image and
 # then run it as a container image on AWS Lambda.
 
-# the amazon/aws-lambda-provided:al2 image doesn't have curl and unzip,
-# so we use the build-provided.al2 image here
-FROM lambci/lambda:build-provided.al2
+# the amazon/aws-lambda-provided:al2 image doesn't have unzip,
+# so we use the amazonlinux:2 image here
+FROM public.ecr.aws/amazonlinux/amazonlinux:2
+RUN yum install -y curl unzip
 RUN cd /opt && \
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-5-32-runtime-al2.zip -o runtime.zip && \
+    case $(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: $(uname -m)"; exit 1;; esac && \
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-5-32-runtime-al2-$ARCH.zip -o runtime.zip && \
     unzip runtime.zip && rm runtime.zip
 
-FROM amazon/aws-lambda-provided:al2
+FROM public.ecr.aws/lambda/provided:al2
 
 # Use the custom runtime perl in preference to the system perl
 ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
