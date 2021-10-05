@@ -37,6 +37,7 @@
             "Dancer2" : "0",
             "Minilla" : "0",
             "Mojolicious" : "0",
+            "Parallel::ForkManager" : "0",
             "Software::License::MIT" : "0",
             "Test::CPAN::Meta" : "0",
             "Test::MinimumVersion::Fast" : "0.04",

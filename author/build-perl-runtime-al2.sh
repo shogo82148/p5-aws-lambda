@@ -3,8 +3,8 @@
 ROOT=$(cd "$(dirname "$0")/../" && pwd)
 
 if [[ $# -eq 0 ]]; then
-    $0 5.32.1 5-32
     $0 5.34.0 5-34
+    $0 5.32.1 5-32
     exit 0
 fi
 
@@ -15,17 +15,45 @@ DIST="$ROOT/.perl-layer/dist"
 set -uex
 
 # clean up
-rm -rf "$OPT"
-mkdir -p "$OPT"
-rm -f "$DIST/perl-$TAG-runtime-al2.zip"
+rm -rf "$OPT-x86_64"
+rm -rf "$OPT-arm64"
+mkdir -p "$OPT-x86_64"
+mkdir -p "$OPT-arm64"
+rm -f "$DIST/perl-$TAG-runtime-al2-x86_64.zip"
+rm -f "$DIST/perl-$TAG-runtime-al2-arm64.zip"
 
 # build the perl binary
-docker run -v "$ROOT:/var/task" -v "$OPT:/opt" --rm lambci/lambda:build-provided.al2 ./author/build-perl-al2.sh "$PERL_VERSION"
+docker run \
+    -v "$ROOT:/var/task" \
+    -v "$OPT-x86_64:/opt" \
+    --rm --platform linux/amd64 \
+    public.ecr.aws/sam/build-provided.al2:latest-x86_64 \
+    ./author/build-perl-al2.sh "$PERL_VERSION"
+docker run \
+    -v "$ROOT:/var/task" \
+    -v "$OPT-arm64:/opt" \
+    --rm --platform linux/arm64 \
+    public.ecr.aws/sam/build-provided.al2:latest-arm64 \
+    ./author/build-perl-al2.sh "$PERL_VERSION"
 
-# check the perl binary works on the lambci/lambda:provided image
-docker run -v "$OPT:/opt" -v "$ROOT/examples/hello:/var/task" --rm --entrypoint /opt/bin/perl lambci/lambda:provided.al2 -V
+# check the perl binary works on the emulation images
+docker run \
+    -v "$OPT-x86_64:/opt" \
+    -v "$ROOT/examples/hello:/var/task" \
+    --rm --platform linux/amd64 \
+    --entrypoint /opt/bin/perl \
+    public.ecr.aws/sam/emulation-provided.al2:latest-x86_64 -V
+docker run \
+    -v "$OPT-arm64:/opt" \
+    --rm --platform linux/arm64 \
+    --entrypoint /opt/bin/perl \
+    public.ecr.aws/sam/emulation-provided.al2:latest-arm64 -V
 
 # create zip archive
-cd "$OPT"
+cd "$OPT-x86_64"
 mkdir -p "$DIST"
-zip -9 -r "$DIST/perl-$TAG-runtime-al2.zip" .
+zip -9 -r "$DIST/perl-$TAG-runtime-al2-x86_64.zip" .
+
+cd "$OPT-arm64"
+mkdir -p "$DIST"
+zip -9 -r "$DIST/perl-$TAG-runtime-al2-arm64.zip" .
