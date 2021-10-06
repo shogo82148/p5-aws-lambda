@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.30 2021-10-06T00:13:52Z
     - add amd64 compatible layers
     - pre-install some modules
 
