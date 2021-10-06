@@ -215,7 +215,7 @@ The following modules are pre-installed for convenience.
 - [IO::Socket::SSL](https://metacpan.org/pod/IO%3A%3ASocket%3A%3ASSL)
 - [Mozilla::CA](https://metacpan.org/pod/Mozilla%3A%3ACA)
 
-    [Paws](https://metacpan.org/pod/Paws) is optional. See the "Paws SUPPORT" section.
+[Paws](https://metacpan.org/pod/Paws) is optional. See the "Paws SUPPORT" section.
 
 ## AWS X-Ray SUPPORT
 
@@ -737,15 +737,3 @@ Copyright (C) Ichinose Shogo
 # AUTHOR
 
 Ichinose Shogo
-
-# POD ERRORS
-
-Hey! **The above document had some coding errors, which are explained below:**
-
-- Around line 1387:
-
-    '=item' outside of any '=over'
-
-- Around line 1411:
-
-    You forgot a '=back' before '=head2'

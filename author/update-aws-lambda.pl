@@ -444,6 +444,8 @@ and build zip archives to deploy.
 
 The following modules are pre-installed for convenience.
 
+=over
+
 =item L<AWS::Lambda>
 
 =item L<AWS::XRay>
@@ -465,6 +467,8 @@ The following modules are pre-installed for convenience.
 =item L<IO::Socket::SSL>
 
 =item L<Mozilla::CA>
+
+=back
 
 L<Paws> is optional. See the "Paws SUPPORT" section.
 

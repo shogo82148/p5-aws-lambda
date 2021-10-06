@@ -3,7 +3,7 @@ use 5.026000;
 use strict;
 use warnings;
 
-our $VERSION = "0.0.29";
+our $VERSION = "0.0.30";
 
 # the context of Lambda Function
 our $context;
@@ -1384,6 +1384,8 @@ and build zip archives to deploy.
 
 The following modules are pre-installed for convenience.
 
+=over
+
 =item L<AWS::Lambda>
 
 =item L<AWS::XRay>
@@ -1405,6 +1407,8 @@ The following modules are pre-installed for convenience.
 =item L<IO::Socket::SSL>
 
 =item L<Mozilla::CA>
+
+=back
 
 L<Paws> is optional. See the "Paws SUPPORT" section.
 
