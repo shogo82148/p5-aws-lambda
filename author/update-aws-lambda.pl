@@ -440,6 +440,34 @@ and build zip archives to deploy.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:@@LATEST_PERL@@.al2 \
         handler.handle '{"some":"event"}'
 
+=head2 Pre-installed modules
+
+The following modules are pre-installed for convenience.
+
+=item L<AWS::Lambda>
+
+=item L<AWS::XRay>
+
+=item L<JSON>
+
+=item L<Cpanel::JSON::XS>
+
+=item L<JSON::MaybeXS>
+
+=item L<YAML>
+
+=item L<YAML::Tiny>
+
+=item L<YAML::XS>
+
+=item L<Net::SSLeay>
+
+=item L<IO::Socket::SSL>
+
+=item L<Mozilla::CA>
+
+L<Paws> is optional. See the "Paws SUPPORT" section.
+
 =head2 AWS X-Ray SUPPORT
 
 L<AWS X-Ray|https://aws.amazon.com/xray/> is a service that collects data about requests that your application serves.

@@ -199,6 +199,24 @@ and build zip archives to deploy.
     docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.34.al2 \
         handler.handle '{"some":"event"}'
 
+## Pre-installed modules
+
+The following modules are pre-installed for convenience.
+
+- [AWS::Lambda](https://metacpan.org/pod/AWS%3A%3ALambda)
+- [AWS::XRay](https://metacpan.org/pod/AWS%3A%3AXRay)
+- [JSON](https://metacpan.org/pod/JSON)
+- [Cpanel::JSON::XS](https://metacpan.org/pod/Cpanel%3A%3AJSON%3A%3AXS)
+- [JSON::MaybeXS](https://metacpan.org/pod/JSON%3A%3AMaybeXS)
+- [YAML](https://metacpan.org/pod/YAML)
+- [YAML::Tiny](https://metacpan.org/pod/YAML%3A%3ATiny)
+- [YAML::XS](https://metacpan.org/pod/YAML%3A%3AXS)
+- [Net::SSLeay](https://metacpan.org/pod/Net%3A%3ASSLeay)
+- [IO::Socket::SSL](https://metacpan.org/pod/IO%3A%3ASocket%3A%3ASSL)
+- [Mozilla::CA](https://metacpan.org/pod/Mozilla%3A%3ACA)
+
+    [Paws](https://metacpan.org/pod/Paws) is optional. See the "Paws SUPPORT" section.
+
 ## AWS X-Ray SUPPORT
 
 [AWS X-Ray](https://aws.amazon.com/xray/) is a service that collects data about requests that your application serves.
@@ -719,3 +737,15 @@ Copyright (C) Ichinose Shogo
 # AUTHOR
 
 Ichinose Shogo
+
+# POD ERRORS
+
+Hey! **The above document had some coding errors, which are explained below:**
+
+- Around line 1387:
+
+    '=item' outside of any '=over'
+
+- Around line 1411:
+
+    You forgot a '=back' before '=head2'
