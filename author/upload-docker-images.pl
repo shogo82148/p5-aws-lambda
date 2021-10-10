@@ -30,7 +30,7 @@ ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 RUN ln -s /opt/bootstrap /var/runtime/bootstrap
 EOF
         },
@@ -64,7 +64,7 @@ RUN yum install -y curl unzip
 RUN cd /opt && \\
     case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-\$ARCH.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 
 FROM public.ecr.aws/lambda/provided:al2
 
@@ -79,7 +79,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'amazon/aws-lambda-provided:al2',
+                'public.ecr.aws/lambda/provided:al2',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
             );
         },
@@ -105,11 +105,11 @@ ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 RUN ln -s /opt/bootstrap /var/runtime/bootstrap
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
-    unzip paws.zip && rm paws.zip
+    unzip -o paws.zip && rm paws.zip
 EOF
         },
         'dependencies' => sub {
@@ -143,14 +143,14 @@ RUN yum install -y curl unzip
 RUN cd /opt && \\
     case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-\$ARCH.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 
 FROM public.ecr.aws/amazonlinux/amazonlinux:2
 RUN yum install -y curl unzip
 RUN cd /opt && \\
     case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-\$ARCH.zip -o paws.zip && \\
-    unzip paws.zip && rm paws.zip
+    unzip -o paws.zip && rm paws.zip
 
 FROM public.ecr.aws/lambda/provided:al2
 
@@ -166,7 +166,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'amazon/aws-lambda-provided:al2',
+                'public.ecr.aws/lambda/provided:al2',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip",
             );
@@ -189,7 +189,7 @@ ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 EOF
         },
         'dependencies' => sub {
@@ -218,7 +218,7 @@ ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip && \\
+    unzip -o runtime.zip && rm runtime.zip && \\
     # workaround for "xlocale.h: No such file or directory"
     ln -s /usr/include/locale.h /usr/include/xlocale.h && \\
     # build-provided.al2 lacks some development packages
@@ -251,10 +251,10 @@ ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
-    unzip paws.zip && rm paws.zip
+    unzip -o paws.zip && rm paws.zip
 EOF
         },
         'dependencies' => sub {
@@ -284,14 +284,14 @@ ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip && \\
+    unzip -o runtime.zip && rm runtime.zip && \\
     # workaround for "xlocale.h: No such file or directory"
     ln -s /usr/include/locale.h /usr/include/xlocale.h && \\
     # build-provided.al2 lacks some development packages
     yum install -y expat-devel openssl openssl-devel && yum clean all
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
-    unzip paws.zip && rm paws.zip
+    unzip -o paws.zip && rm paws.zip
 EOF
         },
         'dependencies' => sub {
@@ -319,7 +319,7 @@ FROM lambci/lambda:provided
 USER root
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 USER sbx_user1051
 EOF
         },
@@ -347,7 +347,7 @@ EOF
 FROM lambci/lambda:build-provided.al2
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 
 FROM lambci/lambda:provided.al2
 COPY --from=0 /opt /opt
@@ -377,10 +377,10 @@ FROM lambci/lambda:provided
 USER root
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
-    unzip paws.zip && rm paws.zip
+    unzip -o paws.zip && rm paws.zip
 USER sbx_user1051
 EOF
         },
@@ -409,12 +409,12 @@ EOF
 FROM lambci/lambda:build-provided.al2
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
-    unzip runtime.zip && rm runtime.zip
+    unzip -o runtime.zip && rm runtime.zip
 
 FROM lambci/lambda:build-provided.al2
 RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
-    unzip paws.zip && rm paws.zip
+    unzip -o paws.zip && rm paws.zip
 
 FROM lambci/lambda:provided.al2
 COPY --from=0 /opt /opt
@@ -460,6 +460,7 @@ sub build {
     my $t = localtime;
     my $date = $t->ymd(".");
 
+    say STDERR "checking updates...";
     check_updates();
 
     for my $perl(@$perl_versions) {
@@ -505,13 +506,18 @@ sub check_updates {
         # for container format
         'amazon/aws-lambda-provided:alami',
         'amazon/aws-lambda-provided:al2',
+
+        # for aws provided images
+        'public.ecr.aws/amazonlinux/amazonlinux:2',
+        'public.ecr.aws/lambda/provided:al2',
     );
     for my $image(@images) {
-        docker('pull', $image);
+        say STDERR "inspect $image";
         $state->{$image} = inspect_id($image);
     }
 
     for my $perl(@$perl_versions) {
+        say STDERR "$perl on provided";
         my $version = $perl =~ s/[.]/-/r;
         my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip";
         $state->{$runtime} = fetch_etag($runtime);
@@ -520,6 +526,7 @@ sub check_updates {
     }
 
     for my $perl(@$perl_versions_al2) {
+        say STDERR "$perl on provided.al2";
         my $version = $perl =~ s/[.]/-/r;
         my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip";
         $state->{$runtime} = fetch_etag($runtime);
@@ -546,7 +553,15 @@ sub docker {
 
 sub inspect_id {
     my $image = shift;
-    return decode_json(run('docker', 'image', 'inspect', $image))->[0]->{Id};
+    my $manifest = decode_json(run('docker', 'manifest', 'inspect', $image));
+    my $mediaType = lc $manifest->{mediaType};
+    if ($mediaType eq 'application/vnd.docker.distribution.manifest.v2+json') {
+        return $manifest->{config}{digest};
+    }
+    if ($mediaType eq 'application/vnd.docker.distribution.manifest.list.v2+json') {
+        return join "\n", sort map {$_->{digest}} @{$manifest->{manifests}};
+    }
+    return '';
 }
 
 sub fetch_etag {
