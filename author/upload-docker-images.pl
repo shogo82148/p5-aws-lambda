@@ -79,7 +79,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'amazon/aws-lambda-provided:al2',
+                'public.ecr.aws/lambda/provided:al2',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
             );
         },
@@ -166,7 +166,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'amazon/aws-lambda-provided:al2',
+                'public.ecr.aws/lambda/provided:al2',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip",
             );
@@ -460,6 +460,7 @@ sub build {
     my $t = localtime;
     my $date = $t->ymd(".");
 
+    say STDERR "checking updates...";
     check_updates();
 
     for my $perl(@$perl_versions) {
@@ -505,13 +506,18 @@ sub check_updates {
         # for container format
         'amazon/aws-lambda-provided:alami',
         'amazon/aws-lambda-provided:al2',
+
+        # for aws provided images
+        'public.ecr.aws/amazonlinux/amazonlinux:2',
+        'public.ecr.aws/lambda/provided:al2',
     );
     for my $image(@images) {
-        docker('pull', $image);
+        say STDERR "inspect $image";
         $state->{$image} = inspect_id($image);
     }
 
     for my $perl(@$perl_versions) {
+        say STDERR "$perl on provided";
         my $version = $perl =~ s/[.]/-/r;
         my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip";
         $state->{$runtime} = fetch_etag($runtime);
@@ -520,6 +526,7 @@ sub check_updates {
     }
 
     for my $perl(@$perl_versions_al2) {
+        say STDERR "$perl on provided.al2";
         my $version = $perl =~ s/[.]/-/r;
         my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip";
         $state->{$runtime} = fetch_etag($runtime);
@@ -546,7 +553,15 @@ sub docker {
 
 sub inspect_id {
     my $image = shift;
-    return decode_json(run('docker', 'image', 'inspect', $image))->[0]->{Id};
+    my $manifest = decode_json(run('docker', 'manifest', 'inspect', $image));
+    my $mediaType = lc $manifest->{mediaType};
+    if ($mediaType eq 'application/vnd.docker.distribution.manifest.v2+json') {
+        return $manifest->{config}{digest};
+    }
+    if ($mediaType eq 'application/vnd.docker.distribution.manifest.list.v2+json') {
+        return join "\n", sort map {$_->{digest}} @{$manifest->{manifests}};
+    }
+    return '';
 }
 
 sub fetch_etag {
