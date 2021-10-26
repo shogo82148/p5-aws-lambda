@@ -10,4 +10,4 @@ while read -r REGION; do
 aws --region "$REGION" cloudformation deploy \
     --stack-name "lambda-perl5-runtime-s3" \
     --template-file "${ROOT}/cfn-s3.yml" || true
-done < "$ROOT/regions.txt"
+done < "$ROOT/regions-x86_64.txt"
