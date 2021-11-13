@@ -80,7 +80,8 @@ EOF
             $version =~ s/[.]/-/;
             return (
                 'public.ecr.aws/lambda/provided:al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x86_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
             );
         },
         'tag' => sub {
@@ -167,8 +168,10 @@ EOF
             $version =~ s/[.]/-/;
             return (
                 'public.ecr.aws/lambda/provided:al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x86_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-x86_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-arm64.zip",
             );
         },
         'tag' => sub {
@@ -182,7 +185,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return <<"EOF";
-FROM lambci/lambda:build-provided
+FROM public.ecr.aws/shogo82148/lambda-provided:build-alami
 
 # Use the custom runtime perl in preference to the system perl
 ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -196,7 +199,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'lambci/lambda:build-provided',
+                'public.ecr.aws/shogo82148/lambda-provided:build-alami',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
             );
         },
@@ -211,26 +214,29 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return <<"EOF";
-FROM lambci/lambda:build-provided.al2
+FROM public.ecr.aws/shogo82148/lambda-provided:build-al2
 
 # Use the custom runtime perl in preference to the system perl
 ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
-    unzip -o runtime.zip && rm runtime.zip && \\
-    # workaround for "xlocale.h: No such file or directory"
-    ln -s /usr/include/locale.h /usr/include/xlocale.h && \\
-    # build-provided.al2 lacks some development packages
+# workaround for "xlocale.h: No such file or directory"
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h && \\
+# build-provided.al2 lacks some development packages
     yum install -y expat-devel openssl openssl-devel && yum clean all
+
+RUN cd /opt && \\
+    case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-\$ARCH.zip -o runtime.zip && \\
+    unzip -o runtime.zip && rm runtime.zip
 EOF
         },
         'dependencies' => sub {
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'lambci/lambda:build-provided.al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
+                'public.ecr.aws/shogo82148/lambda-provided:build-al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x64_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
             );
         },
         'tag' => sub {
@@ -244,7 +250,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return <<"EOF";
-FROM lambci/lambda:build-provided
+FROM public.ecr.aws/shogo82148/lambda-provided:build-alami
 
 # Use the custom runtime perl in preference to the system perl
 ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -261,7 +267,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'lambci/lambda:build-provided',
+                'public.ecr.aws/shogo82148/lambda-provided:build-alami',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip",
             );
@@ -277,20 +283,23 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return <<"EOF";
-FROM lambci/lambda:build-provided.al2
+FROM public.ecr.aws/shogo82148/lambda-provided:build-al2
 
 # Use the custom runtime perl in preference to the system perl
 ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
-    unzip -o runtime.zip && rm runtime.zip && \\
-    # workaround for "xlocale.h: No such file or directory"
-    ln -s /usr/include/locale.h /usr/include/xlocale.h && \\
-    # build-provided.al2 lacks some development packages
+# workaround for "xlocale.h: No such file or directory"
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h && \\
+# build-provided.al2 lacks some development packages
     yum install -y expat-devel openssl openssl-devel && yum clean all
+
 RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
+    case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-\$ARCH.zip -o runtime.zip && \\
+    unzip -o runtime.zip && rm runtime.zip
+RUN cd /opt && \\
+    case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-\$ARCH.zip -o paws.zip && \\
     unzip -o paws.zip && rm paws.zip
 EOF
         },
@@ -298,9 +307,11 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'lambci/lambda:build-provided.al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip",
+                'public.ecr.aws/shogo82148/lambda-provided:build-al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x84_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-x86_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-arm64.zip",
             );
         },
         'tag' => sub {
@@ -314,7 +325,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return <<"EOF";
-FROM lambci/lambda:provided
+FROM public.ecr.aws/shogo82148/lambda-provided:alami
 
 USER root
 RUN cd /opt && \\
@@ -327,7 +338,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'lambci/lambda:provided',
+                'public.ecr.aws/shogo82148/lambda-provided:alami',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
             );
         },
@@ -344,12 +355,14 @@ EOF
             return <<"EOF"
 # the provided.al2 image doesn't have curl and unzip,
 # so we use the build-provided.al2 image here
-FROM lambci/lambda:build-provided.al2
+FROM public.ecr.aws/amazonlinux/amazonlinux:2
+RUN yum install -y curl unzip
 RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
+    case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-\$ARCH.zip -o runtime.zip && \\
     unzip -o runtime.zip && rm runtime.zip
 
-FROM lambci/lambda:provided.al2
+FROM public.ecr.aws/shogo82148/lambda-provided:al2
 COPY --from=0 /opt /opt
 EOF
         },
@@ -357,8 +370,9 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'lambci/lambda:provided.al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
+                'public.ecr.aws/shogo82148/lambda-provided:al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x86_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
             );
         },
         'tag' => sub {
@@ -372,7 +386,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return <<"EOF"
-FROM lambci/lambda:provided
+FROM public.ecr.aws/shogo82148/lambda-provided:alami
 
 USER root
 RUN cd /opt && \\
@@ -388,7 +402,7 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'lambci/lambda:provided',
+                'public.ecr.aws/shogo82148/lambda-provided:alami',
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
                 "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip",
             );
@@ -405,18 +419,22 @@ EOF
             $version =~ s/[.]/-/;
             return <<"EOF"
 # the provided.al2 image doesn't have curl and unzip,
-# so we use the build-provided.al2 image here
-FROM lambci/lambda:build-provided.al2
+# so we use the public.ecr.aws/amazonlinux/amazonlinux:2 image here
+FROM public.ecr.aws/amazonlinux/amazonlinux:2
+RUN yum install -y curl unzip
 RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip -o runtime.zip && \\
+    case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-\$ARCH.zip -o runtime.zip && \\
     unzip -o runtime.zip && rm runtime.zip
 
-FROM lambci/lambda:build-provided.al2
+FROM public.ecr.aws/amazonlinux/amazonlinux:2
+RUN yum install -y curl unzip
 RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip -o paws.zip && \\
+    case \$(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: \$(uname -m)"; exit 1;; esac && \\
+    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-\$ARCH.zip -o paws.zip && \\
     unzip -o paws.zip && rm paws.zip
 
-FROM lambci/lambda:provided.al2
+FROM public.ecr.aws/shogo82148/lambda-provided:al2
 COPY --from=0 /opt /opt
 COPY --from=1 /opt /opt
 EOF
@@ -425,9 +443,11 @@ EOF
             my $version = shift;
             $version =~ s/[.]/-/;
             return (
-                'lambci/lambda:provided.al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip",
+                'public.ecr.aws/shogo82148/lambda-provided:al2',
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x86_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-x86_64.zip",
+                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-arm64.zip",
             );
         },
         'tag' => sub {
@@ -496,12 +516,12 @@ sub check_updates {
     # image dependencies
     my @images = (
         # for lambci provided
-        'lambci/lambda:build-provided',
-        'lambci/lambda:provided',
+        'public.ecr.aws/shogo82148/lambda-provided:build-alami',
+        'public.ecr.aws/shogo82148/lambda-provided:alami',
 
         # for lambci provided.al2
-        'lambci/lambda:build-provided.al2',
-        'lambci/lambda:provided.al2',
+        'public.ecr.aws/shogo82148/lambda-provided:build-al2',
+        'public.ecr.aws/shogo82148/lambda-provided:al2',
 
         # for container format
         'amazon/aws-lambda-provided:alami',

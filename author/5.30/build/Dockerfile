@@ -1,4 +1,4 @@
-FROM lambci/lambda:build-provided
+FROM public.ecr.aws/shogo82148/lambda-provided:build-alami
 
 # Use the custom runtime perl in preference to the system perl
 ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
