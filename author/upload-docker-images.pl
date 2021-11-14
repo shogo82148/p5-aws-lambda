@@ -461,7 +461,8 @@ sub generate {
     chdir "$FindBin::Bin" or die "failed to chdir: $!";
     for my $perl(@$perl_versions) {
         for my $flavor(sort keys %$flavors) {
-            next if $flavor =~ /[.]al2$/ && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
+            my $is_al2 = $flavor =~ /[.]al2$/;
+            next if $is_al2 && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
             mkpath("$perl/$flavor");
             open my $fh, '>', "$perl/$flavor/Dockerfile";
             print $fh $flavors->{$flavor}->{dockerfile}->($perl);
@@ -485,7 +486,8 @@ sub build {
 
     for my $perl(@$perl_versions) {
         for my $flavor(sort keys %$flavors) {
-            next if $flavor =~ /[.]al2$/ && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
+            my $is_al2 = $flavor =~ /[.]al2$/;
+            next if $is_al2 && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
 
             my $settings = $flavors->{$flavor};
             my $tag = $settings->{tag}->($perl);
@@ -495,17 +497,20 @@ sub build {
             }
             say STDERR "building $tag...";
             chdir "$FindBin::Bin/$perl/$flavor" or die "failed to chdir: $!";
-            docker('build', '-t', "perl:$tag", '.');
+            for my $registory (qw(shogo82148/p5-aws-lambda public.ecr.aws/shogo82148/p5-aws-lambda)) {
+                if ($is_al2) {
+                    docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-$date-x86_64", '.');
+                    docker('buildx', 'build', '--platform', 'linux/arm64', '--push', '-t', "$registory:$tag-$date-arm64", '.');
+                    docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag-$date", '.');
 
-            docker('tag', "perl:$tag", "shogo82148/p5-aws-lambda:$tag");
-            docker('push', "shogo82148/p5-aws-lambda:$tag");
-            docker('tag', "perl:$tag", "shogo82148/p5-aws-lambda:$tag-$date");
-            docker('push', "shogo82148/p5-aws-lambda:$tag-$date");
-
-            docker('tag', "perl:$tag", "public.ecr.aws/shogo82148/p5-aws-lambda:$tag");
-            docker('push', "public.ecr.aws/shogo82148/p5-aws-lambda:$tag");
-            docker('tag', "perl:$tag", "public.ecr.aws/shogo82148/p5-aws-lambda:$tag-$date");
-            docker('push', "public.ecr.aws/shogo82148/p5-aws-lambda:$tag-$date");
+                    docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-x86_64", '.');
+                    docker('buildx', 'build', '--platform', 'linux/arm64', '--push', '-t', "$registory:$tag-arm64", '.');
+                    docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag", '.');
+                } else {
+                    docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-$date", '.');
+                    docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag", '.');
+                }
+            }
         }
     }
 
