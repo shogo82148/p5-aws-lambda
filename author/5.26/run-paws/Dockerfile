@@ -1,4 +1,4 @@
-FROM lambci/lambda:provided
+FROM public.ecr.aws/shogo82148/lambda-provided:alami
 
 USER root
 RUN cd /opt && \
