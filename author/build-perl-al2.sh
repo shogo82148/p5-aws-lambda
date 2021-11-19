@@ -32,19 +32,19 @@ curl -fsSL --compressed http://cpanmin.us | perl -i -pe 's(^#!.*perl$)(#!/opt/bi
 install /tmp/cpanm /opt/bin/cpanm
 curl -fsSL --compressed https://git.io/cpm | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpm
 install /tmp/cpm /opt/bin/cpm
-/opt/bin/cpanm --notest --no-man-pages \
-    AWS::XRay@0.11 \
-    JSON@4.03 \
-    Cpanel::JSON::XS@4.26 \
-    JSON::XS@4.03 \
-    JSON::MaybeXS@1.004003 \
-    YAML@1.30 \
-    YAML::Tiny@1.73 \
-    YAML::XS@0.83 \
-    Net::SSLeay@1.90 \
-    IO::Socket::SSL@2.072 \
-    Mozilla::CA@20211001
-/opt/bin/cpanm --notest --no-man-pages .
+/opt/bin/cpan -T \
+    AWS::XRay \
+    JSON \
+    Cpanel::JSON::XS \
+    JSON::XS \
+    JSON::MaybeXS \
+    YAML \
+    YAML::Tiny \
+    YAML::XS \
+    Net::SSLeay \
+    IO::Socket::SSL \
+    Mozilla::CA
+/opt/bin/cpan -T .
 
 # replace shebang to the absolute path of perl
 cp script/bootstrap /opt/
