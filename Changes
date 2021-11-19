@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - fix broken dependencies, closes https://github.com/shogo82148/p5-aws-lambda/issues/75
+    - migrate to https://gallery.ecr.aws/shogo82148/lambda-provided
 
 0.0.31 2021-10-26T13:20:57Z
     - Europe (Stockholm) eu-north-1 is available
