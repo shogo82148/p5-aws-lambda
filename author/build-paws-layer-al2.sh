@@ -26,13 +26,13 @@ docker run --rm \
     -v "$ROOT:/var/task" \
     -v "$OPT-arm64/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
     --platform linux/arm64 \
-    public.ecr.aws/sam/build-provided.al2:latest-arm64 \
+    public.ecr.aws/shogo82148/lambda-provided:build-al2 \
     ./author/build-paws-al2.sh "$TAG"
 docker run --rm \
     -v "$ROOT:/var/task" \
     -v "$OPT-x86_64/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
     --platform linux/amd64 \
-    public.ecr.aws/sam/build-provided.al2:latest-x86_64 \
+    public.ecr.aws/shogo82148/lambda-provided:build-al2 \
     ./author/build-paws-al2.sh "$TAG"
 
 cd "$OPT-x86_64"

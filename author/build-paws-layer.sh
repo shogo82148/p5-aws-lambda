@@ -25,7 +25,7 @@ rm -f "$DIST/perl-$TAG-paws-x86_64.zip"
 docker run --rm \
     -v "$ROOT:/var/task" \
     -v "$OPT/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
-    public.ecr.aws/sam/build-provided:latest \
+    public.ecr.aws/shogo82148/lambda-provided:build-alami \
     ./author/build-paws.sh "$TAG"
 cd "$OPT"
 mkdir -p "$DIST"
