@@ -10,15 +10,16 @@ JOBS=$(nproc)
 curl -sL https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build > /tmp/perl-build
 perl /tmp/perl-build "$PERL_VERSION" /opt --jobs="$JOBS" --noman -Dvendorprefix=/opt
 
-# some libraries are missing in the image for running.
-cp -R /lib64/libcrypt[.-]* /opt/lib/
-cp -R /usr/lib64/libcurl.* /opt/lib/
-
 # workaround for "xlocale.h: No such file or directory"
 ln -s /usr/include/locale.h /usr/include/xlocale.h
 
 # build-provided.al2 lacks some development packages
 yum install -y openssl openssl-devel
+
+# some libraries are missing in the image for running.
+cp -R /lib64/libcrypt[.-]* /opt/lib/
+cp -R /usr/lib64/libcurl.* /opt/lib/
+cp /usr/bin/openssl /opt/bin/openssl
 
 # AWS::Lambda is installed as vendor modules.
 # site_perl is reserved for other AWS Lambda layers.
