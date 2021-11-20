@@ -18,6 +18,11 @@ OPT="$ROOT/.perl-layer/$PERL_VERSION-paws.al2"
 DIST="$ROOT/.perl-layer/dist"
 set -uex
 
+# sanity check of required tools
+command -v perlstrip # cpanm --notest Perl::Strip
+command -v parallel # GNU parallel
+command -v timeout # coreutils
+
 # clean up
 rm -rf "$OPT-$PLATFORM"
 mkdir -p "$OPT-$PLATFORM/lib/perl5/site_perl"
@@ -31,12 +36,14 @@ case $PLATFORM in
     exit 1;;
 esac
 
-docker run --rm \
+docker run \
     -v "$ROOT:/var/task" \
     -v "$OPT-$PLATFORM/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
     --platform "$DOCKER_PLATFORM" \
     "public.ecr.aws/shogo82148/lambda-provided:build-al2-$PLATFORM" \
     ./author/build-paws-al2.sh "$TAG"
+
+find "$OPT-$PLATFORM" -type f -a -name '*.pm' -print0 | parallel -0 "$ROOT/author/perlstrip.sh"
 
 cd "$OPT-$PLATFORM"
 mkdir -p "$DIST"
