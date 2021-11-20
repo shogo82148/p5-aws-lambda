@@ -23,29 +23,30 @@ cp /usr/bin/openssl /opt/bin/openssl
 
 # AWS::Lambda is installed as vendor modules.
 # site_perl is reserved for other AWS Lambda layers.
-PERL_MM_OPT="INSTALLDIRS=vendor CCFLAGS=-I/opt/include LIBS=-L/opt/lib"
-export PERL_MM_OPT
-PERL_MB_OPT="--installdirs=vendor --ccflags=-I/opt/include --lddlflags=-L/opt/lib"
-export PERL_MB_OPT
+# and skip man page generation.
+export PERL_MM_OPT="INSTALLDIRS=vendor CCFLAGS=-I/opt/include LIBS=-L/opt/lib INSTALLMAN1DIR=none INSTALLMAN3DIR=none"
+export PERL_MB_OPT="--installdirs=vendor --ccflags=-I/opt/include --lddlflags=-L/opt/lib --config installman1dir= --config installsiteman1dir= --config installman3dir= --config installsiteman3dir="
+export PERL_MM_USE_DEFAULT=1
 
 # install pre-installed modules
 curl -fsSL --compressed http://cpanmin.us | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpanm
 install /tmp/cpanm /opt/bin/cpanm
 curl -fsSL --compressed https://git.io/cpm | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpm
 install /tmp/cpm /opt/bin/cpm
-/opt/bin/cpan -T \
-    AWS::XRay \
-    JSON \
-    Cpanel::JSON::XS \
-    JSON::XS \
-    JSON::MaybeXS \
-    YAML \
-    YAML::Tiny \
-    YAML::XS \
-    Net::SSLeay \
-    IO::Socket::SSL \
-    Mozilla::CA
-/opt/bin/cpan -T .
+
+/opt/bin/cpanm --notest \
+    AWS::XRay@0.11 \
+    JSON@4.03 \
+    Cpanel::JSON::XS@4.26 \
+    JSON::XS@4.03 \
+    JSON::MaybeXS@1.004003 \
+    YAML@1.30 \
+    YAML::Tiny@1.73 \
+    YAML::XS@0.83 \
+    Net::SSLeay@1.90 \
+    IO::Socket::SSL@2.072 \
+    Mozilla::CA@20211001
+/opt/bin/cpanm --notest .
 
 # replace shebang to the absolute path of perl
 cp script/bootstrap /opt/
