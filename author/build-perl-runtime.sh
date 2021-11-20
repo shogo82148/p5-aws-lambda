@@ -30,13 +30,15 @@ docker run \
     public.ecr.aws/shogo82148/lambda-provided:build-alami \
     ./author/build-perl.sh "$PERL_VERSION"
 
-# check the perl binary works on the emulation image
+# sanity check the perl binary works on the emulation image
 docker run \
     -v "$OPT:/opt" \
     --rm --platform linux/amd64 \
     --entrypoint /opt/bin/perl \
     public.ecr.aws/shogo82148/lambda-provided:alami \
-    -V
+    -MJSON -MCpanel::JSON::XS -MJSON::XS -MJSON::MaybeXS \
+    -MYAML -MYAML::Tiny -MYAML::XS -MNet::SSLeay -MIO::Socket::SSL -MMozilla::CA \
+    -MAWS::XRay -MAWS::Lambda -MAWS::Lambda::PSGI
 
 # create zip archive
 cd "$OPT"

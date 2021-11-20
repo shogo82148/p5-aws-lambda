@@ -36,18 +36,23 @@ docker run \
     public.ecr.aws/shogo82148/lambda-provided:build-al2-arm64 \
     ./author/build-perl-al2.sh "$PERL_VERSION"
 
-# check the perl binary works on the emulation images
+# sanity check the perl binary works on the emulation images
 docker run \
     -v "$OPT-x86_64:/opt" \
-    -v "$ROOT/examples/hello:/var/task" \
     --rm --platform linux/amd64 \
     --entrypoint /opt/bin/perl \
-    public.ecr.aws/shogo82148/lambda-provided:al2-x86_64 -V
+    public.ecr.aws/shogo82148/lambda-provided:al2-x86_64 \
+    -MJSON -MCpanel::JSON::XS -MJSON::XS -MJSON::MaybeXS \
+    -MYAML -MYAML::Tiny -MYAML::XS -MNet::SSLeay -MIO::Socket::SSL -MMozilla::CA \
+    -MAWS::XRay -MAWS::Lambda -MAWS::Lambda::PSGI
 docker run \
     -v "$OPT-arm64:/opt" \
     --rm --platform linux/arm64 \
     --entrypoint /opt/bin/perl \
-    public.ecr.aws/shogo82148/lambda-provided:al2-arm64 -V
+    public.ecr.aws/shogo82148/lambda-provided:al2-arm64 \
+    -MJSON -MCpanel::JSON::XS -MJSON::XS -MJSON::MaybeXS \
+    -MYAML -MYAML::Tiny -MYAML::XS -MNet::SSLeay -MIO::Socket::SSL -MMozilla::CA \
+    -MAWS::XRay -MAWS::Lambda -MAWS::Lambda::PSGI
 
 # create zip archive
 cd "$OPT-x86_64"
