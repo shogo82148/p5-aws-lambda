@@ -10,8 +10,8 @@ JOBS=$(nproc)
 curl -sL https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build > /tmp/perl-build
 perl /tmp/perl-build "$PERL_VERSION" /opt --jobs="$JOBS" --noman -Dvendorprefix=/opt
 
-# build-provided.al2 lacks some development packages
-yum install -y expat-devel openssl openssl-devel
+# build-provided lacks some development packages
+yum install -y openssl openssl-devel
 
 # AWS::Lambda is installed as vendor modules.
 # site_perl is reserved for other AWS Lambda layers.
@@ -26,6 +26,9 @@ install /tmp/cpanm /opt/bin/cpanm
 curl -fsSL --compressed https://git.io/cpm | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpm
 install /tmp/cpm /opt/bin/cpm
 
+# Net::SSLeay needs special CCFLAGS and LIBS to link
+PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bin/cpanm --notest Net::SSLeay@1.90
+
 /opt/bin/cpanm --notest \
     AWS::XRay@0.11 \
     JSON@4.03 \
@@ -35,7 +38,6 @@ install /tmp/cpm /opt/bin/cpm
     YAML@1.30 \
     YAML::Tiny@1.73 \
     YAML::XS@0.83 \
-    Net::SSLeay@1.90 \
     IO::Socket::SSL@2.072 \
     Mozilla::CA@20211001
 /opt/bin/cpanm --notest .

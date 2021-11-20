@@ -36,9 +36,8 @@ docker run \
     --rm --platform linux/amd64 \
     --entrypoint /opt/bin/perl \
     public.ecr.aws/shogo82148/lambda-provided:alami \
-    -MJSON -MCpanel::JSON::XS -MJSON::XS -MJSON::MaybeXS \
-    -MYAML -MYAML::Tiny -MYAML::XS -MNet::SSLeay -MIO::Socket::SSL -MMozilla::CA \
-    -MAWS::XRay -MAWS::Lambda -MAWS::Lambda::PSGI
+    -MJSON::XS -MYAML::XS -MNet::SSLeay -MIO::Socket::SSL -MMozilla::CA \
+    -MAWS::XRay -MAWS::Lambda -MAWS::Lambda::PSGI -e ''
 
 # create zip archive
 cd "$OPT"
