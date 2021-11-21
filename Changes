@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - add missing dependency expat
 
 0.0.32 2021-11-21T01:39:00Z
     - fix broken dependencies, closes https://github.com/shogo82148/p5-aws-lambda/issues/75
