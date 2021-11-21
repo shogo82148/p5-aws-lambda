@@ -27,16 +27,17 @@ docker run \
     -v "$ROOT:/var/task" \
     -v "$OPT:/opt" \
     --rm --platform linux/amd64 \
-    public.ecr.aws/sam/build-provided:latest \
+    public.ecr.aws/shogo82148/lambda-provided:build-alami \
     ./author/build-perl.sh "$PERL_VERSION"
 
-# check the perl binary works on the emulation image
+# sanity check the perl binary works on the emulation image
 docker run \
     -v "$OPT:/opt" \
     --rm --platform linux/amd64 \
     --entrypoint /opt/bin/perl \
-    public.ecr.aws/sam/emulation-provided:latest \
-    -V
+    public.ecr.aws/shogo82148/lambda-provided:alami \
+    -MJSON::XS -MYAML::XS -MNet::SSLeay -MIO::Socket::SSL -MMozilla::CA \
+    -MAWS::XRay -MAWS::Lambda -MAWS::Lambda::PSGI -e ''
 
 # create zip archive
 cd "$OPT"
