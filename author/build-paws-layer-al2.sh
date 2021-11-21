@@ -39,6 +39,7 @@ esac
 docker run \
     -v "$ROOT:/var/task" \
     -v "$OPT-$PLATFORM/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
+    -v "$OPT-$PLATFORM/lib:/opt-lib" \
     --platform "$DOCKER_PLATFORM" \
     "public.ecr.aws/shogo82148/lambda-provided:build-al2-$PLATFORM" \
     ./author/build-paws-al2.sh "$TAG"
