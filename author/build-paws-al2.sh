@@ -6,8 +6,9 @@ set -uex
 
 TAG=$1
 
-# provided.al2 lacks some development packages
-yum install -y expat-devel
+# provided.al2 lacks expat.
+yum install -y expat expat-devel
+cp /usr/lib64/libexpat.so.* /opt-lib/
 
 case $(uname -m) in
   "x86_64")
