@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.33 2021-11-22T00:18:42Z
     - add missing dependency expat
 
 0.0.32 2021-11-21T01:39:00Z
