@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.34 2021-12-16T09:26:58Z
     - Asia Pacific (Jakarta) Region ap-southeast-3 is available
 
 0.0.33 2021-11-22T00:18:42Z
