@@ -73,6 +73,7 @@ The list of all available layer ARN is here:
         - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-34-runtime-al2-x86_64:3`
         - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-34-runtime-al2-x86_64:3`
         - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-34-runtime-al2-x86_64:3`
+        - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-34-runtime-al2-x86_64:1`
         - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-34-runtime-al2-x86_64:2`
         - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-34-runtime-al2-x86_64:3`
         - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-34-runtime-al2-x86_64:2`
@@ -107,6 +108,7 @@ The list of all available layer ARN is here:
         - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime-al2-x86_64:3`
         - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime-al2-x86_64:3`
         - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-runtime-al2-x86_64:3`
+        - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-32-runtime-al2-x86_64:1`
         - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-runtime-al2-x86_64:2`
         - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-runtime-al2-x86_64:3`
         - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-32-runtime-al2-x86_64:2`
@@ -282,6 +284,7 @@ The list of all available layer ARN is here:
         - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-34-paws-al2-x86_64:4`
         - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-34-paws-al2-x86_64:4`
         - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-34-paws-al2-x86_64:4`
+        - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-34-paws-al2-x86_64:1`
         - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-34-paws-al2-x86_64:3`
         - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-34-paws-al2-x86_64:4`
         - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-34-paws-al2-x86_64:3`
@@ -316,6 +319,7 @@ The list of all available layer ARN is here:
         - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws-al2-x86_64:4`
         - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws-al2-x86_64:4`
         - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-paws-al2-x86_64:4`
+        - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-32-paws-al2-x86_64:1`
         - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-paws-al2-x86_64:3`
         - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-paws-al2-x86_64:4`
         - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-32-paws-al2-x86_64:3`
@@ -400,6 +404,7 @@ The list of all available layer ARN is here:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-34-runtime:5`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-34-runtime:5`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-34-runtime:5`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-34-runtime:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-34-runtime:4`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-34-runtime:5`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-34-runtime:2`
@@ -422,6 +427,7 @@ The list of all available layer ARN is here:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime:7`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime:7`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-runtime:7`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-32-runtime:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-runtime:6`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-runtime:7`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-32-runtime:2`
@@ -444,6 +450,7 @@ The list of all available layer ARN is here:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-runtime:14`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-30-runtime:14`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-30-runtime:14`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-30-runtime:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-30-runtime:13`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-runtime:14`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-30-runtime:2`
@@ -466,6 +473,7 @@ The list of all available layer ARN is here:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-runtime:20`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-28-runtime:20`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-28-runtime:20`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-28-runtime:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-28-runtime:19`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-28-runtime:20`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-28-runtime:2`
@@ -488,6 +496,7 @@ The list of all available layer ARN is here:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-runtime:21`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-26-runtime:21`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-26-runtime:21`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-26-runtime:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-26-runtime:20`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-26-runtime:21`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-26-runtime:2`
@@ -513,6 +522,7 @@ And Paws layers:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-34-paws:4`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-34-paws:4`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-34-paws:4`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-34-paws:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-34-paws:4`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-34-paws:4`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-34-paws:2`
@@ -535,6 +545,7 @@ And Paws layers:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws:7`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws:7`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-paws:7`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-32-paws:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-paws:7`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-paws:7`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-32-paws:2`
@@ -557,6 +568,7 @@ And Paws layers:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-30-paws:11`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-30-paws:11`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-30-paws:11`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-30-paws:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-30-paws:11`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-30-paws:11`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-30-paws:2`
@@ -579,6 +591,7 @@ And Paws layers:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-28-paws:10`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-28-paws:10`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-28-paws:10`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-28-paws:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-28-paws:10`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-28-paws:10`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-28-paws:2`
@@ -601,6 +614,7 @@ And Paws layers:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-26-paws:11`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-26-paws:11`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-26-paws:11`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-26-paws:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-26-paws:11`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-26-paws:11`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-26-paws:2`
@@ -645,6 +659,7 @@ The list of all available layer ARN is here:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-34-runtime-al2:5`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-34-runtime-al2:5`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-34-runtime-al2:5`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-34-runtime-al2:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-34-runtime-al2:4`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-34-runtime-al2:5`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-34-runtime-al2:2`
@@ -667,6 +682,7 @@ The list of all available layer ARN is here:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-runtime-al2:7`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-runtime-al2:7`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-runtime-al2:7`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-32-runtime-al2:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-runtime-al2:6`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-runtime-al2:7`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-32-runtime-al2:2`
@@ -692,6 +708,7 @@ And Paws layers:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-34-paws-al2:6`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-34-paws-al2:6`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-34-paws-al2:6`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-34-paws-al2:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-34-paws-al2:5`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-34-paws-al2:6`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-34-paws-al2:3`
@@ -714,6 +731,7 @@ And Paws layers:
     - `arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-32-paws-al2:9`
     - `arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-32-paws-al2:9`
     - `arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-32-paws-al2:9`
+    - `arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-32-paws-al2:1`
     - `arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-32-paws-al2:8`
     - `arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-32-paws-al2:9`
     - `arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-32-paws-al2:3`
