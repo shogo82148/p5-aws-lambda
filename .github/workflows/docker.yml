@@ -31,7 +31,7 @@ jobs:
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/shogo82148s
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: restore state
         run: |
           aws s3 cp s3://shogo82148-lambda-perl-runtime-state/state.json author/state.json || true
