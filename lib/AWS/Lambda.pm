@@ -1765,6 +1765,11 @@ install the modules into C</opt/lib/perl5/site_perl> in the layer.
         cpanm --notest --no-man-pages Some::Module
     cd $(PATH_TO_LAYER_DIR) && zip -9 -r $(PATH_TO_DIST)/some-module.zip .
 
+=head1 MAINTENANCE AND SUPPORT
+
+Supported Perl versions are the same as those officially supported by the Perl community (L<perlpolicy>).
+It means that we support the two most recent stable release series.
+
 =head1 LEGACY CUSTOM RUNTIME ON AMAZON LINUX
 
 We also provide the layers for legacy custom runtime as known as "provided".
