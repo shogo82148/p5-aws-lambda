@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - Perl 5.34.1 is released
 
 0.0.34 2021-12-16T09:26:58Z
     - Asia Pacific (Jakarta) Region ap-southeast-3 is available
