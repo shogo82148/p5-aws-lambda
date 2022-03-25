@@ -773,8 +773,8 @@ And Paws:
 
 The MIT License (MIT)
 
-Copyright (C) Ichinose Shogo
+Copyright (C) ICHINOSE Shogo
 
 # AUTHOR
 
-Ichinose Shogo
+ICHINOSE Shogo
