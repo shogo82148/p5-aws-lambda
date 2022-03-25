@@ -4,7 +4,7 @@
       "Ichinose Shogo"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.12, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.16, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "mit"
    ],
@@ -81,7 +81,7 @@
       "homepage" : "https://github.com/shogo82148/p5-aws-lambda",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/shogo82148/p5-aws-lambda.git",
+         "url" : "https://github.com/shogo82148/p5-aws-lambda.git",
          "web" : "https://github.com/shogo82148/p5-aws-lambda"
       }
    },
