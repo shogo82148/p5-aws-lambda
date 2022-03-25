@@ -2552,10 +2552,10 @@ C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-
 
 The MIT License (MIT)
 
-Copyright (C) Ichinose Shogo
+Copyright (C) ICHINOSE Shogo
 
 =head1 AUTHOR
 
-Ichinose Shogo
+ICHINOSE Shogo
 
 =cut
