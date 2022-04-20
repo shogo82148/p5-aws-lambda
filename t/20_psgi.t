@@ -150,6 +150,42 @@ subtest "ALB POST Base64 Request" => sub {
     is $req->query_string, '', 'query string';
 };
 
+subtest "Function URLs GET Request" => sub {
+    my $input = slurp_json("testdata/function-urls-get-request.json");
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'GET', 'method';
+    is slurp_fh($req->input), '', 'content';
+    is $req->request_uri, '/foo /bar?parameter1=value1&parameter1=value2&parameter2=value', 'request uri';
+    is $req->path_info, '/foo /bar', 'path info';
+    is $req->query_string, 'parameter1=value1&parameter1=value2&parameter2=value', 'query string';
+    is $req->header('header1'), 'value1,value2', 'header';
+};
+
+subtest "Function URLs POST Request" => sub {
+    my $input = slurp_json("testdata/function-urls-post-request.json");
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'POST', 'method';
+    is $req->content_type, 'application/json', 'content-type';
+    is slurp_fh($req->input), '{"hello":"world"}', 'content';
+    is $req->request_uri, '/my/path', 'request uri';
+    is $req->path_info, '/my/path', 'path info';
+    is $req->query_string, '', 'query string';
+};
+
+subtest "Function URLs POST Base64 Request" => sub {
+    my $input = slurp_json("testdata/function-urls-post-base64-request.json");
+    my $output = $app->format_input($input);
+    my $req = Plack::Request->new($output);
+    is $req->method, 'POST', 'method';
+    is $req->content_type, 'application/octet-stream', 'content-type';
+    is slurp_fh($req->input), '{"hello":"world"}', 'content';
+    is $req->request_uri, '/my/path', 'request uri';
+    is $req->path_info, '/my/path', 'path info';
+    is $req->query_string, '', 'query string';
+};
+
 subtest "plain text response" => sub {
     my $response = [
         200,

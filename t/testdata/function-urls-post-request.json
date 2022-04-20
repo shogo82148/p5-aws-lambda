@@ -1,0 +1,36 @@
+{
+    "body": "{\"hello\":\"world\"}",
+    "headers": {
+        "accept": "*/*",
+        "content-type": "application/json",
+        "host": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.lambda-url.ap-northeast-1.on.aws",
+        "user-agent": "curl/7.79.1",
+        "x-amzn-trace-id": "Root=1-62577683-4e8059702ee4af274153a8a9",
+        "x-forwarded-for": "192.0.2.1",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "isBase64Encoded": false,
+    "rawPath": "/my/path",
+    "rawQueryString": "",
+    "requestContext": {
+        "accountId": "anonymous",
+        "apiId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "domainName": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.lambda-url.ap-northeast-1.on.aws",
+        "domainPrefix": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "http": {
+            "method": "POST",
+            "path": "/my/path",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "192.0.2.1",
+            "userAgent": "curl/7.79.1"
+        },
+        "requestId": "1bdb4bdc-7de3-4b47-b991-24bf146bed2f",
+        "routeKey": "$default",
+        "stage": "$default",
+        "time": "14/Apr/2022:01:18:59 +0000",
+        "timeEpoch": 1649899139915
+    },
+    "routeKey": "$default",
+    "version": "2.0"
+}
