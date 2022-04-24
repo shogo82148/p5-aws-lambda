@@ -29,7 +29,14 @@ jobs:
 
       - name: Login to ECR Public Registry
         run: |
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/shogo82148s
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/shogo82148
+
+      - name: Login to ghcr.io
+        run: |
+          printenv PASSWORD | docker login --username "$USERNAME" --password-stdin ghcr.io
+        env:
+          USERNAME: ${{ github.repository_owner }}
+          PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v3
       - name: restore state
@@ -46,5 +53,9 @@ jobs:
         run: |
           aws s3 cp author/state.json s3://shogo82148-lambda-perl-runtime-state/state.json
 
-      - run: docker logout
+      - name: docker logout
+        run: |
+          docker logout
+          docker logout public.ecr.aws/shogo82148
+          docker logout ghcr.io
         if: always()
