@@ -1,0 +1,36 @@
+{
+    "body": "eyJoZWxsbyI6IndvcmxkIn0=",
+    "headers": {
+        "accept": "*/*",
+        "content-type": "application/octet-stream",
+        "host": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.lambda-url.ap-northeast-1.on.aws",
+        "user-agent": "curl/7.79.1",
+        "x-amzn-trace-id": "Root=1-62577702-3f59d86f1830be3f76a10c1e",
+        "x-forwarded-for": "192.0.2.1",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "isBase64Encoded": true,
+    "rawPath": "/my/path",
+    "rawQueryString": "",
+    "requestContext": {
+        "accountId": "anonymous",
+        "apiId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "domainName": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.lambda-url.ap-northeast-1.on.aws",
+        "domainPrefix": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "http": {
+            "method": "POST",
+            "path": "/my/path",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "192.0.2.1",
+            "userAgent": "curl/7.79.1"
+        },
+        "requestId": "22d6f51d-23e9-4c93-8f6a-0215eb2e8a5e",
+        "routeKey": "$default",
+        "stage": "$default",
+        "time": "14/Apr/2022:01:21:06 +0000",
+        "timeEpoch": 1649899266100
+    },
+    "routeKey": "$default",
+    "version": "2.0"
+}

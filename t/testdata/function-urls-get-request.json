@@ -1,0 +1,40 @@
+{
+    "headers": {
+        "accept": "*/*",
+        "header1": "value1,value2",
+        "header2": "value2",
+        "host": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.lambda-url.ap-northeast-1.on.aws",
+        "user-agent": "curl/7.79.1",
+        "x-amzn-trace-id": "Root=1-625773fa-63e53c0f63e4fce44bb582d5",
+        "x-forwarded-for": "192.0.2.1",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "isBase64Encoded": false,
+    "queryStringParameters": {
+        "parameter1": "value1,value2",
+        "parameter2": "value"
+    },
+    "rawPath": "/foo /bar",
+    "rawQueryString": "parameter1=value1&parameter1=value2&parameter2=value",
+    "requestContext": {
+        "accountId": "anonymous",
+        "apiId": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "domainName": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.lambda-url.ap-northeast-1.on.aws",
+        "domainPrefix": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "http": {
+            "method": "GET",
+            "path": "/foo /bar",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "192.0.2.1",
+            "userAgent": "curl/7.79.1"
+        },
+        "requestId": "7866ba5e-bbcb-42cc-9e26-11f5b18a7c0b",
+        "routeKey": "$default",
+        "stage": "$default",
+        "time": "14/Apr/2022:01:08:10 +0000",
+        "timeEpoch": 1649898490097
+    },
+    "routeKey": "$default",
+    "version": "2.0"
+}
