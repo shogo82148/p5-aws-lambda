@@ -506,13 +506,13 @@ sub build {
             chdir "$FindBin::Bin/$perl/$flavor" or die "failed to chdir: $!";
             for my $registory (qw(shogo82148/p5-aws-lambda public.ecr.aws/shogo82148/p5-aws-lambda ghcr.io/shogo82148/p5-aws-lambda)) {
                 if ($is_al2) {
+                    docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag-$date", '.');
                     docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-$date-x86_64", '.');
                     docker('buildx', 'build', '--platform', 'linux/arm64', '--push', '-t', "$registory:$tag-$date-arm64", '.');
-                    docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag-$date", '.');
 
+                    docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag", '.');
                     docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-x86_64", '.');
                     docker('buildx', 'build', '--platform', 'linux/arm64', '--push', '-t', "$registory:$tag-arm64", '.');
-                    docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag", '.');
                 } else {
                     docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-$date", '.');
                     docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag", '.');
@@ -580,7 +580,20 @@ sub needs_build {
 }
 
 sub docker {
-    system('docker', @_) == 0 or croak 'failed to run docker';
+    if (system('docker', @_) == 0) {
+        return;
+    }
+    print STDERR "failed to build, try...";
+    sleep(5);
+    if (system('docker', @_) == 0) {
+        return;
+    }
+    print STDERR "failed to build, try...";
+    sleep(10);
+    if (system('docker', @_) == 0) {
+        return;
+    }
+    croak 'gave up, failed to run docker';
 }
 
 sub inspect_id {
