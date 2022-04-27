@@ -123,6 +123,7 @@ Resources:
   DeploymentRole:
     Type: AWS::IAM::Role
     Properties:
+      MaxSessionDuration: 43200 # 43200 seconds = 12 hours
       # trust policy for using https://github.com/fuller-inc/actions-aws-assume-role
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
