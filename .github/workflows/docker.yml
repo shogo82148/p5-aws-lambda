@@ -9,6 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 1440 # 1440 mins = 24 hours
+    permissions:
+      id-token: write
+      statuses: write
+      contents: read
+      
     steps:
       - uses: docker/setup-qemu-action@v1
       - uses: docker/setup-buildx-action@v1
@@ -26,6 +32,7 @@ jobs:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::445285296882:role/lambda-perl5-runtime-ecr-DeploymentRole-199JZ5SP862Q0
           role-session-tagging: true
+          role-duration-seconds: 86400 # 86400 seconds = 24 hours
 
       - name: Login to ECR Public Registry
         run: |
