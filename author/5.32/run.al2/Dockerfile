@@ -1,9 +1,9 @@
 # the provided.al2 image doesn't have curl and unzip,
 # so we use the build-provided.al2 image here
-FROM public.ecr.aws/amazonlinux/amazonlinux:2
+FROM --platform=$BUILDPLATFORM public.ecr.aws/amazonlinux/amazonlinux:2
 RUN yum install -y curl unzip
 RUN cd /opt && \
-    case $(uname -m) in "x86_64") ARCH=x86_64;; "aarch64") ARCH=arm64;; *) echo "unknown architecture: $(uname -m)"; exit 1;; esac && \
+    case ${TARGETARCH} in "amd64") ARCH=x86_64;; "arm64") ARCH=arm64;; *) echo "unknown architecture: ${TARGETARCH}"; exit 1;; esac && \
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-5-32-runtime-al2-$ARCH.zip -o runtime.zip && \
     unzip -o runtime.zip && rm runtime.zip
 
