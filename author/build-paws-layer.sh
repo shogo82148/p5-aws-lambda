@@ -26,6 +26,7 @@ mkdir -p "$OPT/lib/perl5/site_perl"
 rm -f "$DIST/perl-$TAG-paws-x86_64.zip"
 
 docker run --rm \
+    --platform linux/amd64 \
     -v "$ROOT:/var/task" \
     -v "$OPT/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
     public.ecr.aws/shogo82148/lambda-provided:build-alami \
