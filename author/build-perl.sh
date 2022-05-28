@@ -30,7 +30,7 @@ install /tmp/cpm /opt/bin/cpm
 PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bin/cpanm --notest Net::SSLeay@1.92
 
 /opt/bin/cpanm --notest \
-    AWS::XRay@0.11 \
+    AWS::XRay@0.12 \
     JSON@4.05 \
     Cpanel::JSON::XS@4.27 \
     JSON::XS@4.03 \
