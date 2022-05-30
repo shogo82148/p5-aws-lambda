@@ -3,6 +3,7 @@
 ROOT=$(cd "$(dirname "$0")/../" && pwd)
 
 if [[ $# -eq 0 ]]; then
+    $0 5.36.0 5-36
     $0 5.34.1 5-34
     $0 5.32.1 5-32
     exit 0
@@ -25,6 +26,7 @@ mkdir -p "$OPT/lib/perl5/site_perl"
 rm -f "$DIST/perl-$TAG-paws-x86_64.zip"
 
 docker run --rm \
+    --platform linux/amd64 \
     -v "$ROOT:/var/task" \
     -v "$OPT/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
     public.ecr.aws/shogo82148/lambda-provided:build-alami \
