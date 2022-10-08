@@ -1,10 +1,9 @@
 #!/usr/bin/env perl
 
-use 5.03000;
-use strict;
-use warnings;
+use v5.36;
 use FindBin;
 use Parallel::ForkManager;
+use Capture::Tiny ('capture');
 
 my $archs = ['x86_64', 'arm64'];
 my $regions = +{ map {
@@ -37,6 +36,9 @@ my $layers = {};
 my $pm = Parallel::ForkManager->new(10);
 $pm->run_on_finish(sub {
     my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
+    if (!$data) {
+        return;
+    }
     my ($version, $region, $arn) = @$data;
     $layers->{$version} //= {};
     $layers->{$version}{$region} = $arn;
@@ -48,10 +50,37 @@ for my $version (@$versions) {
         $pm->start("$version/$region") and next;
 
         my $runtime_stack = "lambda-@{[ $version =~ s/[.]/-/r ]}-runtime";
-        chomp(my $runtime_arn = `aws --region $region cloudformation describe-stacks --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
         my $paws_stack = "lambda-@{[ $version =~ s/[.]/-/r ]}-paws";
-        chomp(my $paws_arn = `aws --region $region cloudformation describe-stacks --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
+        my ($stdout, $stderr, $exit);
 
+        ($stdout, $stderr, $exit) = capture {
+            system("aws --region $region cloudformation describe-stacks --output json --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue");
+        };
+        if ($exit != 0) {
+            if ($stderr =~ /ValidationError/) {
+                # the stack doesn't exist; skip it.
+                $pm->finish;
+                next;
+            }
+            die "failed to execute aws cli";
+        }
+        my $runtime_arn = $stdout;
+
+        ($stdout, $stderr, $exit) = capture {
+            system("aws --region $region cloudformation describe-stacks --output json --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue");
+        };
+        if ($exit != 0) {
+            if ($stderr =~ /ValidationError/) {
+                # the stack doesn't exist; skip it.
+                $pm->finish;
+                next;
+            }
+            die "failed to execute aws cli";
+        }
+        my $paws_arn = $stdout;
+ 
+        chomp($runtime_arn);
+        chomp($paws_arn);
         $pm->finish(0, [$version, $region, {
             runtime_arn     => $runtime_arn,
             runtime_version => (split /:/, $runtime_arn)[-1],
@@ -67,6 +96,9 @@ my $layers_al2_x86_64 = {};
 my $pm_al2_x86_64 = Parallel::ForkManager->new(10);
 $pm_al2_x86_64->run_on_finish(sub {
     my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
+    if (!$data) {
+        return;
+    }
     my ($version, $region, $arn) = @$data;
     $layers_al2_x86_64->{$version} //= {};
     $layers_al2_x86_64->{$version}{$region} = $arn;
@@ -78,10 +110,37 @@ for my $version (@$versions_al2) {
         $pm_al2_x86_64->start("$version/$region") and next;
 
         my $runtime_stack = "lambda-$version-runtime-al2" =~ s/[._]/-/gr;
-        chomp(my $runtime_arn = `aws --region $region cloudformation describe-stacks --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
         my $paws_stack = "lambda-$version-paws-al2" =~ s/[._]/-/gr;
-        chomp(my $paws_arn = `aws --region $region cloudformation describe-stacks --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
+        my ($stdout, $stderr, $exit);
 
+        ($stdout, $stderr, $exit) = capture {
+            system("aws --region $region cloudformation describe-stacks --output json --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue");
+        };
+        if ($exit != 0) {
+            if ($stderr =~ /ValidationError/) {
+                # the stack doesn't exist; skip it.
+                $pm->finish;
+                next;
+            }
+            die "failed to execute aws cli";
+        }
+        my $runtime_arn = $stdout;
+
+        ($stdout, $stderr, $exit) = capture {
+            system("aws --region $region cloudformation describe-stacks --output json --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue");
+        };
+        if ($exit != 0) {
+            if ($stderr =~ /ValidationError/) {
+                # the stack doesn't exist; skip it.
+                $pm->finish;
+                next;
+            }
+            die "failed to execute aws cli";
+        }
+        my $paws_arn = $stdout;
+ 
+        chomp($runtime_arn);
+        chomp($paws_arn);
         $pm_al2_x86_64->finish(0, [$version, $region, {
             runtime_arn     => $runtime_arn,
             runtime_version => (split /:/, $runtime_arn)[-1],
@@ -92,11 +151,14 @@ for my $version (@$versions_al2) {
 }
 $pm_al2_x86_64->wait_all_children;
 
-# get the list of layers on Amazon Linux 2
+# get the list of layers on Amazon Linux 2 for each arch
 my $layers_al2 = {};
 my $pm_al2 = Parallel::ForkManager->new(10);
 $pm_al2->run_on_finish(sub {
     my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
+    if (!$data) {
+        return;
+    }
     my ($version, $region, $arch, $arn) = @$data;
     $layers_al2->{$version} //= {};
     $layers_al2->{$version}{$region} //= {};
@@ -110,10 +172,37 @@ for my $version (@$versions_al2) {
             $pm_al2->start("$version/$region/$arch") and next;
 
             my $runtime_stack = "lambda-$version-runtime-al2-$arch" =~ s/[._]/-/gr;
-            chomp(my $runtime_arn = `aws --region $region cloudformation describe-stacks --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
             my $paws_stack = "lambda-$version-paws-al2-$arch" =~ s/[._]/-/gr;
-            chomp(my $paws_arn = `aws --region $region cloudformation describe-stacks --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue`);
+            my ($stdout, $stderr, $exit);
 
+            ($stdout, $stderr, $exit) = capture {
+                system("aws --region $region cloudformation describe-stacks --output json --stack-name $runtime_stack | jq -r .Stacks[0].Outputs[0].OutputValue");
+            };
+            if ($exit != 0) {
+                if ($stderr =~ /ValidationError/) {
+                    # the stack doesn't exist; skip it.
+                    $pm->finish;
+                    next;
+                }
+                die "failed to execute aws cli";
+            }
+            my $runtime_arn = $stdout;
+
+            ($stdout, $stderr, $exit) = capture {
+                system("aws --region $region cloudformation describe-stacks --output json --stack-name $paws_stack | jq -r .Stacks[0].Outputs[0].OutputValue");
+            };
+            if ($exit != 0) {
+                if ($stderr =~ /ValidationError/) {
+                    # the stack doesn't exist; skip it.
+                    $pm->finish;
+                    next;
+                }
+                die "failed to execute aws cli";
+            }
+            my $paws_arn = $stdout;
+
+            chomp($runtime_arn);
+            chomp($paws_arn);
             $pm_al2->finish(0, [$version, $region, $arch, {
                 runtime_arn     => $runtime_arn,
                 runtime_version => (split /:/, $runtime_arn)[-1],
@@ -135,7 +224,7 @@ my $latest_paws_version = $layers_al2->{$latest_perl}{'us-east-1'}{x86_64}{paws_
 
 open my $fh, '>', "$FindBin::Bin/../lib/AWS/Lambda.pm" or die "$!";
 
-sub printfh($) {
+sub printfh :prototype($) {
     my $contents = shift;
     $contents =~ s/\@\@VERSION\@\@/$module_version/g;
     $contents =~ s/\@\@LATEST_PERL\@\@/$latest_perl/g;
@@ -165,6 +254,9 @@ print $fh "our \$LAYERS = {\n";
 for my $version (@$versions) {
     print $fh "    '$version' => {\n";
     for my $region (@{$regions->{x86_64}}) {
+        if (!$layers->{$version}{$region}{runtime_arn}) {
+            next;
+        }
         print $fh <<EOS
         '$region' => {
             runtime_arn     => "$layers->{$version}{$region}{runtime_arn}",
@@ -626,6 +718,9 @@ EOS
 for my $version (@$versions) {
     print $fh "=item Perl $version\n\n=over\n\n";
     for my $region (@{$regions->{x86_64}}) {
+        if (!$layers->{$version}{$region}{paws_arn}) {
+            next;
+        }
         print $fh "=item C<$layers->{$version}{$region}{paws_arn}>\n\n";
     }
     print $fh "=back\n\n";

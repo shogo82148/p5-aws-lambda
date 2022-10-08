@@ -29,4 +29,5 @@ on 'develop' => sub {
     requires 'Mojolicious';
     requires 'Dancer2';
     requires 'Parallel::ForkManager';
+    requires 'Capture::Tiny';
 };

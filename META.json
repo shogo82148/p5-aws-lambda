@@ -34,6 +34,7 @@
       "develop" : {
          "requires" : {
             "CPAN::Uploader" : "0",
+            "Capture::Tiny" : "0",
             "Dancer2" : "0",
             "Minilla" : "0",
             "Mojolicious" : "0",
@@ -87,7 +88,7 @@
    },
    "version" : "0.0.36",
    "x_contributors" : [
-      "ICHINOSE Shogo <shogo82148@gmail.com>",
+      "Ichinose Shogo <shogo82148@gmail.com>",
       "Jose Luis Martinez <jlmartinez@capside.com>",
       "Mohammad S Anwar <mohammad.anwar@yahoo.com>",
       "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>"
