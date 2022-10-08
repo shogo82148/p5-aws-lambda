@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.37 2022-10-08T13:28:41Z
     - arm64 compatible layers are now available on 12 additional regions
         - Africa (Cape Town) af-south-1
         - Asia Pacific (Seoul) ap-northeast-2
