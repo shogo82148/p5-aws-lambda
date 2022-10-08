@@ -1,6 +1,20 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - arm64 compatible layers are now available on 12 additional regions
+        - Africa (Cape Town) af-south-1
+        - Asia Pacific (Seoul) ap-northeast-2
+        - Asia Pacific (Jakarta) ap-southeast-3
+        - Asia Pacific (Hong Kong) ap-east-1
+        - Asia Pacific (Osaka) ap-northeast-3
+        - Canada (Central) ca-central-1
+        - Europe (Paris) eu-west-3
+        - Europe (Stockholm) eu-north-1
+        - Europe (Milan) eu-south-1
+        - Middle East (Bahrain) me-south-1
+        - South America (Sao Paulo) sa-east-1
+        - US West (N. California) us-west-1
+    - x86_64 compatible layers are now available on Middle East (UAE) Region me-central-1
 
 0.0.36 2022-05-30T14:10:22Z
     - support AWS Lambda Functions URLs
