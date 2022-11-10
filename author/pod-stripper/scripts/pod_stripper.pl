@@ -69,6 +69,12 @@ sub dostrip {
       close $pm
     }
 
+    # it is not pod, but might be some data.
+    # skip it for safety.
+    if ($module =~ /^__DATA__$/) {
+        return
+    }
+
     # We unlink the original pm
     unlink $file;
 
