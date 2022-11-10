@@ -71,7 +71,7 @@ sub dostrip {
 
     # it is not pod, but might be some data.
     # skip it for safety.
-    if ($module =~ /^__DATA__$/) {
+    if ($module =~ /^__DATA__$/m) {
         return
     }
 
