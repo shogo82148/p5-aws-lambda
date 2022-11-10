@@ -53,9 +53,8 @@ PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bi
 cp script/bootstrap /opt/
 perl -i -pe 's(^#!perl$)(#!/opt/bin/perl)' /opt/bootstrap
 
-# autodie is included in perl core, but the system perl of the Lambda Runtime lacks it.
-yum install -y perl-autodie
-
 # remove POD(Plain Old Documentation)
-curl -s https://raw.githubusercontent.com/pplu/p5-pod-stripper/feature/fatpack/fatpacked/pod_stripper.pl > /tmp/pod_stripper.pl
-perl /tmp/pod_stripper.pl /opt/lib/perl5
+yum install -y perl-ExtUtils-MakeMaker
+cd author/pod-stripper
+perl /opt/bin/cpanm --installdeps .
+perl ./scripts/pod_stripper.pl /opt/lib/perl5
