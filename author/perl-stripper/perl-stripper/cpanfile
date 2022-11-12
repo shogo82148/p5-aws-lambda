@@ -1,0 +1,6 @@
+requires 'perl', '5.036000';
+requires 'Perl::Strip', '1.1';
+
+requires 'Params::Util'; # it's not direct dependency. Perl::Strip forgets it?
+
+# requires 'AWS::Lambda'; # use pre-installed one
