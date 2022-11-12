@@ -1,0 +1,18 @@
+version = 0.1
+[default]
+[default.package]
+[default.package.parameters]
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-10nboesix5it7"
+s3_prefix = "perl-stripper"
+region = "ap-northeast-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "perl-stripper"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-10nboesix5it7"
+s3_prefix = "perl-stripper"
+region = "ap-northeast-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

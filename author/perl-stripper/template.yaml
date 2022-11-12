@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: perl-strip
+
+Resources:
+  PerlStripper:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
+    Properties:
+      Description: Perl Stripper API
+      CodeUri: ./perl-stripper/
+      Handler: handler.handle
+      Runtime: provided.al2
+      Architectures: [arm64]
+      Timeout: 120
+      # https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-memory-console
+      MemorySize: 1769 # -> 1 vCPU
+      Layers:
+        - arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-36-runtime-al2-arm64:1
+      FunctionUrlConfig:
+        AuthType: NONE
