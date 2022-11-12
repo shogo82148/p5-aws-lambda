@@ -241,7 +241,7 @@ sub format_output {
         $body->close;
     }
 
-    my $type = $singleValueHeaders->{'content-type'};
+    my $type = $singleValueHeaders->{'content-type'} // 'application/octet-stream';
     my $isBase64Encoded = $type !~ m(^text/.*|application/(:?json|javascript|xml))i;
     if ($isBase64Encoded) {
         $content = encode_base64 $content, '';
