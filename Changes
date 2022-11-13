@@ -1,6 +1,9 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - fix Untagged opnames warnings, closes https://github.com/shogo82148/p5-aws-lambda/issues/97
+    - Off load perlstrip to AWS Lambda.
+    - add fallback to content-type
 
 0.0.37 2022-10-08T13:28:41Z
     - arm64 compatible layers are now available on 12 additional regions
