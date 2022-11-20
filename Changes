@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.0.39 2022-11-20T18:56:48Z
     - update dependency modules
 
 0.0.38 2022-11-13T05:40:29Z
