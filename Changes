@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - update dependency modules
 
 0.0.38 2022-11-13T05:40:29Z
     - fix Untagged opnames warnings, closes https://github.com/shogo82148/p5-aws-lambda/issues/97
