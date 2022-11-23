@@ -45,7 +45,7 @@ PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bi
     YAML@1.30 \
     YAML::Tiny@1.73 \
     YAML::XS@0.85 \
-    IO::Socket::SSL@2.076 \
+    IO::Socket::SSL@2.077 \
     Mozilla::CA@20221114
 /opt/bin/cpanm --notest .
 
