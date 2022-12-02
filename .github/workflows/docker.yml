@@ -3,7 +3,7 @@ name: Build Docker Images
 # to follow lambci/lambda
 on:
   schedule:
-    - cron: "19 14 * * *"
+    - cron: "19 14 * * 1"
   workflow_dispatch:
 
 jobs:
