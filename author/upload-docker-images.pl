@@ -12,12 +12,10 @@ use File::Path qw/mkpath/;
 use Time::Piece;
 
 my $perl_versions = [
-    '5.32',
     '5.34',
     '5.36',
 ];
 my $perl_versions_al2 = [
-    '5.32',
     '5.34',
     '5.36',
 ];
