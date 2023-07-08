@@ -39,13 +39,13 @@ PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bi
 /opt/bin/cpanm --notest \
     AWS::XRay@0.12 \
     JSON@4.10 \
-    Cpanel::JSON::XS@4.32 \
+    Cpanel::JSON::XS@4.37 \
     JSON::XS@4.03 \
-    JSON::MaybeXS@1.004004 \
+    JSON::MaybeXS@1.004005 \
     YAML@1.30 \
-    YAML::Tiny@1.73 \
-    YAML::XS@0.85 \
-    IO::Socket::SSL@2.077 \
+    YAML::Tiny@1.74 \
+    YAML::XS@0.88 \
+    IO::Socket::SSL@2.083 \
     Mozilla::CA@20221114
 /opt/bin/cpanm --notest .
 
