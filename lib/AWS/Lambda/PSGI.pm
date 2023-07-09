@@ -11,6 +11,7 @@ use JSON::Types;
 use Encode;
 use Try::Tiny;
 use Plack::Middleware::ReverseProxy;
+use AWS::Lambda::Context;
 
 sub new {
     my $proto = shift;
