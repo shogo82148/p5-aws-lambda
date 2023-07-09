@@ -11,7 +11,7 @@ use JSON::Types;
 use Encode;
 use Try::Tiny;
 use Plack::Middleware::ReverseProxy;
-use AWS::Lambda::Context;
+use AWS::Lambda;
 
 sub new {
     my $proto = shift;
@@ -309,10 +309,10 @@ L<AWS::Lambda::PSGI> injects the request id that compatible with L<Plack::Middle
 
 The MIT License (MIT)
 
-Copyright (C) Ichinose Shogo.
+Copyright (C) ICHINOSE Shogo.
 
 =head1 AUTHOR
 
-Ichinose Shogo E<lt>shogo82148@gmail.comE<gt>
+ICHINOSE Shogo E<lt>shogo82148@gmail.comE<gt>
 
 =cut

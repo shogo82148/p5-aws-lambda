@@ -207,10 +207,10 @@ C<$context> is an instance of L<AWS::Lambda::Context>.
 
 The MIT License (MIT)
 
-Copyright (C) Ichinose Shogo.
+Copyright (C) ICHINOSE Shogo.
 
 =head1 AUTHOR
 
-Ichinose Shogo E<lt>shogo82148@gmail.comE<gt>
+ICHINOSE Shogo E<lt>shogo82148@gmail.comE<gt>
 
 =cut
