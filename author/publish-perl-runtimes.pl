@@ -86,10 +86,4 @@ publish("paws-al2", "x86_64");
 publish("runtime-al2", "arm64");
 publish("paws-al2", "arm64");
 
-# for backward compatibility
-publish("runtime", "x86_64", "");
-publish("paws", "x86_64", "");
-publish("runtime-al2", "x86_64", "");
-publish("paws-al2", "x86_64", "");
-
 1;
