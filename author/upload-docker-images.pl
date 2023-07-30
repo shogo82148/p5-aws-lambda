@@ -41,14 +41,6 @@ RUN cd /opt && \\
 RUN ln -s /opt/bootstrap /var/runtime/bootstrap
 EOF
         },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'amazon/aws-lambda-provided:alami',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
-            )
-        },
         'tag' => sub {
             my $version = shift;
             return "base-$version";
@@ -85,15 +77,6 @@ COPY --from=0 /opt /opt
 RUN ln -s /opt/bootstrap /var/runtime/bootstrap
 EOF
         },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/lambda/provided:al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x86_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
-            );
-        },
         'tag' => sub {
             my $version = shift;
             return "base-$version.al2";
@@ -122,15 +105,6 @@ RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
     unzip -o paws.zip && rm paws.zip
 EOF
-        },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'amazon/aws-lambda-provided:alami',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip",
-            );
         },
         'tag' => sub {
             my $version = shift;
@@ -175,17 +149,6 @@ RUN ln -s /opt/bootstrap /var/runtime/bootstrap
 COPY --from=1 /opt /opt
 EOF
         },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/lambda/provided:al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x86_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-x86_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-arm64.zip",
-            );
-        },
         'tag' => sub {
             my $version = shift;
             return "base-$version-paws.al2";
@@ -206,14 +169,6 @@ RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
     unzip -o runtime.zip && rm runtime.zip
 EOF
-        },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/shogo82148/lambda-provided:build-alami',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
-            );
         },
         'tag' => sub {
             my $version = shift;
@@ -242,15 +197,6 @@ RUN cd /opt && \\
     unzip -o runtime.zip && rm runtime.zip
 EOF
         },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/shogo82148/lambda-provided:build-al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x64_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
-            );
-        },
         'tag' => sub {
             my $version = shift;
             return "build-$version.al2";
@@ -274,15 +220,6 @@ RUN cd /opt && \\
     curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
     unzip -o paws.zip && rm paws.zip
 EOF
-        },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/shogo82148/lambda-provided:build-alami',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip",
-            );
         },
         'tag' => sub {
             my $version = shift;
@@ -315,17 +252,6 @@ RUN cd /opt && \\
     unzip -o paws.zip && rm paws.zip
 EOF
         },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/shogo82148/lambda-provided:build-al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x84_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-x86_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-arm64.zip",
-            );
-        },
         'tag' => sub {
             my $version = shift;
             return "build-$version-paws.al2";
@@ -345,14 +271,6 @@ RUN cd /opt && \\
     unzip -o runtime.zip && rm runtime.zip
 USER sbx_user1051
 EOF
-        },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/shogo82148/lambda-provided:alami',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
-            );
         },
         'tag' => sub {
             my $version = shift;
@@ -379,15 +297,6 @@ FROM public.ecr.aws/shogo82148/lambda-provided:al2
 COPY --from=0 /opt /opt
 EOF
         },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/shogo82148/lambda-provided:al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x86_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
-            );
-        },
         'tag' => sub {
             my $version = shift;
             return "$version.al2";
@@ -410,15 +319,6 @@ RUN cd /opt && \\
     unzip -o paws.zip && rm paws.zip
 USER sbx_user1051
 EOF
-        },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/shogo82148/lambda-provided:alami',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip",
-            );
         },
         'tag' => sub {
             my $version = shift;
@@ -453,17 +353,6 @@ FROM public.ecr.aws/shogo82148/lambda-provided:al2
 COPY --from=0 /opt /opt
 COPY --from=1 /opt /opt
 EOF
-        },
-        'dependencies' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return (
-                'public.ecr.aws/shogo82148/lambda-provided:al2',
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-x86_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2-arm64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-x86_64.zip",
-                "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2-arm64.zip",
-            );
         },
         'tag' => sub {
             my $version = shift;
