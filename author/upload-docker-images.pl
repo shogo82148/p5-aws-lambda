@@ -11,42 +11,12 @@ use JSON qw/decode_json encode_json/;
 use File::Path qw/mkpath/;
 use Time::Piece;
 
-my $perl_versions = [
-    '5.38',
-    '5.36',
-];
 my $perl_versions_al2 = [
     '5.38',
     '5.36',
 ];
 
 my $flavors = {
-    'base' => {
-        'dockerfile' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return <<"EOF"
-# Base Image for Lambda
-# You add your function code and dependencies to the base image and
-# then run it as a container image on AWS Lambda.
-
-FROM amazon/aws-lambda-provided:alami
-
-# Use the custom runtime perl in preference to the system perl
-ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip -o runtime.zip && rm runtime.zip
-RUN ln -s /opt/bootstrap /var/runtime/bootstrap
-EOF
-        },
-        'tag' => sub {
-            my $version = shift;
-            return "base-$version";
-        },
-    },
-
     'base.al2' => {
         'dockerfile' => sub {
             my $version = shift;
@@ -80,35 +50,6 @@ EOF
         'tag' => sub {
             my $version = shift;
             return "base-$version.al2";
-        },
-    },
-
-    'base-paws' => {
-        'dockerfile' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return <<"EOF";
-# Base Image for Lambda
-# You add your function code and dependencies to the base image and
-# then run it as a container image on AWS Lambda.
-
-FROM amazon/aws-lambda-provided:alami
-
-# Use the custom runtime perl in preference to the system perl
-ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip -o runtime.zip && rm runtime.zip
-RUN ln -s /opt/bootstrap /var/runtime/bootstrap
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
-    unzip -o paws.zip && rm paws.zip
-EOF
-        },
-        'tag' => sub {
-            my $version = shift;
-            return "base-$version-paws";
         },
     },
 
@@ -155,27 +96,6 @@ EOF
         },
     },
 
-    'build' => {
-        'dockerfile' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return <<"EOF";
-FROM public.ecr.aws/shogo82148/lambda-provided:build-alami
-
-# Use the custom runtime perl in preference to the system perl
-ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip -o runtime.zip && rm runtime.zip
-EOF
-        },
-        'tag' => sub {
-            my $version = shift;
-            return "build-$version";
-        },
-    },
-
     'build.al2' => {
         'dockerfile' => sub {
             my $version = shift;
@@ -200,30 +120,6 @@ EOF
         'tag' => sub {
             my $version = shift;
             return "build-$version.al2";
-        },
-    },
-
-    'build-paws' => {
-        'dockerfile' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return <<"EOF";
-FROM public.ecr.aws/shogo82148/lambda-provided:build-alami
-
-# Use the custom runtime perl in preference to the system perl
-ENV PATH=/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip -o runtime.zip && rm runtime.zip
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
-    unzip -o paws.zip && rm paws.zip
-EOF
-        },
-        'tag' => sub {
-            my $version = shift;
-            return "build-$version-paws";
         },
     },
 
@@ -258,26 +154,6 @@ EOF
         },
     },
 
-    'run' => {
-        'dockerfile' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return <<"EOF";
-FROM public.ecr.aws/shogo82148/lambda-provided:alami
-
-USER root
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip -o runtime.zip && rm runtime.zip
-USER sbx_user1051
-EOF
-        },
-        'tag' => sub {
-            my $version = shift;
-            return "$version";
-        },
-    },
-
     'run.al2' => {
         'dockerfile' => sub {
             my $version = shift;
@@ -300,29 +176,6 @@ EOF
         'tag' => sub {
             my $version = shift;
             return "$version.al2";
-        },
-    },
-
-    'run-paws' => {
-        'dockerfile' => sub {
-            my $version = shift;
-            $version =~ s/[.]/-/;
-            return <<"EOF"
-FROM public.ecr.aws/shogo82148/lambda-provided:alami
-
-USER root
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip -o runtime.zip && \\
-    unzip -o runtime.zip && rm runtime.zip
-RUN cd /opt && \\
-    curl -sSL https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip -o paws.zip && \\
-    unzip -o paws.zip && rm paws.zip
-USER sbx_user1051
-EOF
-        },
-        'tag' => sub {
-            my $version = shift;
-            return "$version-paws";
         },
     },
 
@@ -363,10 +216,8 @@ EOF
 
 sub generate {
     chdir "$FindBin::Bin" or die "failed to chdir: $!";
-    for my $perl(@$perl_versions) {
+    for my $perl(@$perl_versions_al2) {
         for my $flavor(sort keys %$flavors) {
-            my $is_al2 = $flavor =~ /[.]al2$/;
-            next if $is_al2 && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
             mkpath("$perl/$flavor");
             open my $fh, '>', "$perl/$flavor/Dockerfile";
             print $fh $flavors->{$flavor}->{dockerfile}->($perl);
@@ -379,28 +230,20 @@ sub build {
     my $t = localtime;
     my $date = $t->ymd(".");
 
-    for my $perl(@$perl_versions) {
+    for my $perl(@$perl_versions_al2) {
         for my $flavor(sort keys %$flavors) {
-            my $is_al2 = $flavor =~ /[.]al2$/;
-            next if $is_al2 && scalar(grep {$_ eq $perl} @$perl_versions_al2) == 0;
-
             my $settings = $flavors->{$flavor};
             my $tag = $settings->{tag}->($perl);
             say STDERR "building $tag...";
             chdir "$FindBin::Bin/$perl/$flavor" or die "failed to chdir: $!";
             for my $registory (qw(shogo82148/p5-aws-lambda public.ecr.aws/shogo82148/p5-aws-lambda ghcr.io/shogo82148/p5-aws-lambda)) {
-                if ($is_al2) {
-                    docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag-$date", '.');
-                    docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-$date-x86_64", '.');
-                    docker('buildx', 'build', '--platform', 'linux/arm64', '--push', '-t', "$registory:$tag-$date-arm64", '.');
+                docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag-$date", '.');
+                docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-$date-x86_64", '.');
+                docker('buildx', 'build', '--platform', 'linux/arm64', '--push', '-t', "$registory:$tag-$date-arm64", '.');
 
-                    docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag", '.');
-                    docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-x86_64", '.');
-                    docker('buildx', 'build', '--platform', 'linux/arm64', '--push', '-t', "$registory:$tag-arm64", '.');
-                } else {
-                    docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-$date", '.');
-                    docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag", '.');
-                }
+                docker('buildx', 'build', '--platform', 'linux/amd64,linux/arm64', '--push', '-t', "$registory:$tag", '.');
+                docker('buildx', 'build', '--platform', 'linux/amd64', '--push', '-t', "$registory:$tag-x86_64", '.');
+                docker('buildx', 'build', '--platform', 'linux/arm64', '--push', '-t', "$registory:$tag-arm64", '.');
             }
         }
     }
