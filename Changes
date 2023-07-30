@@ -1,6 +1,9 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - switch build environment from lambci/lambda based to public.ecr.aws/lambda/provided based.
+    - stop building Amazon Linux 2 based layers.
+        - These layers are still available however they will not receive any updates.
 
 0.0.40 2023-07-09T17:55:20Z
     - Perl 5.38.0 is released
