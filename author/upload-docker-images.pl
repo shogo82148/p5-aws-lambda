@@ -486,18 +486,9 @@ sub generate {
     }
 }
 
-my $current_state = {};
-my $state = {};
-
 sub build {
-    # load current state
-    $current_state = load_state();
-
     my $t = localtime;
     my $date = $t->ymd(".");
-
-    say STDERR "checking updates...";
-    check_updates();
 
     for my $perl(@$perl_versions) {
         for my $flavor(sort keys %$flavors) {
@@ -506,10 +497,6 @@ sub build {
 
             my $settings = $flavors->{$flavor};
             my $tag = $settings->{tag}->($perl);
-            if (!needs_build($settings->{dependencies}->($perl))) {
-                say STDERR "no need to build $tag, skipping.";
-                next;
-            }
             say STDERR "building $tag...";
             chdir "$FindBin::Bin/$perl/$flavor" or die "failed to chdir: $!";
             for my $registory (qw(shogo82148/p5-aws-lambda public.ecr.aws/shogo82148/p5-aws-lambda ghcr.io/shogo82148/p5-aws-lambda)) {
@@ -528,63 +515,6 @@ sub build {
             }
         }
     }
-
-    save_state($state);
-}
-
-sub check_updates {
-    # image dependencies
-    my @images = (
-        # for lambci provided
-        'public.ecr.aws/shogo82148/lambda-provided:build-alami',
-        'public.ecr.aws/shogo82148/lambda-provided:alami',
-
-        # for lambci provided.al2
-        'public.ecr.aws/shogo82148/lambda-provided:build-al2',
-        'public.ecr.aws/shogo82148/lambda-provided:al2',
-
-        # for container format
-        'amazon/aws-lambda-provided:alami',
-        'amazon/aws-lambda-provided:al2',
-
-        # for aws provided images
-        'public.ecr.aws/amazonlinux/amazonlinux:2',
-        'public.ecr.aws/lambda/provided:al2',
-    );
-    for my $image(@images) {
-        say STDERR "inspect $image";
-        $state->{$image} = inspect_id($image);
-    }
-
-    for my $perl(@$perl_versions) {
-        say STDERR "$perl on provided";
-        my $version = $perl =~ s/[.]/-/r;
-        my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime.zip";
-        $state->{$runtime} = fetch_etag($runtime);
-        my $paws = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws.zip";
-        $state->{$paws} = fetch_etag($paws);
-    }
-
-    for my $perl(@$perl_versions_al2) {
-        say STDERR "$perl on provided.al2";
-        my $version = $perl =~ s/[.]/-/r;
-        my $runtime = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-runtime-al2.zip";
-        $state->{$runtime} = fetch_etag($runtime);
-        my $paws = "https://shogo82148-lambda-perl-runtime-us-east-1.s3.amazonaws.com/perl-$version-paws-al2.zip";
-        $state->{$paws} = fetch_etag($paws);
-    }
-}
-
-sub needs_build {
-    my @deps = @_;
-    for my $dep(@deps) {
-        my $current = $current_state->{$dep};
-        my $new = $state->{$dep};
-        if (!$current || $current ne $new) {
-            return 1;
-        }
-    }
-    return 0;
 }
 
 sub docker {
@@ -604,26 +534,6 @@ sub docker {
     croak 'gave up, failed to run docker';
 }
 
-sub inspect_id {
-    my $image = shift;
-    my $manifest = decode_json(run('docker', 'manifest', 'inspect', $image));
-    my $mediaType = lc $manifest->{mediaType};
-    if ($mediaType eq 'application/vnd.docker.distribution.manifest.v2+json') {
-        return $manifest->{config}{digest};
-    }
-    if ($mediaType eq 'application/vnd.docker.distribution.manifest.list.v2+json') {
-        return join "\n", sort map {$_->{digest}} @{$manifest->{manifests}};
-    }
-    return '';
-}
-
-sub fetch_etag {
-    my $url = shift;
-    my $headers = run('curl', '-I', $url);
-    $headers =~ /^ETag:\s*(\S+)/mi;
-    return $1;
-}
-
 # a wrapper for system
 sub run {
     my @args = @_;
@@ -637,21 +547,6 @@ sub run {
         croak "`$cmd` exit code: $code, message: $result";
     }
     return $result;
-}
-
-sub load_state {
-    open my $fh, '<', "$FindBin::Bin/state.json" or return {};
-    my $data = do { local $/; <$fh> };
-    close($fh);
-    return decode_json($data);
-}
-
-sub save_state {
-    my $state = shift;
-    my $json = JSON->new->utf8(1)->pretty(1)->canonical(1);
-    open my $fh, '>', "$FindBin::Bin/state.json" or return {};
-    print $fh $json->encode($state);
-    close($fh);
 }
 
 my $subcommand = shift;
