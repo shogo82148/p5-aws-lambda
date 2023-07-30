@@ -39,7 +39,7 @@ docker run \
     -v "$OPT-$PLATFORM/lib/perl5/site_perl:/opt/lib/perl5/site_perl" \
     -v "$OPT-$PLATFORM/lib:/opt-lib" \
     --platform "$DOCKER_PLATFORM" \
-    "public.ecr.aws/shogo82148/lambda-provided:build-al2-$PLATFORM" \
+    "public.ecr.aws/sam/build-provided.al2:1-$PLATFORM" \
     ./author/build-paws-al2.sh "$TAG"
 
 find "$OPT-$PLATFORM" -type f -a -name '*.pm' -print0 | parallel -0 -j 32 "$ROOT/author/perlstrip.sh"
