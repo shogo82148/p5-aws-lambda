@@ -36,7 +36,7 @@ docker run \
     -v "$ROOT:/var/task" \
     -v "$OPT-$PLATFORM:/opt" \
     --rm --platform "$DOCKER_PLATFORM" \
-    "public.ecr.aws/shogo82148/lambda-provided:build-al2-$PLATFORM" \
+    "public.ecr.aws/sam/build-provided.al2:1-$PLATFORM" \
     ./author/build-perl-al2.sh "$PERL_VERSION"
 
 # sanity check the perl binary works on the emulation images
@@ -44,7 +44,7 @@ docker run \
     -v "$OPT-$PLATFORM:/opt" \
     --rm --platform "$DOCKER_PLATFORM" \
     --entrypoint /opt/bin/perl \
-    "public.ecr.aws/shogo82148/lambda-provided:al2-$PLATFORM" \
+    "public.ecr.aws/lambda/provided:al2-$PLATFORM" \
     -MJSON::XS -MYAML::XS -MNet::SSLeay -MIO::Socket::SSL -MMozilla::CA \
     -MAWS::XRay -MAWS::Lambda -MAWS::Lambda::PSGI -e ''
 
