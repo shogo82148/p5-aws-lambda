@@ -690,7 +690,7 @@ It means that we support the two most recent stable release series.
 We also provide the layers for legacy custom runtime as known as "provided".
 These layers are only for backward compatibility.
 We recommend to migrate to Amazon Linux 2.
-We may stop maintenance without any notice.
+These layers are NO LONGER MAINTAINED and WILL NOT RECEIVE ANY UPDATES.
 
 =head2 Pre-built Public Lambda Layers for Amazon Linux
 
@@ -746,7 +746,7 @@ C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-
 Previously, we provided the layers that named without CPU architectures.
 These layers are compatible with x86_64 and only for backward compatibility.
 We recommend to specify the CPU architecture.
-We may stop maintenance without any notice.
+These layers are NO LONGER MAINTAINED and WILL NOT RECEIVE ANY UPDATES.
 
 =head2 Pre-built Legacy Public Lambda Layers for Amazon Linux 2
 
