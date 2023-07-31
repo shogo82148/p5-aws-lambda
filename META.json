@@ -4,7 +4,7 @@
       "ICHINOSE Shogo"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.18, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.22, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "mit"
    ],
@@ -86,13 +86,13 @@
          "web" : "https://github.com/shogo82148/p5-aws-lambda"
       }
    },
-   "version" : "0.0.40",
+   "version" : "0.1.0",
    "x_contributors" : [
       "ICHINOSE Shogo <shogo82148@gmail.com>",
       "Jose Luis Martinez <jlmartinez@capside.com>",
       "Mohammad S Anwar <mohammad.anwar@yahoo.com>",
       "dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 4.11",
+   "x_serialization_backend" : "JSON::PP version 4.16",
    "x_static_install" : 1
 }
