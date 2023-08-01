@@ -10,3 +10,26 @@ Resources:
       BucketName: !Sub shogo82148-lambda-perl-runtime-${AWS::Region}
       VersioningConfiguration:
         Status: Enabled
+
+      # allow public access policy to the bucket
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: false
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+
+  # make the Perl Layers public readable
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref LayerBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${LayerBucket}/*"
