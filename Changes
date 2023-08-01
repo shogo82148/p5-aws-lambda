@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - ap-south-2, ap-southeast-4, eu-central-2, eu-south-2 and il-central-1 are available.
 
 0.1.0 2023-07-31T11:31:41Z
     - switch build environment from lambci/lambda based to public.ecr.aws/lambda/provided based.
