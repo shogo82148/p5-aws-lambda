@@ -38,10 +38,9 @@ my $layers = {};
 my $pm = Parallel::ForkManager->new(10);
 $pm->run_on_finish(sub {
     my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
-    if (!$data) {
-        return;
-    }
+    return unless $data;
     my ($version, $region, $arn) = @$data;
+    return unless $version && $region && $arn;
     $layers->{$version} //= {};
     $layers->{$version}{$region} = $arn;
 });
@@ -98,10 +97,10 @@ my $layers_al2_x86_64 = {};
 my $pm_al2_x86_64 = Parallel::ForkManager->new(10);
 $pm_al2_x86_64->run_on_finish(sub {
     my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
-    if (!$data) {
-        return;
-    }
+    return unless $data;
     my ($version, $region, $arn) = @$data;
+    return unless $version && $region && $arn;
+
     $layers_al2_x86_64->{$version} //= {};
     $layers_al2_x86_64->{$version}{$region} = $arn;
 });
@@ -158,10 +157,9 @@ my $layers_al2 = {};
 my $pm_al2 = Parallel::ForkManager->new(10);
 $pm_al2->run_on_finish(sub {
     my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data) = @_;
-    if (!$data) {
-        return;
-    }
+    return unless $data;
     my ($version, $region, $arch, $arn) = @$data;
+    return unless $version && $region && $arch && $arn;
     $layers_al2->{$version} //= {};
     $layers_al2->{$version}{$region} //= {};
     $layers_al2->{$version}{$region}{$arch} = $arn;
@@ -256,9 +254,7 @@ print $fh "our \$LAYERS = {\n";
 for my $version (@$versions) {
     print $fh "    '$version' => {\n";
     for my $region (@{$regions->{x86_64}}) {
-        if (!$layers->{$version}{$region}{runtime_arn}) {
-            next;
-        }
+        next unless $layers->{$version}{$region}{runtime_arn};
         print $fh <<EOS
         '$region' => {
             runtime_arn     => "$layers->{$version}{$region}{runtime_arn}",
@@ -278,6 +274,7 @@ for my $version (@$versions_al2) {
     for my $arch (@$archs) {
         print $fh "        '$arch' => {\n";
         for my $region (@{$regions->{$arch}}) {
+            next unless $layers_al2->{$version}{$region}{$arch}{runtime_arn};
             print $fh <<EOS
             '$region' => {
                 runtime_arn     => "$layers_al2->{$version}{$region}{$arch}{runtime_arn}",
@@ -436,6 +433,7 @@ for my $version (@$versions_al2) {
     for my $arch(@$archs) {
         print $fh "=item $arch architecture\n\n=over\n\n";
         for my $region (@{$regions->{$arch}}) {
+            next unless $layers_al2->{$version}{$region}{$arch}{runtime_arn};
             print $fh "=item C<$layers_al2->{$version}{$region}{$arch}{runtime_arn}>\n\n";
         }
         print $fh "=back\n\n";
@@ -631,6 +629,7 @@ for my $version (@$versions_al2) {
     for my $arch(@$archs) {
         print $fh "=item $arch architecture\n\n=over\n\n";
         for my $region (@{$regions->{$arch}}) {
+            next unless $layers_al2->{$version}{$region}{$arch}{paws_arn};
             print $fh "=item C<$layers_al2->{$version}{$region}{$arch}{paws_arn}>\n\n";
         }
         print $fh "=back\n\n";
@@ -703,6 +702,7 @@ EOS
 for my $version (@$versions) {
     print $fh "=item Perl $version\n\n=over\n\n";
     for my $region (@{$regions->{x86_64}}) {
+        next unless $layers->{$version}{$region}{runtime_arn};
         print $fh "=item C<$layers->{$version}{$region}{runtime_arn}>\n\n";
     }
     print $fh "=back\n\n";
@@ -720,9 +720,7 @@ EOS
 for my $version (@$versions) {
     print $fh "=item Perl $version\n\n=over\n\n";
     for my $region (@{$regions->{x86_64}}) {
-        if (!$layers->{$version}{$region}{paws_arn}) {
-            next;
-        }
+        next unless $layers->{$version}{$region}{paws_arn};
         print $fh "=item C<$layers->{$version}{$region}{paws_arn}>\n\n";
     }
     print $fh "=back\n\n";
@@ -759,6 +757,7 @@ EOS
 for my $version (@$versions_al2) {
     print $fh "=item Perl $version\n\n=over\n\n";
     for my $region (@{$regions->{x86_64}}) {
+        next unless $layers_al2_x86_64->{$version}{$region}{runtime_arn};
         print $fh "=item C<$layers_al2_x86_64->{$version}{$region}{runtime_arn}>\n\n";
     }
     print $fh "=back\n\n";
@@ -776,6 +775,7 @@ EOS
 for my $version (@$versions_al2) {
     print $fh "=item Perl $version\n\n=over\n\n";
     for my $region (@{$regions->{x86_64}}) {
+        next unless $layers_al2_x86_64->{$version}{$region}{paws_arn};
         print $fh "=item C<$layers_al2_x86_64->{$version}{$region}{paws_arn}>\n\n";
     }
     print $fh "=back\n\n";
