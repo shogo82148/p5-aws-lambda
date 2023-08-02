@@ -30,7 +30,7 @@ export PERL_MM_USE_DEFAULT=1
 # install pre-installed modules
 curl -fsSL --compressed http://cpanmin.us | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpanm
 install /tmp/cpanm /opt/bin/cpanm
-curl -fsSL --compressed https://git.io/cpm | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpm
+curl -fsSL --compressed https://raw.githubusercontent.com/skaji/cpm/main/cpm | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpm
 install /tmp/cpm /opt/bin/cpm
 
 # Net::SSLeay needs special CCFLAGS and LIBS to link
