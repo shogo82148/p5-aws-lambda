@@ -7,6 +7,7 @@ set -uex
 PERL_VERSION=$1
 
 NET_SSLEAY_VERSION=1.92
+CARTON_VERSION=v1.0.35
 AWS_XRAY_VERSION=0.12
 JSON_VERSION=4.10
 JSON_XS_VERSION=4.03
@@ -49,6 +50,7 @@ install /tmp/cpm /opt/bin/cpm
 PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bin/cpanm --notest "Net::SSLeay@$NET_SSLEAY_VERSION"
 
 /opt/bin/cpanm --notest \
+    "Carton@$CARTON_VERSION" \
     "AWS::XRay@$AWS_XRAY_VERSION" \
     "JSON@$JSON_VERSION" \
     "Cpanel::JSON::XS@$CPANEL_JSON_XS_VERSION" \
