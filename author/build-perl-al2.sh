@@ -6,6 +6,18 @@ set -uex
 
 PERL_VERSION=$1
 
+NET_SSLEAY_VERSION=1.92
+AWS_XRAY_VERSION=0.12
+JSON_VERSION=4.10
+JSON_XS_VERSION=4.03
+CPANEL_JSON_XS_VERSION=4.37
+JSON_MAYBEXS_VERSION=1.004005
+YAML_VERSION=1.30
+YAML_TINY_VERSION=1.74
+YAML_XS_VERSION=0.88
+IO_SOCKET_SSL_VERSION=2.083
+MOZILLA_CA_VERSION=20230801
+
 JOBS=$(nproc)
 curl -sL https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build > /tmp/perl-build
 perl /tmp/perl-build "$PERL_VERSION" /opt --jobs="$JOBS" --noman -Dvendorprefix=/opt
@@ -34,19 +46,19 @@ curl -fsSL --compressed https://raw.githubusercontent.com/skaji/cpm/main/cpm | p
 install /tmp/cpm /opt/bin/cpm
 
 # Net::SSLeay needs special CCFLAGS and LIBS to link
-PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bin/cpanm --notest Net::SSLeay@1.92
+PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bin/cpanm --notest "Net::SSLeay@$NET_SSLEAY_VERSION"
 
 /opt/bin/cpanm --notest \
-    AWS::XRay@0.12 \
-    JSON@4.10 \
-    Cpanel::JSON::XS@4.37 \
-    JSON::XS@4.03 \
-    JSON::MaybeXS@1.004005 \
-    YAML@1.30 \
-    YAML::Tiny@1.74 \
-    YAML::XS@0.88 \
-    IO::Socket::SSL@2.083 \
-    Mozilla::CA@20221114
+    "AWS::XRay@$AWS_XRAY_VERSION" \
+    "JSON@$JSON_VERSION" \
+    "Cpanel::JSON::XS@$CPANEL_JSON_XS_VERSION" \
+    "JSON::XS@$JSON_XS_VERSION" \
+    "JSON::MaybeXS@$JSON_MAYBEXS_VERSION" \
+    "YAML@$YAML_VERSION" \
+    "YAML::Tiny@$YAML_TINY_VERSION" \
+    "YAML::XS@$YAML_XS_VERSION" \
+    "IO::Socket::SSL@$IO_SOCKET_SSL_VERSION" \
+    "Mozilla::CA@$MOZILLA_CA_VERSION"
 /opt/bin/cpanm --notest .
 
 # replace shebang to the absolute path of perl
