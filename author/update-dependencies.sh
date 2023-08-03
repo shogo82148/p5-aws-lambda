@@ -18,6 +18,7 @@ function update {
 }
 
 update Net-SSLeay NET_SSLEAY_VERSION build-perl-al2.sh
+update Carton CARTON_VERSION build-perl-al2.sh
 update AWS-XRay AWS_XRAY_VERSION build-perl-al2.sh
 update JSON JSON_VERSION build-perl-al2.sh
 update JSON-XS JSON_XS_VERSION build-perl-al2.sh
