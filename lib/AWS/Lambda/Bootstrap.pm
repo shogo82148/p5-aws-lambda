@@ -171,7 +171,7 @@ __END__
 
 =head1 NAME
 
-AWS::Lambda::Bootstrap - It's the bootrap script for AWS Lambda Custom Runtime.
+AWS::Lambda::Bootstrap - the bootrap script for AWS Lambda Custom Runtime.
 
 =head1 SYNOPSIS
 
@@ -202,6 +202,20 @@ The format of the handler is following.
     }
 
 C<$context> is an instance of L<AWS::Lambda::Context>.
+
+=head1 RESPONSE STREAMING
+
+It also supports L<response streaming|https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html>.
+
+    sub handle {
+        my ($payload, $context) = @_;
+        return sub {
+            my $responder = shift;
+            my $writer = $responder->('application/json');
+            $writer->write('{"foo": "bar"}');
+            $writer->close;
+        };
+    }
 
 =head1 LICENSE
 
