@@ -16,6 +16,7 @@ on 'test' => sub {
     requires 'Test::SharedFork';
     requires 'Test::Warn';
     requires 'File::Slurp', '9999.25';
+    requires 'Starman';
 };
 
 on 'develop' => sub {

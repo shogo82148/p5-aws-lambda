@@ -10,10 +10,11 @@ sub new {
     my $class = shift;
     my %args = @_;
     my $self = $class->SUPER::new(%args);
-    $self->{lambda_next}       = $args{lambda_next} // sub { die "unexpected call of lambda_next" };
-    $self->{lambda_response}   = $args{lambda_response} // sub { die "unexpected call of lambda_response" };
-    $self->{lambda_error}      = $args{lambda_error} // sub { die "unexpected call of lambda_error" };
-    $self->{lambda_init_error} = $args{lambda_init_error} // sub { die "unexpected call of lambda_init_error" };
+    $self->{lambda_next}               = $args{lambda_next}               // sub { die "unexpected call of lambda_next" };
+    $self->{lambda_response}           = $args{lambda_response}           // sub { die "unexpected call of lambda_response" };
+    $self->{lambda_response_streaming} = $args{lambda_response_streaming} // sub { die "unexpected call of lambda_response_streaming" };
+    $self->{lambda_error}              = $args{lambda_error}              // sub { die "unexpected call of lambda_error" };
+    $self->{lambda_init_error}         = $args{lambda_init_error}         // sub { die "unexpected call of lambda_init_error" };
     return $self;
 }
 
@@ -25,6 +26,11 @@ sub lambda_next {
 sub lambda_response {
     my $self = shift;
     return $self->{lambda_response}->($self, @_);
+}
+
+sub lambda_response_streaming {
+    my $self = shift;
+    return $self->{lambda_response_streaming}->($self, @_);
 }
 
 sub lambda_error {

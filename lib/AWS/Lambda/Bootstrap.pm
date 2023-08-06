@@ -8,6 +8,7 @@ use JSON::XS qw/decode_json encode_json/;
 use Try::Tiny;
 use AWS::Lambda;
 use AWS::Lambda::Context;
+use AWS::Lambda::ResponseWriter;
 use Scalar::Util qw(blessed);
 use Exporter 'import';
 
@@ -91,10 +92,15 @@ sub handle_event {
         $self->lambda_error($err, $context);
         bless {}, 'AWS::Lambda::ErrorSentinel';
     };
-    if (ref($response) eq 'AWS::Lambda::ErrorSentinel') {
+    my $ref = ref($response);
+    if ($ref eq 'AWS::Lambda::ErrorSentinel') {
         return;
     }
-    $self->lambda_response($response, $context);
+    if ($ref eq 'CODE') {
+        $self->lambda_response_streaming($response, $context);
+    } else {
+        $self->lambda_response($response, $context);
+    }
     return 1;
 }
 
@@ -127,6 +133,37 @@ sub lambda_response {
     if (!$resp->{success}) {
         die "failed to response of execution: $resp->{status} $resp->{reason}";
     }
+}
+
+sub lambda_response_streaming {
+    my $self = shift;
+    my ($response, $context) = @_;
+    my $runtime_api = $self->{runtime_api};
+    my $api_version = $self->{api_version};
+    my $request_id = $context->aws_request_id;
+    my $url = "http://${runtime_api}/${api_version}/runtime/invocation/${request_id}/response";
+    my $writer = undef;
+    # try { # TODO: error handling
+    $response->(sub {
+        my $content_type = shift;
+        $writer = AWS::Lambda::ResponseWriter->new(
+            response_url => $url,
+            http         => $self->{http},
+        );
+        $writer->_request($content_type);
+        return $writer;
+    });
+    if ($writer) {
+        my $response = $writer->_handle_response;
+        if (!$response->{success}) {
+            die "failed to response of execution: $response->{status} $response->{reason}";
+        }
+    }
+    # } catch {
+    #     my $err = $_;
+    #     print STDERR "$err";
+    #     $self->lambda_error($err, $context);
+    # };
 }
 
 sub lambda_error {
