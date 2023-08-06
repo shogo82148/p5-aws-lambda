@@ -29,9 +29,13 @@ my $app_server = Test::TCP->new(
         my $app = sub {
             my $env = shift;
             my $req = Plack::Request->new($env);
-            is $req->method, "POST", "http method";
+            my $headers = $req->headers;
             my $body = slurp($req->body);
-            is $body, '{"key1":"a","key2":"b","key3":"c"}', "response";
+
+            is $req->method, "POST", "http method is POST";
+            is $headers->header('Lambda-Runtime-Function-Response-Mode'), "streaming", "streaming is enabled";
+            is $body, '{"key1":"a","key2":"b","key3":"c"}', "response body is correct";
+
             my $res = $req->new_response(200);
             $res->content_type("application/json");
             $res->body('{}');

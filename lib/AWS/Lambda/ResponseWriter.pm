@@ -49,11 +49,13 @@ sub _request {
             "host"              => $host_port,
             "content-type"      => $content_type,
             "transfer-encoding" => "chunked",
+            "lambda-runtime-function-response-mode" => "streaming",
         },
         header_case => {
             "host"              => "Host",
             "content-type"      => "Content-Type",
             "transfer-encoding" => "Transfer-Encoding",
+            "lambda-runtime-function-response-mode" => "Lambda-Runtime-Function-Response-Mode",
         },
     };
     my $peer = $host;
