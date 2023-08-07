@@ -4,6 +4,8 @@ use utf8;
 use strict;
 use warnings;
 use Carp qw(croak);
+use Scalar::Util qw(blessed);
+use MIME::Base64 qw(encode_base64);
 use HTTP::Tiny;
 
 my %DefaultPort = (
@@ -126,6 +128,25 @@ sub close {
     }
     my $handle = $self->{handle};
     $handle->write("0\x0D\x0A\x0D\x0A");
+    $self->{closed} = 1;
+}
+
+sub _close_with_error {
+    my ($self, $error) = @_;
+    if ($self->{closed}) {
+        # already closed
+        return;
+    }
+    my $handle = $self->{handle};
+    $handle->write("0\x0D\x0A");
+    my $type = blessed($error) // "Error";
+    $handle->write_header_lines({
+        "lambda-runtime-function-error-type" => "$type",
+        "lambda-runtime-function-error-body" => encode_base64("$error", ""),
+    }, {
+        "lambda-runtime-function-error-type" => "Lambda-Runtime-Function-Error-Type",
+        "lambda-runtime-function-error-body" => "Lambda-Runtime-Function-Error-Body",
+    });
     $self->{closed} = 1;
 }
 

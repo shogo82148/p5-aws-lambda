@@ -157,7 +157,7 @@ sub lambda_response_streaming {
         my $err = $_;
         print STDERR "$err";
         if ($writer) {
-            # TODO: error handling
+            $writer->_close_with_error($err);
         } else {
             $self->lambda_error($err, $context);
         }
@@ -177,10 +177,11 @@ sub lambda_error {
     my $api_version = $self->{api_version};
     my $request_id = $context->aws_request_id;
     my $url = "http://${runtime_api}/${api_version}/runtime/invocation/${request_id}/error";
+    my $type = blessed($error) // "Error";
     my $resp = $self->{http}->post($url, {
         content => encode_json({
             errorMessage => "$error",
-            errorType => blessed($error) // "error",
+            errorType => "$type",
         }),
     });
     if (!$resp->{success}) {
@@ -194,10 +195,11 @@ sub lambda_init_error {
     my $runtime_api = $self->{runtime_api};
     my $api_version = $self->{api_version};
     my $url = "http://${runtime_api}/${api_version}/runtime/init/error";
+    my $type = blessed($error) // "Error";
     my $resp = $self->{http}->post($url, {
         content => encode_json({
             errorMessage => "$error",
-            errorType => blessed($error) // "error",
+            errorType => "$type",
         }),
     });
     if (!$resp->{success}) {

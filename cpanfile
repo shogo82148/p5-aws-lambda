@@ -6,6 +6,7 @@ requires 'Plack', '1.0047';
 requires 'Plack::Middleware::ReverseProxy', '0.16';
 requires 'JSON::Types', '0.05';
 requires 'URI::Escape';
+requires 'MIME::Base64';
 
 recommends 'AWS::XRay', '>=0.09';
 
