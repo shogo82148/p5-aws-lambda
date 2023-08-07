@@ -3,6 +3,7 @@ use 5.026000;
 use utf8;
 use strict;
 use warnings;
+use Carp qw(croak);
 use HTTP::Tiny;
 
 my %DefaultPort = (
@@ -49,12 +50,14 @@ sub _request {
             "host"              => $host_port,
             "content-type"      => $content_type,
             "transfer-encoding" => "chunked",
+            "trailer"           => "Lambda-Runtime-Function-Error-Type, Lambda-Runtime-Function-Error-Body",
             "lambda-runtime-function-response-mode" => "streaming",
         },
         header_case => {
             "host"              => "Host",
             "content-type"      => "Content-Type",
             "transfer-encoding" => "Transfer-Encoding",
+            "trailer"           => "Trailer",
             "lambda-runtime-function-response-mode" => "Lambda-Runtime-Function-Response-Mode",
         },
     };
@@ -89,21 +92,8 @@ sub _handle_response {
 
     my $data_cb = $http->_prepare_data_cb($response, {});
     my $known_message_length = $handle->read_body($data_cb, $response);
+    $handle->close;
 
-    # Check if the HTTP request is using the keep-alive feature.
-    if ( $http->{keep_alive}
-        && $handle->connected
-        && $known_message_length
-        && $response->{protocol} eq 'HTTP/1.1'
-        && ($response->{headers}{connection} || '') ne 'close'
-    ) {
-        # keep-alive
-        $http->{handle} = $handle;
-    }
-    else {
-        # close
-        $handle->close;
-    }
     $response->{success} = substr( $response->{status}, 0, 1 ) eq '2';
     $response->{url} = $self->{response_url};
     return $response;
@@ -111,6 +101,12 @@ sub _handle_response {
 
 sub write {
     my ($self, $data) = @_;
+
+    if ($self->{closed}) {
+        # already closed
+        croak "write failed: already closed";
+    }
+
     if (!defined($data) || length($data) == 0) {
         return;
     }
@@ -124,6 +120,10 @@ sub write {
 
 sub close {
     my $self = shift;
+    if ($self->{closed}) {
+        # already closed
+        return;
+    }
     my $handle = $self->{handle};
     $handle->write("0\x0D\x0A\x0D\x0A");
     $self->{closed} = 1;

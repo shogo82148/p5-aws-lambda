@@ -143,27 +143,31 @@ sub lambda_response_streaming {
     my $request_id = $context->aws_request_id;
     my $url = "http://${runtime_api}/${api_version}/runtime/invocation/${request_id}/response";
     my $writer = undef;
-    # try { # TODO: error handling
-    $response->(sub {
-        my $content_type = shift;
-        $writer = AWS::Lambda::ResponseWriter->new(
-            response_url => $url,
-            http         => $self->{http},
-        );
-        $writer->_request($content_type);
-        return $writer;
-    });
+    try {
+        $response->(sub {
+            my $content_type = shift;
+            $writer = AWS::Lambda::ResponseWriter->new(
+                response_url => $url,
+                http         => $self->{http},
+            );
+            $writer->_request($content_type);
+            return $writer;
+        });
+    } catch {
+        my $err = $_;
+        print STDERR "$err";
+        if ($writer) {
+            # TODO: error handling
+        } else {
+            $self->lambda_error($err, $context);
+        }
+    };
     if ($writer) {
         my $response = $writer->_handle_response;
         if (!$response->{success}) {
             die "failed to response of execution: $response->{status} $response->{reason}";
         }
     }
-    # } catch {
-    #     my $err = $_;
-    #     print STDERR "$err";
-    #     $self->lambda_error($err, $context);
-    # };
 }
 
 sub lambda_error {
