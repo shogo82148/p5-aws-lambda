@@ -26,7 +26,7 @@ my $app_server = Test::TCP->new(
             is $req->method, "POST", "http method";
             my $body = $req->body;
             my $response = decode_json(<$body>);
-            cmp_deeply $response, {errorMessage=>"some error 😨", errorType=>'error'}, "response";
+            cmp_deeply $response, {errorMessage=>"some error 😨", errorType=>'Error'}, "response";
             my $res = $req->new_response(200);
             $res->finalize;
         });
