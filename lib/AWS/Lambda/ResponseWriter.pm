@@ -110,14 +110,14 @@ sub write {
     }
 
     if (!defined($data) || length($data) == 0) {
-        return;
+        return "0E0";
     }
 
     my $chunk  = sprintf '%X', length $data;
     $chunk .= "\x0D\x0A";
     $chunk .= $data;
     $chunk .= "\x0D\x0A";
-    $self->{handle}->write($chunk);
+    return $self->{handle}->write($chunk);
 }
 
 sub close {
@@ -127,8 +127,8 @@ sub close {
         return;
     }
     my $handle = $self->{handle};
-    $handle->write("0\x0D\x0A\x0D\x0A");
     $self->{closed} = 1;
+    return $handle->write("0\x0D\x0A\x0D\x0A");
 }
 
 sub _close_with_error {
@@ -137,17 +137,17 @@ sub _close_with_error {
         # already closed
         return;
     }
+    $self->{closed} = 1;
     my $handle = $self->{handle};
     $handle->write("0\x0D\x0A");
     my $type = blessed($error) // "Error";
-    $handle->write_header_lines({
+    return $handle->write_header_lines({
         "lambda-runtime-function-error-type" => "$type",
         "lambda-runtime-function-error-body" => encode_base64("$error", ""),
     }, {
         "lambda-runtime-function-error-type" => "Lambda-Runtime-Function-Error-Type",
         "lambda-runtime-function-error-body" => "Lambda-Runtime-Function-Error-Body",
     });
-    $self->{closed} = 1;
 }
 
 1;
