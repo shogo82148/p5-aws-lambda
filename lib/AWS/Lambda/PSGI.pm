@@ -12,6 +12,8 @@ use Encode;
 use Try::Tiny;
 use Plack::Middleware::ReverseProxy;
 use AWS::Lambda;
+use Scalar::Util qw(reftype);
+use JSON::XS qw(encode_json);
 
 sub new {
     my $proto = shift;
@@ -62,9 +64,17 @@ sub call {
     # fall back to $AWS::Lambda::context because of backward compatibility.
     $ctx ||= $AWS::Lambda::context;
 
-    my $input = $self->format_input($env, $ctx);
-    my $res = $self->app->($input);
-    return $self->format_output($res);
+    my $invoke_mode = $ENV{AWS_LAMBDA_PSGI_INVOKE_MODE} || 'BUFFERED';
+    if ($invoke_mode eq "RESPONSE_STREAM") {
+        my $input = $self->_format_input_v2($env, $ctx);
+        $input->{'psgi.streaming'} = Plack::Util::TRUE;
+        my $res = $self->app->($input);
+        return $self->_handle_response_stream($res);
+    } else {
+        my $input = $self->format_input($env, $ctx);
+        my $res = $self->app->($input);
+        return $self->format_output($res);
+    }
 }
 
 sub format_input {
@@ -232,7 +242,7 @@ sub format_output {
     });
 
     my $content = '';
-    if (ref $body eq 'ARRAY') {
+    if (reftype($body) eq 'ARRAY') {
         $content = join '', grep defined, @$body;
     } else {
         local $/ = \4096;
@@ -264,6 +274,76 @@ sub format_output {
         statusCode => number $status,
         body => string $content,
     }
+}
+
+sub _handle_response_stream {
+    my ($self, $response) = @_;
+    if (reftype($response) ne "CODE") {
+        my $orig = $response;
+        $response = sub {
+            my $responder = shift;
+            $responder->($orig);
+        };
+    }
+
+    return sub {
+        my $lambda_responder = shift;
+        my $psgi_responder = sub {
+            my $response = shift;
+            my ($status, $headers, $body) = @$response;
+
+            # write the prelude.
+            my $writer = $lambda_responder->("application/vnd.awslambda.http-integration-response");
+            my $prelude = encode_json($self->_format_response_stream($status, $headers));
+            $prelude .= "\x00\x00\x00\x00\x00\x00\x00\x00";
+            $writer->write($prelude) or die "failed to write prelude: $!";
+
+            # write the body.
+            if (!defined $body) {
+                # the caller will write the body.
+                return $writer;
+            }
+            if (reftype($body) eq 'ARRAY') {
+                # array-ref
+                for my $chunk (@$body) {
+                    $writer->write($chunk) or die "failed to write chunk: $!";
+                }
+            } else {
+                # IO::Handle-like object
+                local $/ = \4096;
+                while (defined(my $chunk = $body->getline)) {
+                    $writer->write($chunk) or die "failed to write chunk: $!";
+                }
+            }
+            $writer->close or die "failed to close writer: $!";
+            return;
+        };
+        $response->($psgi_responder);
+    };
+}
+
+sub _format_response_stream {
+    my ($self, $status, $headers) = @_;
+    my $headers_hash = {};
+    my $cookies = [];
+
+    Plack::Util::header_iter($headers, sub {
+        my ($k, $v) = @_;
+        $k = lc $k;
+        if ($k eq 'set-cookie') {
+            push @$cookies, string $v;
+        } elsif (exists $headers_hash->{$k}) {
+            $headers_hash->{$k} = ", $v";
+        } else {
+            $headers_hash->{$k} = string $v;
+        }
+    });
+
+    return +{
+        statusCode => number $status,
+        headers    => $headers_hash,
+        cookies    => $cookies,
+    };
 }
 
 1;
