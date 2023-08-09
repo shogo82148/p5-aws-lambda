@@ -1,0 +1,162 @@
+# carton snapshot format: version 1.0
+DISTRIBUTIONS
+  Clone-0.46
+    pathname: G/GA/GARU/Clone-0.46.tar.gz
+    provides:
+      Clone 0.46
+    requirements:
+      ExtUtils::MakeMaker 0
+  PPI-1.276
+    pathname: O/OA/OALDERS/PPI-1.276.tar.gz
+    provides:
+      PPI 1.276
+      PPI::Cache 1.276
+      PPI::Document 1.276
+      PPI::Document::File 1.276
+      PPI::Document::Fragment 1.276
+      PPI::Document::Normalized 1.276
+      PPI::Dumper 1.276
+      PPI::Element 1.276
+      PPI::Exception 1.276
+      PPI::Exception::ParserRejection 1.276
+      PPI::Find 1.276
+      PPI::Lexer 1.276
+      PPI::Node 1.276
+      PPI::Normal 1.276
+      PPI::Normal::Standard 1.276
+      PPI::Singletons 1.276
+      PPI::Statement 1.276
+      PPI::Statement::Break 1.276
+      PPI::Statement::Compound 1.276
+      PPI::Statement::Data 1.276
+      PPI::Statement::End 1.276
+      PPI::Statement::Expression 1.276
+      PPI::Statement::Given 1.276
+      PPI::Statement::Include 1.276
+      PPI::Statement::Include::Perl6 1.276
+      PPI::Statement::Null 1.276
+      PPI::Statement::Package 1.276
+      PPI::Statement::Scheduled 1.276
+      PPI::Statement::Sub 1.276
+      PPI::Statement::Unknown 1.276
+      PPI::Statement::UnmatchedBrace 1.276
+      PPI::Statement::Variable 1.276
+      PPI::Statement::When 1.276
+      PPI::Structure 1.276
+      PPI::Structure::Block 1.276
+      PPI::Structure::Condition 1.276
+      PPI::Structure::Constructor 1.276
+      PPI::Structure::For 1.276
+      PPI::Structure::Given 1.276
+      PPI::Structure::List 1.276
+      PPI::Structure::Subscript 1.276
+      PPI::Structure::Unknown 1.276
+      PPI::Structure::When 1.276
+      PPI::Token 1.276
+      PPI::Token::ArrayIndex 1.276
+      PPI::Token::Attribute 1.276
+      PPI::Token::BOM 1.276
+      PPI::Token::Cast 1.276
+      PPI::Token::Comment 1.276
+      PPI::Token::DashedWord 1.276
+      PPI::Token::Data 1.276
+      PPI::Token::End 1.276
+      PPI::Token::HereDoc 1.276
+      PPI::Token::Label 1.276
+      PPI::Token::Magic 1.276
+      PPI::Token::Number 1.276
+      PPI::Token::Number::Binary 1.276
+      PPI::Token::Number::Exp 1.276
+      PPI::Token::Number::Float 1.276
+      PPI::Token::Number::Hex 1.276
+      PPI::Token::Number::Octal 1.276
+      PPI::Token::Number::Version 1.276
+      PPI::Token::Operator 1.276
+      PPI::Token::Pod 1.276
+      PPI::Token::Prototype 1.276
+      PPI::Token::Quote 1.276
+      PPI::Token::Quote::Double 1.276
+      PPI::Token::Quote::Interpolate 1.276
+      PPI::Token::Quote::Literal 1.276
+      PPI::Token::Quote::Single 1.276
+      PPI::Token::QuoteLike 1.276
+      PPI::Token::QuoteLike::Backtick 1.276
+      PPI::Token::QuoteLike::Command 1.276
+      PPI::Token::QuoteLike::Readline 1.276
+      PPI::Token::QuoteLike::Regexp 1.276
+      PPI::Token::QuoteLike::Words 1.276
+      PPI::Token::Regexp 1.276
+      PPI::Token::Regexp::Match 1.276
+      PPI::Token::Regexp::Substitute 1.276
+      PPI::Token::Regexp::Transliterate 1.276
+      PPI::Token::Separator 1.276
+      PPI::Token::Structure 1.276
+      PPI::Token::Symbol 1.276
+      PPI::Token::Unknown 1.276
+      PPI::Token::Whitespace 1.276
+      PPI::Token::Word 1.276
+      PPI::Tokenizer 1.276
+      PPI::Transform 1.276
+      PPI::Transform::UpdateCopyright 1.276
+      PPI::Util 1.276
+      PPI::XSAccessor 1.276
+    requirements:
+      Carp 0
+      Clone 0.30
+      Digest::MD5 2.35
+      Exporter 0
+      ExtUtils::MakeMaker 0
+      File::Path 0
+      File::Spec 0.84
+      List::Util 1.33
+      Params::Util 1.00
+      Scalar::Util 0
+      Storable 2.17
+      Task::Weaken 0
+      constant 0
+      if 0
+      overload 0
+      perl 5.006
+      strict 0
+  Params-Util-1.102
+    pathname: R/RE/REHSACK/Params-Util-1.102.tar.gz
+    provides:
+      Params::Util 1.102
+      Params::Util::PP 1.102
+    requirements:
+      Carp 0
+      ExtUtils::MakeMaker 0
+      File::Basename 0
+      File::Copy 0
+      File::Path 0
+      File::Spec 0
+      IPC::Cmd 0
+      Scalar::Util 1.18
+      XSLoader 0.22
+      parent 0
+  Perl-Strip-1.2
+    pathname: M/ML/MLEHMANN/Perl-Strip-1.2.tar.gz
+    provides:
+      Perl::Strip 1.2
+    requirements:
+      Digest::MD5 2
+      ExtUtils::MakeMaker 0
+      PPI 1.213
+      common::sense 3.3
+  Task-Weaken-1.06
+    pathname: E/ET/ETHER/Task-Weaken-1.06.tar.gz
+    provides:
+      Task::Weaken 1.06
+    requirements:
+      Config 0
+      ExtUtils::MakeMaker 0
+      File::Spec 0
+      Scalar::Util 1.14
+      perl 5.006
+      strict 0
+  common-sense-3.75
+    pathname: M/ML/MLEHMANN/common-sense-3.75.tar.gz
+    provides:
+      common::sense 3.75
+    requirements:
+      ExtUtils::MakeMaker 0
