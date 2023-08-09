@@ -8,6 +8,7 @@ use JSON::XS qw/decode_json encode_json/;
 use Try::Tiny;
 use AWS::Lambda;
 use AWS::Lambda::Context;
+use AWS::Lambda::ResponseWriter;
 use Scalar::Util qw(blessed);
 use Exporter 'import';
 
@@ -91,10 +92,15 @@ sub handle_event {
         $self->lambda_error($err, $context);
         bless {}, 'AWS::Lambda::ErrorSentinel';
     };
-    if (ref($response) eq 'AWS::Lambda::ErrorSentinel') {
+    my $ref = ref($response);
+    if ($ref eq 'AWS::Lambda::ErrorSentinel') {
         return;
     }
-    $self->lambda_response($response, $context);
+    if ($ref eq 'CODE') {
+        $self->lambda_response_streaming($response, $context);
+    } else {
+        $self->lambda_response($response, $context);
+    }
     return 1;
 }
 
@@ -129,6 +135,41 @@ sub lambda_response {
     }
 }
 
+sub lambda_response_streaming {
+    my $self = shift;
+    my ($response, $context) = @_;
+    my $runtime_api = $self->{runtime_api};
+    my $api_version = $self->{api_version};
+    my $request_id = $context->aws_request_id;
+    my $url = "http://${runtime_api}/${api_version}/runtime/invocation/${request_id}/response";
+    my $writer = undef;
+    try {
+        $response->(sub {
+            my $content_type = shift;
+            $writer = AWS::Lambda::ResponseWriter->new(
+                response_url => $url,
+                http         => $self->{http},
+            );
+            $writer->_request($content_type);
+            return $writer;
+        });
+    } catch {
+        my $err = $_;
+        print STDERR "$err";
+        if ($writer) {
+            $writer->_close_with_error($err);
+        } else {
+            $self->lambda_error($err, $context);
+        }
+    };
+    if ($writer) {
+        my $response = $writer->_handle_response;
+        if (!$response->{success}) {
+            die "failed to response of execution: $response->{status} $response->{reason}";
+        }
+    }
+}
+
 sub lambda_error {
     my $self = shift;
     my ($error, $context) = @_;
@@ -136,10 +177,11 @@ sub lambda_error {
     my $api_version = $self->{api_version};
     my $request_id = $context->aws_request_id;
     my $url = "http://${runtime_api}/${api_version}/runtime/invocation/${request_id}/error";
+    my $type = blessed($error) // "Error";
     my $resp = $self->{http}->post($url, {
         content => encode_json({
             errorMessage => "$error",
-            errorType => blessed($error) // "error",
+            errorType => "$type",
         }),
     });
     if (!$resp->{success}) {
@@ -153,10 +195,11 @@ sub lambda_init_error {
     my $runtime_api = $self->{runtime_api};
     my $api_version = $self->{api_version};
     my $url = "http://${runtime_api}/${api_version}/runtime/init/error";
+    my $type = blessed($error) // "Error";
     my $resp = $self->{http}->post($url, {
         content => encode_json({
             errorMessage => "$error",
-            errorType => blessed($error) // "error",
+            errorType => "$type",
         }),
     });
     if (!$resp->{success}) {
@@ -171,7 +214,7 @@ __END__
 
 =head1 NAME
 
-AWS::Lambda::Bootstrap - It's the bootrap script for AWS Lambda Custom Runtime.
+AWS::Lambda::Bootstrap - the bootrap script for AWS Lambda Custom Runtime.
 
 =head1 SYNOPSIS
 
@@ -202,6 +245,20 @@ The format of the handler is following.
     }
 
 C<$context> is an instance of L<AWS::Lambda::Context>.
+
+=head1 RESPONSE STREAMING
+
+It also supports L<response streaming|https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html>.
+
+    sub handle {
+        my ($payload, $context) = @_;
+        return sub {
+            my $responder = shift;
+            my $writer = $responder->('application/json');
+            $writer->write('{"foo": "bar"}');
+            $writer->close;
+        };
+    }
 
 =head1 LICENSE
 

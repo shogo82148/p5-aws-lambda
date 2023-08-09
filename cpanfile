@@ -6,6 +6,7 @@ requires 'Plack', '1.0047';
 requires 'Plack::Middleware::ReverseProxy', '0.16';
 requires 'JSON::Types', '0.05';
 requires 'URI::Escape';
+requires 'MIME::Base64';
 
 recommends 'AWS::XRay', '>=0.09';
 
@@ -16,6 +17,7 @@ on 'test' => sub {
     requires 'Test::SharedFork';
     requires 'Test::Warn';
     requires 'File::Slurp', '9999.25';
+    requires 'Starman';
 };
 
 on 'develop' => sub {

@@ -21,10 +21,12 @@ sub slurp_json {
 }
 
 sub slurp_fh {
-    my $fh = $_[0];
-    local $/;
-    my $v = <$fh>;
-    defined $v ? decode_utf8($v) : '';
+    my $fh = shift;
+    my $data = "";
+    while ($fh->read(my $buf, 4096)) {
+        $data .= $buf;
+    }
+    return decode_utf8($data);
 }
 
 my $app = AWS::Lambda::PSGI->new;
@@ -41,6 +43,7 @@ subtest "API Gateway GET Request" => sub {
     is $req->path_info, '/foo /bar', 'path info';
     is $req->query_string, 'query=hoge&query=fuga', 'query string';
     is $req->header('Header-Name'), 'Value1, Value2', 'header';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "API Gateway POST Request" => sub {
@@ -55,6 +58,7 @@ subtest "API Gateway POST Request" => sub {
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
     is $req->query_string, '', 'query string';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "API Gateway Base64 encoded POST Request" => sub {
@@ -72,6 +76,7 @@ subtest "API Gateway Base64 encoded POST Request" => sub {
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
     is $req->query_string, '', 'query string';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "API Gateway v2 GET Request" => sub {
@@ -86,6 +91,7 @@ subtest "API Gateway v2 GET Request" => sub {
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, 'parameter1=value1&parameter1=value2&parameter2=value', 'query string';
     is $req->header('Header1'), 'value1,value2', 'header';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "API Gateway v2 POST Request" => sub {
@@ -99,6 +105,7 @@ subtest "API Gateway v2 POST Request" => sub {
     is $req->request_uri, '/my/path', 'request uri';
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, '', 'query string';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "API Gateway v2 base64 Request" => sub {
@@ -112,6 +119,7 @@ subtest "API Gateway v2 base64 Request" => sub {
     is $req->request_uri, '/my/path', 'request uri';
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, '', 'query string';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "ALB GET Request" => sub {
@@ -124,6 +132,7 @@ subtest "ALB GET Request" => sub {
     is $req->path_info, '/foo/bar', 'path info';
     is $req->query_string, 'query=hoge&query=fuga', 'query string';
     is $req->header('Header-Name'), 'Value1, Value2', 'header';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "ALB POST Request" => sub {
@@ -136,6 +145,7 @@ subtest "ALB POST Request" => sub {
     is $req->request_uri, '/', 'request uri';
     is $req->path_info, '/', 'path info';
     is $req->query_string, '', 'query string';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "ALB POST Base64 Request" => sub {
@@ -148,6 +158,7 @@ subtest "ALB POST Base64 Request" => sub {
     is $req->request_uri, '/foo/bar', 'request uri';
     is $req->path_info, '/foo/bar', 'path info';
     is $req->query_string, '', 'query string';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "Function URLs GET Request" => sub {
@@ -160,6 +171,7 @@ subtest "Function URLs GET Request" => sub {
     is $req->path_info, '/foo /bar', 'path info';
     is $req->query_string, 'parameter1=value1&parameter1=value2&parameter2=value', 'query string';
     is $req->header('header1'), 'value1,value2', 'header';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "Function URLs POST Request" => sub {
@@ -172,6 +184,7 @@ subtest "Function URLs POST Request" => sub {
     is $req->request_uri, '/my/path', 'request uri';
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, '', 'query string';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "Function URLs POST Base64 Request" => sub {
@@ -184,6 +197,7 @@ subtest "Function URLs POST Base64 Request" => sub {
     is $req->request_uri, '/my/path', 'request uri';
     is $req->path_info, '/my/path', 'path info';
     is $req->query_string, '', 'query string';
+    ok !$req->env->{'psgi.streaming'}, 'psgi.streaming';
 };
 
 subtest "plain text response" => sub {

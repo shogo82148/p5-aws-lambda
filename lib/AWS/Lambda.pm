@@ -2208,6 +2208,18 @@ Finally, create new function using awscli.
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
         --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-38-runtime-al2-x86_64:3"
 
+It also supports L<response streaming|https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html>.
+
+    sub handle {
+        my ($payload, $context) = @_;
+        return sub {
+            my $responder = shift;
+            my $writer = $responder->('application/json');
+            $writer->write('{"foo": "bar"}');
+            $writer->close;
+        };
+    }
+
 =head1 DESCRIPTION
 
 This package makes it easy to run AWS Lambda Functions written in Perl.

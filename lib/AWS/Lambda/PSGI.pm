@@ -12,6 +12,8 @@ use Encode;
 use Try::Tiny;
 use Plack::Middleware::ReverseProxy;
 use AWS::Lambda;
+use Scalar::Util qw(reftype);
+use JSON::XS qw(encode_json);
 
 sub new {
     my $proto = shift;
@@ -23,8 +25,14 @@ sub new {
     } else {
         $self = bless {@_}, $class;
     }
+
+    if (!defined $self->{invoke_mode}) {
+        my $mode = $ENV{PERL5_LAMBDA_PSGI_INVOKE_MODE}
+            || $ENV{AWS_LWA_INVOKE_MODE}; # for compatibility with https://github.com/awslabs/aws-lambda-web-adapter
+        $self->{invoke_mode} = uc $mode;
+    }
  
-    $self;
+    return $self;
 }
 
 sub prepare_app { return }
@@ -62,9 +70,16 @@ sub call {
     # fall back to $AWS::Lambda::context because of backward compatibility.
     $ctx ||= $AWS::Lambda::context;
 
-    my $input = $self->format_input($env, $ctx);
-    my $res = $self->app->($input);
-    return $self->format_output($res);
+    if ($self->{invoke_mode} eq "RESPONSE_STREAM") {
+        my $input = $self->_format_input_v2($env, $ctx);
+        $input->{'psgi.streaming'} = Plack::Util::TRUE;
+        my $res = $self->app->($input);
+        return $self->_handle_response_stream($res);
+    } else {
+        my $input = $self->format_input($env, $ctx);
+        my $res = $self->app->($input);
+        return $self->format_output($res);
+    }
 }
 
 sub format_input {
@@ -232,7 +247,7 @@ sub format_output {
     });
 
     my $content = '';
-    if (ref $body eq 'ARRAY') {
+    if (reftype($body) eq 'ARRAY') {
         $content = join '', grep defined, @$body;
     } else {
         local $/ = \4096;
@@ -264,6 +279,76 @@ sub format_output {
         statusCode => number $status,
         body => string $content,
     }
+}
+
+sub _handle_response_stream {
+    my ($self, $response) = @_;
+    if (reftype($response) ne "CODE") {
+        my $orig = $response;
+        $response = sub {
+            my $responder = shift;
+            $responder->($orig);
+        };
+    }
+
+    return sub {
+        my $lambda_responder = shift;
+        my $psgi_responder = sub {
+            my $response = shift;
+            my ($status, $headers, $body) = @$response;
+
+            # write the prelude.
+            my $writer = $lambda_responder->("application/vnd.awslambda.http-integration-response");
+            my $prelude = encode_json($self->_format_response_stream($status, $headers));
+            $prelude .= "\x00\x00\x00\x00\x00\x00\x00\x00";
+            $writer->write($prelude) or die "failed to write prelude: $!";
+
+            # write the body.
+            if (!defined $body) {
+                # the caller will write the body.
+                return $writer;
+            }
+            if (reftype($body) eq 'ARRAY') {
+                # array-ref
+                for my $chunk (@$body) {
+                    $writer->write($chunk) or die "failed to write chunk: $!";
+                }
+            } else {
+                # IO::Handle-like object
+                local $/ = \4096;
+                while (defined(my $chunk = $body->getline)) {
+                    $writer->write($chunk) or die "failed to write chunk: $!";
+                }
+            }
+            $writer->close or die "failed to close writer: $!";
+            return;
+        };
+        $response->($psgi_responder);
+    };
+}
+
+sub _format_response_stream {
+    my ($self, $status, $headers) = @_;
+    my $headers_hash = {};
+    my $cookies = [];
+
+    Plack::Util::header_iter($headers, sub {
+        my ($k, $v) = @_;
+        $k = lc $k;
+        if ($k eq 'set-cookie') {
+            push @$cookies, string $v;
+        } elsif (exists $headers_hash->{$k}) {
+            $headers_hash->{$k} = ", $v";
+        } else {
+            $headers_hash->{$k} = string $v;
+        }
+    });
+
+    return +{
+        statusCode => number $status,
+        headers    => $headers_hash,
+        cookies    => $cookies,
+    };
 }
 
 1;
@@ -298,6 +383,46 @@ And then, L<Set up Lambda Proxy Integrations in API Gateway|https://docs.aws.ama
 L<Lambda Functions as ALB Targets|https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html>
 
 =head1 DESCRIPTION
+
+=head2 Streaming Response
+
+L<AWS::Lambda::PSGI> supports L<response streaming|https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html>.
+The function urls's invoke mode is configured as C<"RESPONSE_STREAM">, and Lambda environment variable "PERL5_LAMBDA_PSGI_INVOKE_MODE" is set to C<"RESPONSE_STREAM">.
+
+    ExampleApi:
+        Type: AWS::Serverless::Function
+        Properties:
+            FunctionUrlConfig:
+                AuthType: NONE
+                InvokeMode: RESPONSE_STREAM
+            Environment:
+                Variables:
+                PERL5_LAMBDA_PSGI_INVOKE_MODE: RESPONSE_STREAM
+            # (snip)
+
+In this mode, the PSGI server accespts L<Delayed Response and Streaming Body|https://metacpan.org/pod/PSGI#Delayed-Response-and-Streaming-Body>.
+
+    my $app = sub {
+        my $env = shift;
+    
+        return sub {
+            my $responder = shift;
+            $responder->([ 200, ['Content-Type' => 'text/plain'], [ "Hello World" ] ]);
+        };
+    };
+
+An application MAY omit the third element (the body) when calling the responder.
+
+    my $app = sub {
+        my $env = shift;
+    
+        return sub {
+            my $responder = shift;
+            my $writer = $responder->([ 200, ['Content-Type' => 'text/plain'] ]);
+            $writer->write("Hello World");
+            $writer->close;
+        };
+    };
 
 =head2 Request ID
 
