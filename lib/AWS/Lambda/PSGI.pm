@@ -25,8 +25,14 @@ sub new {
     } else {
         $self = bless {@_}, $class;
     }
+
+    if (!defined $self->{invoke_mode}) {
+        my $mode = $ENV{PERL5_LAMBDA_PSGI_INVOKE_MODE}
+            || $ENV{AWS_LWA_INVOKE_MODE}; # for compatibility with https://github.com/awslabs/aws-lambda-web-adapter
+        $self->{invoke_mode} = uc $mode;
+    }
  
-    $self;
+    return $self;
 }
 
 sub prepare_app { return }
@@ -64,8 +70,7 @@ sub call {
     # fall back to $AWS::Lambda::context because of backward compatibility.
     $ctx ||= $AWS::Lambda::context;
 
-    my $invoke_mode = $ENV{AWS_LAMBDA_PSGI_INVOKE_MODE} || 'BUFFERED';
-    if ($invoke_mode eq "RESPONSE_STREAM") {
+    if ($self->{invoke_mode} eq "RESPONSE_STREAM") {
         my $input = $self->_format_input_v2($env, $ctx);
         $input->{'psgi.streaming'} = Plack::Util::TRUE;
         my $res = $self->app->($input);
@@ -378,6 +383,46 @@ And then, L<Set up Lambda Proxy Integrations in API Gateway|https://docs.aws.ama
 L<Lambda Functions as ALB Targets|https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html>
 
 =head1 DESCRIPTION
+
+=head2 Streaming Response
+
+L<AWS::Lambda::PSGI> supports L<response streaming|https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html>.
+The function urls's invoke mode is configured as C<"RESPONSE_STREAM">, and Lambda environment variable "PERL5_LAMBDA_PSGI_INVOKE_MODE" is set to C<"RESPONSE_STREAM">.
+
+    ExampleApi:
+        Type: AWS::Serverless::Function
+        Properties:
+            FunctionUrlConfig:
+                AuthType: NONE
+                InvokeMode: RESPONSE_STREAM
+            Environment:
+                Variables:
+                PERL5_LAMBDA_PSGI_INVOKE_MODE: RESPONSE_STREAM
+            # (snip)
+
+In this mode, the PSGI server accespts L<Delayed Response and Streaming Body|https://metacpan.org/pod/PSGI#Delayed-Response-and-Streaming-Body>.
+
+    my $app = sub {
+        my $env = shift;
+    
+        return sub {
+            my $responder = shift;
+            $responder->([ 200, ['Content-Type' => 'text/plain'], [ "Hello World" ] ]);
+        };
+    };
+
+An application MAY omit the third element (the body) when calling the responder.
+
+    my $app = sub {
+        my $env = shift;
+    
+        return sub {
+            my $responder = shift;
+            my $writer = $responder->([ 200, ['Content-Type' => 'text/plain'] ]);
+            $writer->write("Hello World");
+            $writer->close;
+        };
+    };
 
 =head2 Request ID
 
