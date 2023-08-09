@@ -3,4 +3,6 @@ requires 'Perl::Strip', '1.1';
 
 requires 'Params::Util'; # it's not direct dependency. Perl::Strip forgets it?
 
+requires 'local::lib';
+
 # requires 'AWS::Lambda'; # use pre-installed one
