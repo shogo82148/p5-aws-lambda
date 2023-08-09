@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.2.0 2023-08-09T11:25:36Z
     - bump Mozilla::CA 20230807
     - support streaming response
 
