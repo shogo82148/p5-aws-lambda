@@ -1,6 +1,7 @@
 use v5.36;
 use utf8;
-use local::lib "$ENV{'LAMBDA_TASK_ROOT'}/local";
+use lib "$ENV{'LAMBDA_TASK_ROOT'}/local/lib/perl5";
+use lib "$ENV{'LAMBDA_TASK_ROOT'}/local/lib/perl5/aarch64-linux";
 
 use Perl::Strip;
 use Plack::Request;

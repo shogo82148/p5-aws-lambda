@@ -160,10 +160,3 @@ DISTRIBUTIONS
       common::sense 3.75
     requirements:
       ExtUtils::MakeMaker 0
-  local-lib-2.000029
-    pathname: H/HA/HAARG/local-lib-2.000029.tar.gz
-    provides:
-      lib::core::only undef
-      local::lib 2.000029
-    requirements:
-      perl 5.006
