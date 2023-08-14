@@ -44,7 +44,11 @@ sub new {
         runtime_api    => $runtime_api,
         api_version    => $api_version,
         next_event_url => "http://${runtime_api}/${api_version}/runtime/invocation/next",
-        http           => HTTP::Tiny->new,
+        http           => HTTP::Tiny->new(
+            # XXX: I want to disable timeout, but it seems HTTP::Tiny does not support it.
+            # So, I set a long timeout.
+            timeout => 365*24*60*60, # 365 days
+        ),
     }, $class;
     return $self;
 }
