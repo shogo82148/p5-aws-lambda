@@ -17,7 +17,7 @@ YAML_VERSION=1.30
 YAML_TINY_VERSION=1.74
 YAML_XS_VERSION=0.88
 IO_SOCKET_SSL_VERSION=2.083
-MOZILLA_CA_VERSION=20230807
+MOZILLA_CA_VERSION=20230821
 
 JOBS=$(nproc)
 curl -sL https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build > /tmp/perl-build
