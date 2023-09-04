@@ -3,7 +3,7 @@ use 5.026000;
 use strict;
 use warnings;
 
-our $VERSION = "0.2.0";
+our $VERSION = "0.3.0";
 
 # the context of Lambda Function
 our $context;
