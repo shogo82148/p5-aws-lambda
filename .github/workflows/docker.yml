@@ -43,7 +43,7 @@ jobs:
           USERNAME: ${{ github.repository_owner }}
           PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: restore state
         run: |
           aws s3 cp s3://shogo82148-lambda-perl-runtime-state/state.json author/state.json || true
