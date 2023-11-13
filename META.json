@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's Perl support for AWS Lambda Custom Runtime.",
+   "abstract" : "Perl support for AWS Lambda Custom Runtime.",
    "author" : [
       "ICHINOSE Shogo"
    ],
