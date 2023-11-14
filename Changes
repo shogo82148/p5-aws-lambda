@@ -2,6 +2,9 @@ Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
 
+0.4.0 2023-11-14T10:45:45Z
+    - introduce Amazon Linux 2023 based image
+
 0.3.0 2023-09-04T11:31:05Z
     - AWS Lambda Functions powered by AWS Graviton2 now available in 6 additional regions #121 
     - disable HTTP timeout #119
