@@ -159,6 +159,7 @@ The following modules are pre-installed for convenience.
 - [Net::SSLeay](https://metacpan.org/pod/Net%3A%3ASSLeay)
 - [IO::Socket::SSL](https://metacpan.org/pod/IO%3A%3ASocket%3A%3ASSL)
 - [Mozilla::CA](https://metacpan.org/pod/Mozilla%3A%3ACA)
+- [local::lib](https://metacpan.org/pod/local%3A%3Alib)
 
 [Paws](https://metacpan.org/pod/Paws) is optional. See the "Paws SUPPORT" section.
 

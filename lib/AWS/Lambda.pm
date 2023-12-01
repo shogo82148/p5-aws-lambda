@@ -296,6 +296,8 @@ The following modules are pre-installed for convenience.
 
 =item L<Mozilla::CA>
 
+=item L<local::lib>
+
 =back
 
 L<Paws> is optional. See the "Paws SUPPORT" section.
