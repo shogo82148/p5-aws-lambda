@@ -18,6 +18,7 @@ YAML_TINY_VERSION=1.74
 YAML_XS_VERSION=0.88
 IO_SOCKET_SSL_VERSION=2.084
 MOZILLA_CA_VERSION=20230821
+LOCAL_LIB_VERSION=2.000029
 
 
 # build-provided.al2023 lacks some development packages
@@ -61,7 +62,8 @@ PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bi
     "YAML::Tiny@$YAML_TINY_VERSION" \
     "YAML::XS@$YAML_XS_VERSION" \
     "IO::Socket::SSL@$IO_SOCKET_SSL_VERSION" \
-    "Mozilla::CA@$MOZILLA_CA_VERSION"
+    "Mozilla::CA@$MOZILLA_CA_VERSION" \
+    "local::lib@$LOCAL_LIB_VERSION"
 /opt/bin/cpanm --notest .
 
 # replace shebang to the absolute path of perl
