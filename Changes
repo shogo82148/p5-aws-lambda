@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - ca-west-1 is available
 
 0.4.1 2023-12-01T14:13:48Z
     - Perl 5.38.2 and 5.36.3 are released

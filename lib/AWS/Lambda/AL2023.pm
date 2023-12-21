@@ -81,6 +81,12 @@ our $LAYERS = {
                 paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2023-x86_64:3",
                 paws_version    => 3,
             },
+            'ca-west-1' => {
+                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2023-x86_64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2023-x86_64:1",
+                paws_version    => 1,
+            },
             'eu-central-1' => {
                 runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2023-x86_64:2",
                 runtime_version => 2,
@@ -434,6 +440,8 @@ The list of all available layer ARN is here:
 =item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2023-x86_64:2>
 
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2023-x86_64:2>
+
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2023-x86_64:1>
 
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2023-x86_64:2>
 

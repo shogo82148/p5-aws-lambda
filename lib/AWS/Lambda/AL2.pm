@@ -81,6 +81,12 @@ our $LAYERS = {
                 paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:4",
                 paws_version    => 4,
             },
+            'ca-west-1' => {
+                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:1",
+                runtime_version => 1,
+                paws_arn        => "",
+                paws_version    => ,
+            },
             'eu-central-1' => {
                 runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:6",
                 runtime_version => 6,
@@ -422,6 +428,12 @@ our $LAYERS = {
                 runtime_version => 8,
                 paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-36-paws-al2-x86_64:7",
                 paws_version    => 7,
+            },
+            'ca-west-1' => {
+                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-36-paws-al2-x86_64:1",
+                paws_version    => 1,
             },
             'eu-central-1' => {
                 runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:8",
@@ -1329,6 +1341,8 @@ The list of all available layer ARN is here:
 
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:6>
 
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:1>
+
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:6>
 
 =item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:5>
@@ -1458,6 +1472,8 @@ The list of all available layer ARN is here:
 =item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-36-runtime-al2-x86_64:4>
 
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:8>
+
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:1>
 
 =item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:8>
 
