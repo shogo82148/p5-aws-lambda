@@ -207,6 +207,28 @@ for my $version (@$versions_al2023) {
 printfh(<<'EOS');
 =back
 
+And Paws layers:
+
+=over
+
+EOS
+
+for my $version (@$versions_al2023) {
+    print $fh "=item Perl $version\n\n=over\n\n";
+    for my $arch(@$archs) {
+        print $fh "=item $arch architecture\n\n=over\n\n";
+        for my $region (@{$regions->{$arch}}) {
+            next unless $layers_al2023->{$version}{$region}{$arch}{paws_arn};
+            print $fh "=item C<$layers_al2023->{$version}{$region}{$arch}{paws_arn}>\n\n";
+        }
+        print $fh "=back\n\n";
+    }
+    print $fh "=back\n\n";
+}
+
+printfh(<<'EOS');
+=back
+
 =head2 Use Pre-built Zip Archives
 
 URLs for Zip archives are:
