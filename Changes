@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - bump YAML 1.31
 
 0.4.2 2023-12-22T00:18:48Z
     - ca-west-1 is available
