@@ -6,7 +6,7 @@ set -uex
 
 TAG=$1
 
-PAWS_VERSION=0.44
+PAWS_VERSION=0.46
 
 # provided.al2 lacks expat.
 yum install -y expat expat-devel
