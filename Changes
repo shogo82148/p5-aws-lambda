@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.4.3 2024-01-22T01:05:31Z
     - bump Paws v0.46 #138
     - bump YAML 1.31 #136
     - bump Net::SSLeay 1.94 #137
