@@ -6,7 +6,7 @@ set -uex
 
 TAG=$1
 
-PAWS_VERSION=0.46
+PAWS_VERSION=null
 
 # install development packages
 dnf install -y glibc-langpack-en expat-devel
