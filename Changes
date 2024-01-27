@@ -1,7 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
-    - bump IO::Socket::SSL 2.085
+    - bump IO::Socket::SSL 2.085 #140
+    - bump YAML::XS 0.89 #142
 
 0.4.3 2024-01-22T01:05:31Z
     - bump Paws v0.46 #138
