@@ -15,6 +15,7 @@ my $regions = +{ map {
 } @$archs };
 
 my $versions_al2 = [
+    "5.40",
     "5.38",
     "5.36",
     "5.34",

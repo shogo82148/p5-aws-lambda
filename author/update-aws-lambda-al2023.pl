@@ -15,6 +15,7 @@ my $regions = +{ map {
 } @$archs };
 
 my $versions_al2023 = [
+    "5.40",
     "5.38",
 ];
 $versions_al2023 = [sort {version->parse("v$b") <=> version->parse("v$a")} @$versions_al2023];
