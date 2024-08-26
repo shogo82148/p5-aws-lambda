@@ -1,6 +1,11 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - ap-southeast-5 is available
+    - AWS Lambda Functions powered by AWS Graviton2 now available on ca-west-1
+    - bump JSON::MaybeXS 1.004008 #152, #153
+    - bump Mozilla::CA 20240730 #150
+    - bump IO::Socket::SSL 2.088 #147, 148, #149
 
 0.5.0 2024-06-11T05:13:06Z
     - Perl 5.40.0 is released
