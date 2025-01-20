@@ -22,7 +22,7 @@ jobs:
         os:
           - ubuntu-24.04
           - ubuntu-24.04-arm
-    name: Perl ${{ matrix.perl }}
+    name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup perl
