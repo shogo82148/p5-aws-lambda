@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.5.2 2025-01-20T20:32:05Z
     - Perl 5.40.1 and 5.38.3 are released #164
     - ap-northeast-7 adn mx-central-1 are available #166
     - bump IO::Socket::SSL 2.089 #155
