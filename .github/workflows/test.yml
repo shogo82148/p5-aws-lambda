@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -19,6 +19,9 @@ jobs:
           - "5.30"
           - "5.28"
           - "5.26"
+        os:
+          - ubuntu-24.04
+          - ubuntu-20.04-arm
     name: Perl ${{ matrix.perl }}
     steps:
       - uses: actions/checkout@v4
