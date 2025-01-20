@@ -17,7 +17,7 @@ sub head_or_put {
     if ($current ne $md5) {
         say STDERR "Upload $zip to 3://shogo82148-lambda-perl-runtime-$region/$key";
         my $cmd = "aws --output json --region '$region' s3api put-object --bucket 'shogo82148-lambda-perl-runtime-$region' --key '$key' --body '$zip' --content-md5 '$md5' --metadata md5chksum='$md5'";
-        say STDERR "Excuting: $cmd";
+        say STDERR "Executing: $cmd";
         if ($force) {
             $object = decode_json(`$cmd`);
             die "exit: $!" if $! != 0;
@@ -30,7 +30,7 @@ sub head_or_put {
 
 sub run_command {
     my @cmd = @_;
-    say STDERR "Excuting: @cmd";
+    say STDERR "Executing: @cmd";
     if ($force) {
         my $code = system(@cmd);
         die "exit: $code" if $! != 0;
