@@ -17,7 +17,7 @@ sub head_or_put {
     if (!$current) {
         say STDERR "Upload $zip to 3://shogo82148-lambda-perl-runtime-us-east-1/$key";
         my $cmd = "aws --output json --region 'us-east-1' s3api put-object --bucket 'shogo82148-lambda-perl-runtime-us-east-1' --key '$key' --body '$zip'";
-        say STDERR "Excuting: $cmd";
+        say STDERR "Executing: $cmd";
         if ($force) {
             $object = decode_json(`$cmd`);
             die "exit: $!" if $! != 0;
@@ -30,7 +30,7 @@ sub head_or_put {
 
 sub run_command {
     my @cmd = @_;
-    say STDERR "Excuting: @cmd";
+    say STDERR "Executing: @cmd";
     if ($force) {
         my $code = system(@cmd);
         die "exit: $code" if $! != 0;
