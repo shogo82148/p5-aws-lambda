@@ -10,732 +10,780 @@ our $LAYERS = {
     '5.40' => {
         'x86_64' => {
             'af-south-1' => {
-                runtime_arn     => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-east-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-northeast-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-northeast-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-northeast-3' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-south-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-south-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-southeast-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-southeast-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-southeast-3' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-southeast-4' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ap-southeast-5' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-runtime-al2-x86_64:1",
+                runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
+                runtime_version => 2,
+                paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
+            },
+            'ap-southeast-7' => {
+                runtime_arn     => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-40-runtime-al2-x86_64:1",
                 runtime_version => 1,
-                paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
+                paws_arn        => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
                 paws_version    => 1,
             },
             'ca-central-1' => {
-                runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'ca-west-1' => {
-                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'eu-central-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'eu-central-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'eu-north-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'eu-south-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'eu-south-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'eu-west-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'eu-west-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'eu-west-3' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'il-central-1' => {
-                runtime_arn     => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'me-central-1' => {
-                runtime_arn     => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'me-south-1' => {
-                runtime_arn     => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
+                runtime_arn     => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
+            },
+            'mx-central-1' => {
+                runtime_arn     => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
                 paws_version    => 1,
             },
             'sa-east-1' => {
-                runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'us-east-1' => {
-                runtime_arn     => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'us-east-2' => {
-                runtime_arn     => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'us-west-1' => {
-                runtime_arn     => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
             'us-west-2' => {
-                runtime_arn     => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2",
+                paws_version    => 2,
             },
         },
         'arm64' => {
             'af-south-1' => {
-                runtime_arn     => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-east-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-northeast-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-northeast-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-northeast-3' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-south-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-south-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-southeast-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-southeast-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-southeast-3' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-southeast-4' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ap-southeast-5' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-runtime-al2-arm64:1",
+                runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
+                runtime_version => 2,
+                paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
+            },
+            'ap-southeast-7' => {
+                runtime_arn     => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-40-runtime-al2-arm64:1",
                 runtime_version => 1,
-                paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-paws-al2-arm64:1",
+                paws_arn        => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-40-paws-al2-arm64:1",
                 paws_version    => 1,
             },
             'ca-central-1' => {
-                runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'ca-west-1' => {
-                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:1",
-                runtime_version => 1,
-                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
+                runtime_version => 2,
+                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-central-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-central-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-north-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-south-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-south-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-west-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-west-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-west-3' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'il-central-1' => {
-                runtime_arn     => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'me-central-1' => {
-                runtime_arn     => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'me-south-1' => {
-                runtime_arn     => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
+                runtime_arn     => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
+            },
+            'mx-central-1' => {
+                runtime_arn     => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
                 paws_version    => 1,
             },
             'sa-east-1' => {
-                runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'us-east-1' => {
-                runtime_arn     => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'us-east-2' => {
-                runtime_arn     => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'us-west-1' => {
-                runtime_arn     => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'us-west-2' => {
-                runtime_arn     => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2",
-                runtime_version => 2,
-                paws_arn        => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3",
+                runtime_version => 3,
+                paws_arn        => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-paws-al2-arm64:2",
+                paws_version    => 2,
             },
         },
     },
     '5.38' => {
         'x86_64' => {
             'af-south-1' => {
-                runtime_arn     => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-east-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-northeast-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-northeast-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-northeast-3' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-south-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-south-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:9",
-                runtime_version => 9,
-                paws_arn        => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
+                runtime_version => 10,
+                paws_arn        => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'ap-southeast-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-southeast-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-southeast-3' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-paws-al2-x86_64:9",
+                paws_version    => 9,
             },
             'ap-southeast-4' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2-x86_64:9",
-                runtime_version => 9,
-                paws_arn        => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
+                runtime_version => 10,
+                paws_arn        => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'ap-southeast-5' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-runtime-al2-x86_64:1",
+                runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-runtime-al2-x86_64:2",
+                runtime_version => 2,
+                paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-paws-al2-x86_64:2",
+                paws_version    => 2,
+            },
+            'ap-southeast-7' => {
+                runtime_arn     => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-38-runtime-al2-x86_64:1",
                 runtime_version => 1,
-                paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-paws-al2-x86_64:1",
+                paws_arn        => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-38-paws-al2-x86_64:1",
                 paws_version    => 1,
             },
             'ca-central-1' => {
-                runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'ca-west-1' => {
-                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:5",
-                runtime_version => 5,
-                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:3",
-                paws_version    => 3,
+                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:6",
+                runtime_version => 6,
+                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:4",
+                paws_version    => 4,
             },
             'eu-central-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'eu-central-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:9",
-                runtime_version => 9,
-                paws_arn        => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-paws-al2-x86_64:6",
-                paws_version    => 6,
+                runtime_arn     => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
+                runtime_version => 10,
+                paws_arn        => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
+                paws_version    => 7,
             },
             'eu-north-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'eu-south-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'eu-south-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:9",
-                runtime_version => 9,
-                paws_arn        => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-paws-al2-x86_64:6",
-                paws_version    => 6,
+                runtime_arn     => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
+                runtime_version => 10,
+                paws_arn        => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
+                paws_version    => 7,
             },
             'eu-west-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'eu-west-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'eu-west-3' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'il-central-1' => {
-                runtime_arn     => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:9",
-                runtime_version => 9,
-                paws_arn        => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:6",
-                paws_version    => 6,
+                runtime_arn     => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
+                runtime_version => 10,
+                paws_arn        => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
+                paws_version    => 7,
             },
             'me-central-1' => {
-                runtime_arn     => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'me-south-1' => {
-                runtime_arn     => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
+            },
+            'mx-central-1' => {
+                runtime_arn     => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:1",
+                paws_version    => 1,
             },
             'sa-east-1' => {
-                runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'us-east-1' => {
-                runtime_arn     => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'us-east-2' => {
-                runtime_arn     => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'us-west-1' => {
-                runtime_arn     => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
             'us-west-2' => {
-                runtime_arn     => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7",
-                paws_version    => 7,
+                runtime_arn     => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8",
+                paws_version    => 8,
             },
         },
         'arm64' => {
             'af-south-1' => {
-                runtime_arn     => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-east-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-northeast-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-northeast-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-northeast-3' => {
-                runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-south-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-south-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-runtime-al2-arm64:6",
-                runtime_version => 6,
-                paws_arn        => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-paws-al2-arm64:5",
-                paws_version    => 5,
+                runtime_arn     => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-runtime-al2-arm64:7",
+                runtime_version => 7,
+                paws_arn        => "arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-paws-al2-arm64:6",
+                paws_version    => 6,
             },
             'ap-southeast-1' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-southeast-2' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-southeast-3' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ap-southeast-4' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2-arm64:6",
-                runtime_version => 6,
-                paws_arn        => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-paws-al2-arm64:5",
-                paws_version    => 5,
+                runtime_arn     => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2-arm64:7",
+                runtime_version => 7,
+                paws_arn        => "arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-paws-al2-arm64:6",
+                paws_version    => 6,
             },
             'ap-southeast-5' => {
-                runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-runtime-al2-arm64:1",
+                runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-runtime-al2-arm64:2",
+                runtime_version => 2,
+                paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-paws-al2-arm64:2",
+                paws_version    => 2,
+            },
+            'ap-southeast-7' => {
+                runtime_arn     => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-38-runtime-al2-arm64:1",
                 runtime_version => 1,
-                paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-paws-al2-arm64:1",
+                paws_arn        => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-38-paws-al2-arm64:1",
                 paws_version    => 1,
             },
             'ca-central-1' => {
-                runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'ca-west-1' => {
-                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:1",
-                runtime_version => 1,
-                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:1",
-                paws_version    => 1,
+                runtime_arn     => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:2",
+                runtime_version => 2,
+                paws_arn        => "arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:2",
+                paws_version    => 2,
             },
             'eu-central-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'eu-central-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-arm64:6",
-                runtime_version => 6,
-                paws_arn        => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-paws-al2-arm64:5",
-                paws_version    => 5,
+                runtime_arn     => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-arm64:7",
+                runtime_version => 7,
+                paws_arn        => "arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-paws-al2-arm64:6",
+                paws_version    => 6,
             },
             'eu-north-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'eu-south-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'eu-south-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-runtime-al2-arm64:6",
-                runtime_version => 6,
-                paws_arn        => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-paws-al2-arm64:5",
-                paws_version    => 5,
+                runtime_arn     => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-runtime-al2-arm64:7",
+                runtime_version => 7,
+                paws_arn        => "arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-paws-al2-arm64:6",
+                paws_version    => 6,
             },
             'eu-west-1' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'eu-west-2' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'eu-west-3' => {
-                runtime_arn     => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'il-central-1' => {
-                runtime_arn     => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:6",
-                runtime_version => 6,
-                paws_arn        => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:5",
-                paws_version    => 5,
+                runtime_arn     => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:7",
+                runtime_version => 7,
+                paws_arn        => "arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:6",
+                paws_version    => 6,
             },
             'me-central-1' => {
-                runtime_arn     => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:6",
-                runtime_version => 6,
-                paws_arn        => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:5",
-                paws_version    => 5,
+                runtime_arn     => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:7",
+                runtime_version => 7,
+                paws_arn        => "arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:6",
+                paws_version    => 6,
             },
             'me-south-1' => {
-                runtime_arn     => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
+            },
+            'mx-central-1' => {
+                runtime_arn     => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:1",
+                paws_version    => 1,
             },
             'sa-east-1' => {
-                runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'us-east-1' => {
-                runtime_arn     => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'us-east-2' => {
-                runtime_arn     => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'us-west-1' => {
-                runtime_arn     => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
             'us-west-2' => {
-                runtime_arn     => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10",
-                runtime_version => 10,
-                paws_arn        => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-paws-al2-arm64:8",
-                paws_version    => 8,
+                runtime_arn     => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11",
+                runtime_version => 11,
+                paws_arn        => "arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-paws-al2-arm64:9",
+                paws_version    => 9,
             },
         },
     },
@@ -811,6 +859,12 @@ our $LAYERS = {
                 runtime_arn     => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-36-runtime-al2-x86_64:1",
                 runtime_version => 1,
                 paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-36-paws-al2-x86_64:1",
+                paws_version    => 1,
+            },
+            'ap-southeast-7' => {
+                runtime_arn     => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-36-runtime-al2-x86_64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-36-paws-al2-x86_64:1",
                 paws_version    => 1,
             },
             'ca-central-1' => {
@@ -890,6 +944,12 @@ our $LAYERS = {
                 runtime_version => 10,
                 paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-36-paws-al2-x86_64:10",
                 paws_version    => 10,
+            },
+            'mx-central-1' => {
+                runtime_arn     => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-36-paws-al2-x86_64:1",
+                paws_version    => 1,
             },
             'sa-east-1' => {
                 runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:10",
@@ -995,6 +1055,12 @@ our $LAYERS = {
                 paws_arn        => "arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-36-paws-al2-arm64:1",
                 paws_version    => 1,
             },
+            'ap-southeast-7' => {
+                runtime_arn     => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-36-runtime-al2-arm64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-36-paws-al2-arm64:1",
+                paws_version    => 1,
+            },
             'ca-central-1' => {
                 runtime_arn     => "arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-36-runtime-al2-arm64:11",
                 runtime_version => 11,
@@ -1072,6 +1138,12 @@ our $LAYERS = {
                 runtime_version => 11,
                 paws_arn        => "arn:aws:lambda:me-south-1:445285296882:layer:perl-5-36-paws-al2-arm64:9",
                 paws_version    => 9,
+            },
+            'mx-central-1' => {
+                runtime_arn     => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-36-runtime-al2-arm64:1",
+                runtime_version => 1,
+                paws_arn        => "arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-36-paws-al2-arm64:1",
+                paws_version    => 1,
             },
             'sa-east-1' => {
                 runtime_arn     => "arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-36-runtime-al2-arm64:11",
@@ -1697,10 +1769,10 @@ You can get the layer ARN in your script by using C<get_layer_info>.
         "us-east-1", # Region
         "x86_64",    # Architecture ("x86_64" or "arm64", optional, the default is "x86_64")
     );
-    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2
-    say $info->{runtime_version}; # 2
-    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1
-    say $info->{paws_version}     # 1,
+    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3
+    say $info->{runtime_version}; # 3
+    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2
+    say $info->{paws_version}     # 2,
 
 Or, you can use following one-liner.
 
@@ -1719,65 +1791,69 @@ The list of all available layer ARN is here:
 
 =over
 
-=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-runtime-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-40-runtime-al2-x86_64:1>
 
-=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:1>
 
-=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
-=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:2>
+=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
+
+=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
+
+=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-runtime-al2-x86_64:3>
 
 =back
 
@@ -1785,65 +1861,69 @@ The list of all available layer ARN is here:
 
 =over
 
-=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-runtime-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
 
-=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-40-runtime-al2-arm64:1>
 
-=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:1>
+=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-40-runtime-al2-arm64:1>
 
-=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
-=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-runtime-al2-arm64:2>
+=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
+
+=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
+
+=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-runtime-al2-arm64:3>
 
 =back
 
@@ -1857,65 +1937,69 @@ The list of all available layer ARN is here:
 
 =over
 
-=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:9>
+=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
 
-=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2-x86_64:9>
+=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
 
-=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-runtime-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-runtime-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-38-runtime-al2-x86_64:1>
 
-=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:5>
+=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:6>
 
-=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:9>
+=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
 
-=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:9>
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:9>
+=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
 
-=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:1>
 
-=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
-=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:10>
+=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
+
+=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
+
+=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-runtime-al2-x86_64:11>
 
 =back
 
@@ -1923,65 +2007,69 @@ The list of all available layer ARN is here:
 
 =over
 
-=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-runtime-al2-arm64:6>
+=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-runtime-al2-arm64:7>
 
-=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2-arm64:6>
+=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-runtime-al2-arm64:7>
 
-=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-runtime-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-runtime-al2-arm64:2>
 
-=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-38-runtime-al2-arm64:1>
 
-=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:1>
+=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-arm64:6>
+=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-runtime-al2-arm64:7>
 
-=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-runtime-al2-arm64:6>
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-runtime-al2-arm64:7>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:6>
+=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:6>
+=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:7>
 
-=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:7>
 
-=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-38-runtime-al2-arm64:1>
 
-=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
-=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-runtime-al2-arm64:10>
+=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
+
+=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
+
+=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-runtime-al2-arm64:11>
 
 =back
 
@@ -2019,6 +2107,8 @@ The list of all available layer ARN is here:
 
 =item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-36-runtime-al2-x86_64:1>
 
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-36-runtime-al2-x86_64:1>
+
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:10>
 
 =item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:3>
@@ -2044,6 +2134,8 @@ The list of all available layer ARN is here:
 =item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:10>
 
 =item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:10>
+
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:1>
 
 =item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-36-runtime-al2-x86_64:10>
 
@@ -2085,6 +2177,8 @@ The list of all available layer ARN is here:
 
 =item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-36-runtime-al2-arm64:1>
 
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-36-runtime-al2-arm64:1>
+
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-36-runtime-al2-arm64:11>
 
 =item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-36-runtime-al2-arm64:1>
@@ -2110,6 +2204,8 @@ The list of all available layer ARN is here:
 =item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-36-runtime-al2-arm64:4>
 
 =item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-36-runtime-al2-arm64:11>
+
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-36-runtime-al2-arm64:1>
 
 =item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-36-runtime-al2-arm64:11>
 
@@ -2355,65 +2451,69 @@ And Paws layers:
 
 =over
 
-=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
 
-=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
 
-=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
+
+=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
+
+=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-paws-al2-x86_64:2>
 
 =back
 
@@ -2421,65 +2521,69 @@ And Paws layers:
 
 =over
 
-=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-40-paws-al2-arm64:1>
 
-=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
 
-=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-paws-al2-arm64:1>
+=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-40-paws-al2-arm64:2>
+
+=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-40-paws-al2-arm64:2>
+
+=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-40-paws-al2-arm64:2>
 
 =back
 
@@ -2493,65 +2597,69 @@ And Paws layers:
 
 =over
 
-=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-paws-al2-x86_64:9>
 
-=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-paws-al2-x86_64:1>
+=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-paws-al2-x86_64:2>
 
-=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-38-paws-al2-x86_64:1>
 
-=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:3>
+=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:4>
 
-=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-paws-al2-x86_64:6>
+=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
 
-=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-paws-al2-x86_64:6>
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:6>
+=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
 
-=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-38-paws-al2-x86_64:1>
 
-=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
-=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-paws-al2-x86_64:7>
+=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+
+=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
+
+=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-paws-al2-x86_64:8>
 
 =back
 
@@ -2559,65 +2667,69 @@ And Paws layers:
 
 =over
 
-=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:af-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-northeast-2:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-northeast-3:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-paws-al2-arm64:5>
+=item C<arn:aws:lambda:ap-south-2:445285296882:layer:perl-5-38-paws-al2-arm64:6>
 
-=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-southeast-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-southeast-2:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-southeast-3:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-paws-al2-arm64:5>
+=item C<arn:aws:lambda:ap-southeast-4:445285296882:layer:perl-5-38-paws-al2-arm64:6>
 
-=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-38-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-38-paws-al2-arm64:1>
 
-=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:1>
+=item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:2>
 
-=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-paws-al2-arm64:5>
+=item C<arn:aws:lambda:eu-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:eu-central-2:445285296882:layer:perl-5-38-paws-al2-arm64:6>
 
-=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:eu-north-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-paws-al2-arm64:5>
+=item C<arn:aws:lambda:eu-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:eu-south-2:445285296882:layer:perl-5-38-paws-al2-arm64:6>
 
-=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:eu-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:eu-west-2:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:5>
+=item C<arn:aws:lambda:eu-west-3:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:5>
+=item C<arn:aws:lambda:il-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:6>
 
-=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:6>
 
-=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-38-paws-al2-arm64:1>
 
-=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
-=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-paws-al2-arm64:8>
+=item C<arn:aws:lambda:us-east-2:445285296882:layer:perl-5-38-paws-al2-arm64:9>
+
+=item C<arn:aws:lambda:us-west-1:445285296882:layer:perl-5-38-paws-al2-arm64:9>
+
+=item C<arn:aws:lambda:us-west-2:445285296882:layer:perl-5-38-paws-al2-arm64:9>
 
 =back
 
@@ -2655,6 +2767,8 @@ And Paws layers:
 
 =item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-36-paws-al2-x86_64:1>
 
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-36-paws-al2-x86_64:1>
+
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-36-paws-al2-x86_64:10>
 
 =item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-36-paws-al2-x86_64:4>
@@ -2680,6 +2794,8 @@ And Paws layers:
 =item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-36-paws-al2-x86_64:10>
 
 =item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-36-paws-al2-x86_64:10>
+
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-36-paws-al2-x86_64:1>
 
 =item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-36-paws-al2-x86_64:10>
 
@@ -2721,6 +2837,8 @@ And Paws layers:
 
 =item C<arn:aws:lambda:ap-southeast-5:445285296882:layer:perl-5-36-paws-al2-arm64:1>
 
+=item C<arn:aws:lambda:ap-southeast-7:445285296882:layer:perl-5-36-paws-al2-arm64:1>
+
 =item C<arn:aws:lambda:ca-central-1:445285296882:layer:perl-5-36-paws-al2-arm64:9>
 
 =item C<arn:aws:lambda:ca-west-1:445285296882:layer:perl-5-36-paws-al2-arm64:1>
@@ -2746,6 +2864,8 @@ And Paws layers:
 =item C<arn:aws:lambda:me-central-1:445285296882:layer:perl-5-36-paws-al2-arm64:3>
 
 =item C<arn:aws:lambda:me-south-1:445285296882:layer:perl-5-36-paws-al2-arm64:9>
+
+=item C<arn:aws:lambda:mx-central-1:445285296882:layer:perl-5-36-paws-al2-arm64:1>
 
 =item C<arn:aws:lambda:sa-east-1:445285296882:layer:perl-5-36-paws-al2-arm64:9>
 
