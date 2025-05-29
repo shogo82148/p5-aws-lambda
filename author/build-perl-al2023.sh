@@ -15,7 +15,7 @@ CPANEL_JSON_XS_VERSION=4.39
 JSON_MAYBEXS_VERSION=1.004008
 YAML_VERSION=1.31
 YAML_TINY_VERSION=1.76
-YAML_XS_VERSION=v0.903.0
+YAML_XS_VERSION=v0.904.0
 IO_SOCKET_SSL_VERSION=2.089
 MOZILLA_CA_VERSION=20250202
 LOCAL_LIB_VERSION=2.000029
@@ -73,5 +73,5 @@ perl -i -pe 's(^#!perl$)(#!/opt/bin/perl)' /opt/bootstrap
 # remove POD(Plain Old Documentation)
 dnf install -y perl-ExtUtils-MakeMaker
 cd author/pod-stripper
-perl /opt/bin/cpanm --installdeps .
+perl /opt/bin/cpanm --installdeps --notest .
 perl ./scripts/pod_stripper.pl /opt/lib/perl5

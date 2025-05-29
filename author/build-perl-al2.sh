@@ -15,10 +15,29 @@ CPANEL_JSON_XS_VERSION=4.39
 JSON_MAYBEXS_VERSION=1.004008
 YAML_VERSION=1.31
 YAML_TINY_VERSION=1.76
-YAML_XS_VERSION=v0.903.0
+YAML_XS_VERSION=v0.904.0
 IO_SOCKET_SSL_VERSION=2.089
 MOZILLA_CA_VERSION=20250202
 LOCAL_LIB_VERSION=2.000029
+
+# workaround for https://github.com/aws/aws-lambda-base-images/issues/245
+# https://github.com/aws/aws-lambda-base-images/issues/245#issuecomment-2717501840
+cat > /etc/yum.repos.d/amzn2-extras.repo << 'EOREPO'
+[amzn2extra-openssl-snapsafe]
+name=Amazon Extras repo for openssl-snapsafe
+enabled=1
+mirrorlist=$awsproto://$amazonlinux.$awsregion.$awsdomain/2/extras/openssl-snapsafe/latest/$basearch/mirror.list
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-amazon-linux-2
+priority=10
+skip_if_unavailable=1
+report_instanceid=yes
+EOREPO
+yum upgrade -y openssl-snapsafe-libs
+
+# build-provided.al2 lacks some development packages
+yum install -y openssl openssl-devel
+
 
 JOBS=$(nproc)
 curl -sL https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build > /tmp/perl-build
@@ -26,9 +45,6 @@ perl /tmp/perl-build "$PERL_VERSION" /opt --jobs="$JOBS" --noman -Dvendorprefix=
 
 # workaround for "xlocale.h: No such file or directory"
 ln -s /usr/include/locale.h /usr/include/xlocale.h
-
-# build-provided.al2 lacks some development packages
-yum install -y openssl openssl-devel
 
 # some libraries are missing in the image for running.
 cp -R /lib64/libcrypt[.-]* /opt/lib/
@@ -72,5 +88,5 @@ perl -i -pe 's(^#!perl$)(#!/opt/bin/perl)' /opt/bootstrap
 # remove POD(Plain Old Documentation)
 yum install -y perl-ExtUtils-MakeMaker
 cd author/pod-stripper
-perl /opt/bin/cpanm --installdeps .
+perl /opt/bin/cpanm --installdeps --notest .
 perl ./scripts/pod_stripper.pl /opt/lib/perl5
