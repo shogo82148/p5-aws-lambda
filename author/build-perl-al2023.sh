@@ -73,5 +73,5 @@ perl -i -pe 's(^#!perl$)(#!/opt/bin/perl)' /opt/bootstrap
 # remove POD(Plain Old Documentation)
 dnf install -y perl-ExtUtils-MakeMaker
 cd author/pod-stripper
-perl /opt/bin/cpanm --installdeps .
+perl /opt/bin/cpanm --installdeps --notest .
 perl ./scripts/pod_stripper.pl /opt/lib/perl5
