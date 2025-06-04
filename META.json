@@ -88,7 +88,7 @@
          "web" : "https://github.com/shogo82148/p5-aws-lambda"
       }
    },
-   "version" : "0.5.2",
+   "version" : "0.5.3",
    "x_contributors" : [
       "ICHINOSE Shogo <shogo82148@gmail.com>",
       "Jose Luis Martinez <jlmartinez@capside.com>",
