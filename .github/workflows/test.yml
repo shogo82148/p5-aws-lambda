@@ -24,7 +24,7 @@ jobs:
           - ubuntu-24.04-arm
     name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup perl
         uses: shogo82148/actions-setup-perl@v1
         with:
