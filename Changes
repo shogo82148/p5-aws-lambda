@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - bump JSON::XS 4.04 and Cpanel::JSON::XS 4.04 #197
     - bump IO::Socket::SSL 2.095 #184, #187, #193
 
 0.5.4 2025-06-16T02:52:21Z
