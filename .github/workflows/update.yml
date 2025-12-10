@@ -9,9 +9,9 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - name: update
         run: |
           ./author/update-dependencies.sh
       - name: commit and create a pull request
-        uses: shogo82148/actions-commit-and-create-pr@v1
+        uses: shogo82148/actions-commit-and-create-pr@b1322fe9da4037e9720e34ea221997cffcd3498d # v1.1.4
