@@ -19,7 +19,7 @@ Resources:
         S3Bucket: !Sub shogo82148-lambda-perl-runtime-${AWS::Region}
         S3Key: !Sub ${Name}.zip
         S3ObjectVersion: !Ref ObjectVersion
-      Description: !Sub "Perl ${PerlVersion} Runtime Layer on Amazon Linux 2"
+      Description: !Sub "Perl ${PerlVersion} Runtime Layer on Amazon Linux 2023"
       CompatibleArchitectures:
         - "arm64"
       LayerName: !Ref Name
