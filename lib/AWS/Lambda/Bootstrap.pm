@@ -72,16 +72,19 @@ sub handle_events {
         });
         while ($pm->signal_received ne 'TERM') {
             $pm->start and next;
-            while(1) {
-                $self->handle_event;
-            }
+            $self->_handle_events;
             $pm->finish;
         }
         $pm->wait_all_children;
     } else {
-        while(1) {
-            $self->handle_event;
-        }
+        $self->_handle_events
+    }
+}
+
+sub _handle_events {
+    my $self = shift;
+    while(1) {
+        $self->handle_event;
     }
 }
 

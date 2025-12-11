@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/shogo82148/p5-aws-lambda/workflows/Test/badge.svg)](https://github.com/shogo82148/p5-aws-lambda/actions)
+[![Actions Status](https://github.com/shogo82148/p5-aws-lambda/actions/workflows/Test.yml/badge.svg?branch=main)](https://github.com/shogo82148/p5-aws-lambda/actions?workflow=Test)
 # NAME
 
 AWS::Lambda - Perl support for AWS Lambda Custom Runtime.
