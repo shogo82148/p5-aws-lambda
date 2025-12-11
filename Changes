@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - Support tenant id in AWS::Lambda::Context #203
 
 0.6.0 2025-09-10T02:50:47Z
     - Perl 5.42.0 is released #194

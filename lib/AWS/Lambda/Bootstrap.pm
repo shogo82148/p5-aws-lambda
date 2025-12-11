@@ -121,6 +121,7 @@ sub lambda_next {
         aws_request_id       => $h->{'lambda-runtime-aws-request-id'},
         invoked_function_arn => $h->{'lambda-runtime-invoked-function-arn'},
         trace_id             => $h->{'lambda-runtime-trace-id'},
+        tenant_id            => $h->{'lambda-runtime-aws-tenant-id'},
     );
 }
 
