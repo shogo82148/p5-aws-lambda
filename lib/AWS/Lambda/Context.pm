@@ -14,15 +14,17 @@ sub new {
     } else {
         %args = @_;
     }
-    my $deadline_ms = $args{deadline_ms} // die 'deadine_ms is required';
+    my $deadline_ms = $args{deadline_ms} // die 'deadline_ms is required';
     my $invoked_function_arn = $args{invoked_function_arn} // '';
     my $aws_request_id = $args{aws_request_id} // '';
     my $trace_id = $args{trace_id};
+    my $tenant_id = $args{tenant_id};
     my $self = bless +{
         deadline_ms          => +$deadline_ms,
         invoked_function_arn => $invoked_function_arn,
         aws_request_id       => $aws_request_id,
         trace_id             => $trace_id,
+        tenant_id            => $tenant_id,
     }, $class;
 
     return $self;
@@ -71,6 +73,11 @@ sub client_context {
     return undef; # TODO
 }
 
+sub tenant_id {
+    my $self = shift;
+    return $self->{tenant_id};
+}
+
 1;
 =encoding utf-8
 
@@ -105,6 +112,9 @@ AWS::Lambda::Context - It's Perl port of the AWS Lambda Context.
 
             # The log stream for the function instance.
             log_stream_name => $context->log_stream_name,
+
+            # The tenant id for the function.
+            tenant_id => $context->tenant_id,
         };
         return $result;
     }

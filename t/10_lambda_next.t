@@ -20,11 +20,12 @@ my $app_server = Test::TCP->new(
             [
                 200,
                 [
-                    'Content-Type' => 'application/json',
-                    'Lambda-Runtime-Aws-Request-Id' => '8476a536-e9f4-11e8-9739-2dfe598c3fcd',
-                    'Lambda-Runtime-Deadline-Ms' => '1542409706888',
+                    'Content-Type'                        => 'application/json',
+                    'Lambda-Runtime-Aws-Request-Id'       => '8476a536-e9f4-11e8-9739-2dfe598c3fcd',
+                    'Lambda-Runtime-Deadline-Ms'          => '1542409706888',
                     'Lambda-Runtime-Invoked-Function-Arn' => 'arn:aws:lambda:us-east-2:123456789012:function:custom-runtime',
-                    'Lambda-Runtime-Trace-Id' => 'Root=1-5bef4de7-ad49b0e87f6ef6c87fc2e700;Parent=9a9197af755a6419;Sampled=1',
+                    'Lambda-Runtime-Trace-Id'             => 'Root=1-5bef4de7-ad49b0e87f6ef6c87fc2e700;Parent=9a9197af755a6419;Sampled=1',
+                    'Lambda-Runtime-Aws-Tenant-Id'        => 'tenant-1234',
                 ],
                 [ '{"key1":"a", "key2":"b", "key3":"c"}' ],
             ]
@@ -46,5 +47,6 @@ cmp_deeply $payload, {key1=>"a", key2=>"b", key3=>"c"}, "payload";
 is $context->aws_request_id, '8476a536-e9f4-11e8-9739-2dfe598c3fcd', "request id";
 is $context->invoked_function_arn, 'arn:aws:lambda:us-east-2:123456789012:function:custom-runtime', 'invoked function arn';
 is $context->{trace_id}, 'Root=1-5bef4de7-ad49b0e87f6ef6c87fc2e700;Parent=9a9197af755a6419;Sampled=1', 'trace_id';
+is $context->tenant_id, 'tenant-1234', 'tenant_id';
 
 done_testing;
