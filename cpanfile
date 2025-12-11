@@ -7,6 +7,7 @@ requires 'Plack::Middleware::ReverseProxy', '0.16';
 requires 'JSON::Types', '0.05';
 requires 'URI::Escape';
 requires 'MIME::Base64';
+requires 'Parallel::Prefork';
 
 recommends 'AWS::XRay', '>=0.09';
 
