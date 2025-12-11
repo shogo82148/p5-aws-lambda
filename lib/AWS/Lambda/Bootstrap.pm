@@ -219,7 +219,7 @@ __END__
 
 =head1 NAME
 
-AWS::Lambda::Bootstrap - the bootrap script for AWS Lambda Custom Runtime.
+AWS::Lambda::Bootstrap - the bootstrap script for AWS Lambda Custom Runtime.
 
 =head1 SYNOPSIS
 
@@ -234,7 +234,7 @@ Now, you can start using Perl in AWS Lambda!
 
     bootstrap(@ARGV);
 
-Prebuild Perl Runtime Layer includes the C<bootstrap> script.
+Pre-built Perl Runtime Layer includes the C<bootstrap> script.
 So, if you use the Layer, no need to include the C<bootstrap> script into your zip.
 See L<AWS::Lambda> for more details.
 
