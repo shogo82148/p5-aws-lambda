@@ -28,7 +28,8 @@ sub new {
 
     if (!defined $self->{invoke_mode}) {
         my $mode = $ENV{PERL5_LAMBDA_PSGI_INVOKE_MODE}
-            || $ENV{AWS_LWA_INVOKE_MODE}; # for compatibility with https://github.com/awslabs/aws-lambda-web-adapter
+            || $ENV{AWS_LWA_INVOKE_MODE} # for compatibility with https://github.com/awslabs/aws-lambda-web-adapter
+            || "BUFFERED";
         $self->{invoke_mode} = uc $mode;
     }
  
