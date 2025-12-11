@@ -40,6 +40,8 @@ sub new {
     my $runtime_api = $args{runtime_api} // $ENV{'AWS_LAMBDA_RUNTIME_API'} // die '$AWS_LAMBDA_RUNTIME_API is not found';
     my $task_root = $args{task_root} // $ENV{'LAMBDA_TASK_ROOT'} // die '$LAMBDA_TASK_ROOT is not found';
     my $max_workers = $args{max_workers} // $ENV{'AWS_LAMBDA_MAX_CONCURRENCY'} // 0;
+    die "max_workers must be a non-negative integer, got: $max_workers" 
+        unless $max_workers =~ /^\d+$/ && $max_workers >= 0;
     my $self = bless +{
         task_root      => $task_root,
         handler        => $handler,
