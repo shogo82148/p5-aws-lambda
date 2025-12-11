@@ -4,7 +4,7 @@
       "ICHINOSE Shogo"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.23, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.28, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "mit"
    ],
@@ -57,6 +57,7 @@
             "JSON::Types" : "0.05",
             "JSON::XS" : "4.0",
             "MIME::Base64" : "0",
+            "Parallel::Prefork" : "0",
             "Plack" : "1.0047",
             "Plack::Middleware::ReverseProxy" : "0.16",
             "Try::Tiny" : "0.30",
