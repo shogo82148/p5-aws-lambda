@@ -14,7 +14,7 @@ sub new {
     } else {
         %args = @_;
     }
-    my $deadline_ms = $args{deadline_ms} // die 'deadine_ms is required';
+    my $deadline_ms = $args{deadline_ms} // die 'deadline_ms is required';
     my $invoked_function_arn = $args{invoked_function_arn} // '';
     my $aws_request_id = $args{aws_request_id} // '';
     my $trace_id = $args{trace_id};
