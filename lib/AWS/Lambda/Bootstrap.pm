@@ -6,8 +6,6 @@ use warnings;
 use HTTP::Tiny;
 use JSON::XS qw/decode_json encode_json/;
 use Try::Tiny;
-use Parallel::Prefork;
-
 use AWS::Lambda;
 use AWS::Lambda::Context;
 use AWS::Lambda::ResponseWriter;
@@ -64,6 +62,7 @@ sub handle_events {
     $self->_init or return;
 
     if ($self->{max_workers} > 0) {
+        require Parallel::Prefork;
         my $pm = Parallel::Prefork->new({
             max_workers => $self->{max_workers},
             trap_signals => {
