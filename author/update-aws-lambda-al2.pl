@@ -230,6 +230,12 @@ __END__
 
 AWS::Lambda::AL2 - AWS Lambda Custom Runtimes based on Amazon Linux 2
 
+=head1 NO LONGER MAINTAINED
+
+These layers are only for backward compatibility.
+We recommend to migrate to Amazon Linux 2023.
+These layers are NO LONGER MAINTAINED and WILL NOT RECEIVE ANY UPDATES.
+
 =head1 SYNOPSIS
 
 You can get the layer ARN in your script by using C<get_layer_info>.
