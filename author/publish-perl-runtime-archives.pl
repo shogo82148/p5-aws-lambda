@@ -61,11 +61,6 @@ if ($force) {
     say STDERR "DRY RUN";
 }
 
-publish("runtime-al2", "x86_64");
-publish("paws-al2", "x86_64");
-publish("runtime-al2", "arm64");
-publish("paws-al2", "arm64");
-
 publish("runtime-al2023", "x86_64");
 publish("paws-al2023", "x86_64");
 publish("runtime-al2023", "arm64");
