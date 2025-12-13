@@ -7,7 +7,7 @@ use AWS::Lambda::AL;
 use AWS::Lambda::AL2;
 use AWS::Lambda::AL2023;
 
-our $VERSION = "0.6.0";
+our $VERSION = "0.7.0";
 
 # the context of Lambda Function
 our $context;

@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.7.0 2025-12-13T04:33:18Z
     - Support tenant id in AWS::Lambda::Context #203
     - Add support for AWS_LAMBDA_MAX_CONCURRENCY #204
     - Mark Amazon Linux 2 (AL2) based layers as no longer maintained #206
