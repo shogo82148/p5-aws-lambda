@@ -264,10 +264,10 @@ It means that we support the two most recent stable release series.
 
 We also provide the layers for legacy custom runtime as known as "provided".
 These layers are only for backward compatibility.
-We recommend to migrate to Amazon Linux 2.
+We recommend to migrate to Amazon Linux 2023.
 These layers are NO LONGER MAINTAINED and WILL NOT RECEIVE ANY UPDATES.
 
-The list of all layer ARNs is availeble on [AWS::Lambda::AL](https://metacpan.org/pod/AWS%3A%3ALambda%3A%3AAL).
+The list of all layer ARNs is available on [AWS::Lambda::AL](https://metacpan.org/pod/AWS%3A%3ALambda%3A%3AAL).
 
 ## Pre-built Zip Archives for Amazon Linux
 
@@ -281,9 +281,9 @@ And Paws:
 
 # LEGACY CUSTOM RUNTIME ON AMAZON LINUX 2
 
-Previously, we provided the layers that named without CPU architectures.
-These layers are compatible with x86\_64 and only for backward compatibility.
-We recommend to specify the CPU architecture.
+We also provide the layers for legacy custom runtime as known as "provided.al2".
+These layers are only for backward compatibility.
+We recommend to migrate to Amazon Linux 2023.
 These layers are NO LONGER MAINTAINED and WILL NOT RECEIVE ANY UPDATES.
 
 ## Pre-built Legacy Public Lambda Layers for Amazon Linux 2
