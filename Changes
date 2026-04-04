@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.9.0 2026-04-04T02:09:23Z
     - Perl 5.42.2 and 5.40.4 are released #220
     - bump JSON 4.11 #218
     - bump Net::SSLeay 1.96 #216
