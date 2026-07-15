@@ -1,4 +1,4 @@
-use v5.36;
+use v5.42;
 use utf8;
 use lib "$ENV{'LAMBDA_TASK_ROOT'}/local/lib/perl5";
 use lib "$ENV{'LAMBDA_TASK_ROOT'}/local/lib/perl5/aarch64-linux";
@@ -31,5 +31,3 @@ my $func = AWS::Lambda::PSGI->wrap($app);
 sub handle($payload, $context) {
     return $func->($payload);
 }
-
-1;
