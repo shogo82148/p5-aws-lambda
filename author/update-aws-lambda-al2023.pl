@@ -180,8 +180,8 @@ You can get the layer ARN in your script by using C<get_layer_info>.
     );
     say $info->{runtime_arn};     # @@LATEST_RUNTIME_ARN@@
     say $info->{runtime_version}; # @@LATEST_RUNTIME_VERSION@@
-    say $info->{paws_arn}         # @@LATEST_PAWS_ARN@@
-    say $info->{paws_version}     # @@LATEST_PAWS_VERSION@@,
+    say $info->{paws_arn};        # @@LATEST_PAWS_ARN@@
+    say $info->{paws_version};    # @@LATEST_PAWS_VERSION@@
 
 Or, you can use following one-liner.
 
