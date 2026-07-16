@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - Perl 5.44.0 is released #236
     - bump IO::Socket::SSL 2.099 #233
     - bump YAML::XS v0.910.0 #232, #234
     - bump Cpanel::JSON::XS 4.42 #228, #230
