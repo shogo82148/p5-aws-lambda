@@ -1,6 +1,8 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+
+0.10.0 2026-07-16T13:03:43Z
     - Perl 5.44.0 is released #236
     - Temporarily remove me-central-1 and me-south-1 regions #236
       - These regions are currently unavailable due to attacks from the war.
