@@ -1,6 +1,9 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - Perl 5.44.0 is released #236
+    - Temporarily remove me-central-1 and me-south-1 regions #236
+      - These regions are currently unavailable due to attacks from the war.
     - bump IO::Socket::SSL 2.099 #233
     - bump YAML::XS v0.910.0 #232, #234
     - bump Cpanel::JSON::XS 4.42 #228, #230

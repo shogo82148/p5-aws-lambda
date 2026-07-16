@@ -15,7 +15,7 @@ sub head_or_put {
     my $object = decode_json(`aws --output json --region "$region" s3api head-object --bucket "shogo82148-lambda-perl-runtime-$region" --key "$key" || echo "{}"`);
     my $current = $object->{Metadata}{md5chksum} || "";
     if ($current ne $md5) {
-        say STDERR "Upload $zip to 3://shogo82148-lambda-perl-runtime-$region/$key";
+        say STDERR "Upload $zip to s3://shogo82148-lambda-perl-runtime-$region/$key";
         my $cmd = "aws --output json --region '$region' s3api put-object --bucket 'shogo82148-lambda-perl-runtime-$region' --key '$key' --body '$zip' --content-md5 '$md5' --metadata md5chksum='$md5'";
         say STDERR "Executing: $cmd";
         if ($force) {
