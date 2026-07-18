@@ -130,7 +130,7 @@ Create a new function and give it a name and an IAM Role.
 
 =item 3
 
-For the "Runtime" selection, select B<Provide your own bootstrap on Amazon Linux 2>.
+For the "Runtime" selection, select B<Provide your own bootstrap on Amazon Linux 2023>.
 
 =item 4
 
