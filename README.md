@@ -47,7 +47,7 @@ This package makes it easy to run AWS Lambda Functions written in Perl.
 
 1. Login to your AWS Account and go to the Lambda Console.
 2. Create a new function and give it a name and an IAM Role.
-3. For the "Runtime" selection, select **Provide your own bootstrap on Amazon Linux 2**.
+3. For the "Runtime" selection, select **Provide your own bootstrap on Amazon Linux 2023**.
 4. In the "Designer" section of your function dashboard, select the **Layers** box.
 5. Scroll down to the "Layers" section and click **Add a layer**.
 6. Select the **Provide a layer version ARN** option, then copy/paste the Layer ARN for your region.
