@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Setup perl
-        uses: shogo82148/actions-setup-perl@v1.44.3
+        uses: shogo82148/actions-setup-perl@v1.44.4
         with:
           perl-version: ${{ matrix.perl }}
           install-modules-with: cpm
