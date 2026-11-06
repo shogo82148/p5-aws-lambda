@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - bump Mozilla::CA 20261105 #262
 
 0.11.1 2026-10-21T13:18:54Z
     - bump Mozilla::CA 20261020 #245, #257
