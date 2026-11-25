@@ -10,7 +10,6 @@ use MIME::Base64;
 use JSON::Types;
 use Encode;
 use Try::Tiny;
-use Plack::Middleware::ReverseProxy;
 use AWS::Lambda;
 use Scalar::Util qw(reftype);
 use JSON::XS qw(encode_json);
@@ -49,36 +48,15 @@ sub to_app {
     return sub { $self->call(@_) };
 }
 
-# format_input sets REMOTE_ADDR, psgi.url_scheme and SERVER_PORT from the event
-# in place of these headers.
-my @HIDDEN_FORWARDED_HEADERS = qw(
-    HTTP_X_FORWARDED_FOR
-    HTTP_X_FORWARDED_PROTO
-    HTTP_X_FORWARDED_PORT
-);
-
 sub wrap {
     my($self, $app, @args) = @_;
 
-    # Lambda function runs as reverse proxy backend.
-    # So, we always enable ReverseProxy middleware.
-    # However, format_input has already set REMOTE_ADDR, psgi.url_scheme and SERVER_PORT from the Lambda event.
-    # Header names are normalised ("x_forwarded_proto" and "X-Forwarded-Proto" are both HTTP_X_FORWARDED_PROTO),
-    # so a client can put its own value into these keys.
-    # They are hidden from ReverseProxy, so that a client cannot overwrite the values above,
-    # and they are handed back to the app unchanged.
-    my $orig = $app;
-    $app = sub {
-        my $env = shift;
-        my %hidden = map { $_ => delete $env->{$_} }
-            grep { exists $env->{$_} } @HIDDEN_FORWARDED_HEADERS;
-        my $proxy = Plack::Middleware::ReverseProxy->wrap(sub {
-            my $env = shift;
-            @$env{keys %hidden} = values %hidden;
-            return $orig->($env);
-        });
-        return $proxy->($env);
-    };
+    # Lambda function runs as reverse proxy backend,
+    # but Plack::Middleware::ReverseProxy is not enabled here.
+    # format_input sets REMOTE_ADDR, psgi.url_scheme, HTTPS and SERVER_PORT from the Lambda event.
+    # The X-Forwarded-* headers that ReverseProxy reads are not trustworthy:
+    # header names are normalised ("x_forwarded_for" and "X-Forwarded-For" are both HTTP_X_FORWARDED_FOR),
+    # and the AWS front ends do not set X-Forwarded-Host, X-Forwarded-Server and X-Forwarded-HTTPS at all.
 
     if (ref $self) {
         $self->{app} = $app;
@@ -559,10 +537,14 @@ A header such as C<X_Forwarded_Proto> is not used.
 
 =head2 Reverse Proxy
 
-C<wrap> still enables L<Plack::Middleware::ReverseProxy>,
-but hides C<X-Forwarded-For>, C<X-Forwarded-Proto> and C<X-Forwarded-Port> from it,
-so that the values above are not overwritten by values that the client sent.
-The app still receives these headers as request headers.
+Earlier versions of C<wrap> enabled L<Plack::Middleware::ReverseProxy>. It no longer does.
+The values that it derived from the C<X-Forwarded-For>, C<X-Forwarded-Proto> and C<X-Forwarded-Port> headers
+now come from the Lambda event as described above.
+The AWS front ends do not set C<X-Forwarded-Host>, C<X-Forwarded-Server> and C<X-Forwarded-HTTPS>.
+Their values come from the client as is,
+so they no longer change C<HTTP_HOST>, C<SERVER_PORT> or C<psgi.url_scheme>.
+The app still receives all these headers as request headers.
+If a proxy that you trust sets them, enable L<Plack::Middleware::ReverseProxy> in your own app.
 
 =head1 LICENSE
 
