@@ -54,7 +54,21 @@ sub wrap {
 
     # Lambda function runs as reverse proxy backend.
     # So, we always enable ReverseProxy middleware.
-    $app = Plack::Middleware::ReverseProxy->wrap($app);
+    # However, format_input has already set REMOTE_ADDR from the Lambda event,
+    # so X-Forwarded-For is hidden from ReverseProxy, so that a client cannot overwrite REMOTE_ADDR with it,
+    # and it is handed back to the app unchanged.
+    my $orig = $app;
+    $app = sub {
+        my $env = shift;
+        my %hidden = map { $_ => delete $env->{$_} }
+            grep { exists $env->{$_} } qw(HTTP_X_FORWARDED_FOR);
+        my $proxy = Plack::Middleware::ReverseProxy->wrap(sub {
+            my $env = shift;
+            @$env{keys %hidden} = values %hidden;
+            return $orig->($env);
+        });
+        return $proxy->($env);
+    };
 
     if (ref $self) {
         $self->{app} = $app;
@@ -182,7 +196,48 @@ sub _format_input_v1 {
         }
     }
 
+    if ($requestContext && $requestContext->{elb}) {
+        # Application Load Balancer has no sourceIp in the event.
+        # It sets X-Forwarded-For, X-Forwarded-Proto and X-Forwarded-Port instead.
+        # Read them by their exact names, so that a header such as "X_Forwarded_For" cannot be used.
+        my $xff = _last_header_value($payload, 'x-forwarded-for');
+        if (defined $xff && $xff =~ /([^,\s]+)\s*$/) {
+            $env->{REMOTE_ADDR} = $1;
+        }
+        my $proto = _last_header_value($payload, 'x-forwarded-proto') // '';
+        $env->{'psgi.url_scheme'} = lc $proto eq 'https' ? 'https' : 'http';
+        my $port = _last_header_value($payload, 'x-forwarded-port') // '';
+        $env->{SERVER_PORT} = $port =~ /^\s*([0-9]+)\s*$/ ? $1
+            : $env->{'psgi.url_scheme'} eq 'https' ? 443 : 80;
+    } else {
+        # API Gateway REST API accepts only HTTPS.
+        my $source_ip = $requestContext && $requestContext->{identity} && $requestContext->{identity}{sourceIp};
+        if (defined $source_ip) {
+            $env->{REMOTE_ADDR} = $source_ip;
+        }
+        $env->{'psgi.url_scheme'} = 'https';
+        $env->{SERVER_PORT} = 443;
+    }
+
     return $env;
+}
+
+# returns the last value of the header $name in the payload.
+# $name must be lower case, and it is compared with the header names as is,
+# i.e. "x_forwarded_for" does not match "x-forwarded-for".
+sub _last_header_value {
+    my ($payload, $name) = @_;
+    my $value;
+    for my $headers ($payload->{headers}, $payload->{multiValueHeaders}) {
+        next if ref $headers ne 'HASH';
+        for my $key (sort keys %$headers) {
+            next if lc $key ne $name;
+            my $v = $headers->{$key};
+            $v = $v->[-1] if ref $v eq 'ARRAY';
+            $value = $v if defined $v;
+        }
+    }
+    return $value;
 }
 
 sub _format_input_v2 {
@@ -232,6 +287,14 @@ sub _format_input_v2 {
     }
     $env->{PATH_INFO} = $requestContext->{http}{path};
     $env->{SCRIPT_NAME} = '';
+
+    # API Gateway HTTP API and Lambda Function URLs accept only HTTPS.
+    my $source_ip = $requestContext->{http}{sourceIp};
+    if (defined $source_ip) {
+        $env->{REMOTE_ADDR} = $source_ip;
+    }
+    $env->{'psgi.url_scheme'} = 'https';
+    $env->{SERVER_PORT} = 443;
     return $env;
 }
 
@@ -430,6 +493,44 @@ An application MAY omit the third element (the body) when calling the responder.
 L<AWS::Lambda::PSGI> injects the request id that compatible with L<Plack::Middleware::RequestId>.
 
     env->{'psgix.request_id'} # It is same value with $context->aws_request_id
+
+=head2 Remote Address
+
+L<AWS::Lambda::PSGI> sets C<REMOTE_ADDR> from the Lambda event, not from the C<X-Forwarded-For> header.
+
+=over 4
+
+=item API Gateway REST API
+
+C<REMOTE_ADDR> is C<requestContext.identity.sourceIp>.
+
+=item API Gateway HTTP API and Lambda Function URLs
+
+C<REMOTE_ADDR> is C<requestContext.http.sourceIp>.
+
+=item Application Load Balancer
+
+Its events have no C<sourceIp>, so C<REMOTE_ADDR> is the last address in the C<X-Forwarded-For> header
+that the load balancer sets.
+Only the header named exactly C<X-Forwarded-For> is used; a header such as C<X_Forwarded_For> is not.
+This address is the client's only while the load balancer appends to C<X-Forwarded-For>,
+which is the default of the C<routing.http.xff_header_processing.mode> attribute.
+In the C<preserve> mode the client can set it to any value,
+and in the C<remove> mode C<REMOTE_ADDR> is not set.
+C<psgi.url_scheme> and C<SERVER_PORT> come from the C<X-Forwarded-Proto> and C<X-Forwarded-Port> headers.
+
+=back
+
+C<wrap> still enables L<Plack::Middleware::ReverseProxy>, but hides C<X-Forwarded-For> from it,
+so that the address above is not overwritten by a value that the client sent.
+The app still receives C<X-Forwarded-For> as a request header.
+
+This is a change from the earlier versions, which took C<REMOTE_ADDR> from the last address in C<X-Forwarded-For>.
+If another proxy, such as Amazon CloudFront, is in front of API Gateway or Lambda Function URLs,
+C<sourceIp> is the address of that proxy, not the viewer's.
+If you trust that proxy and want the viewer's address,
+take it from C<X-Forwarded-For> in your app,
+for example with L<Plack::Middleware::ReverseProxy> or L<Plack::Middleware::XForwardedFor> and the proxy's addresses.
 
 =head1 LICENSE
 

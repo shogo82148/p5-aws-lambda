@@ -336,4 +336,91 @@ subtest "request id" => sub {
     is $req->header('X-Request-Id'), '8476a536-e9f4-11e8-9739-2dfe598c3fcd', 'get request id from the header';
 };
 
+
+subtest "remote address, scheme and port from the event" => sub {
+    my @cases = (
+        ["apigateway-get-request.json",          '192.0.2.1',      'https', 443],
+        ["apigateway-post-request.json",         undef,            'https', 443],
+        ["apigateway-v2-get-request.json",       '192.0.2.1',      'https', 443],
+        ["function-urls-get-request.json",       '192.0.2.1',      'https', 443],
+        ["alb-get-request.json",                 '122.249.124.94', 'https', 443],
+    );
+    for my $case (@cases) {
+        my ($file, $addr, $scheme, $port) = @$case;
+        my $input = slurp_json("testdata/$file");
+        $addr //= $input->{requestContext}{identity}{sourceIp};
+        my $env = $app->format_input($input);
+        is $env->{REMOTE_ADDR}, $addr, "$file: REMOTE_ADDR";
+        is $env->{'psgi.url_scheme'}, $scheme, "$file: psgi.url_scheme";
+        is $env->{SERVER_PORT}, $port, "$file: SERVER_PORT";
+    }
+
+    # ALB on a plain HTTP listener
+    my $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x-forwarded-proto'} = ['http'];
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['80'];
+    my $env = $app->format_input($input);
+    is $env->{'psgi.url_scheme'}, 'http', 'ALB http: psgi.url_scheme';
+    is $env->{SERVER_PORT}, 80, 'ALB http: SERVER_PORT';
+};
+
+# A client can send headers like "X_Forwarded_For" and "X-Forwarded-For".
+# They must not change REMOTE_ADDR.
+subtest "wrap takes REMOTE_ADDR from the event, not from forged X-Forwarded-For" => sub {
+    my $env;
+    my $func = AWS::Lambda::PSGI->wrap(sub {
+        $env = { %{$_[0]} };
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    }, invoke_mode => 'BUFFERED');
+
+    # API Gateway REST API
+    my $input = slurp_json("testdata/apigateway-get-request.json");
+    $input->{headers}{'X-Forwarded-For'} = '203.0.113.1';
+    $input->{multiValueHeaders}{'X-Forwarded-For'} = ['203.0.113.1'];
+    $input->{headers}{'x_forwarded_for'} = '203.0.113.2';
+    $input->{multiValueHeaders}{'x_forwarded_for'} = ['203.0.113.2'];
+    my $res = $func->($input);
+    is $res->{statusCode}, 200, 'REST: status code';
+    is $env->{REMOTE_ADDR}, '192.0.2.1', 'REST: REMOTE_ADDR is sourceIp';
+    like $env->{HTTP_X_FORWARDED_FOR}, qr/^203\.0\.113\.[12]$/, 'REST: the app still sees X-Forwarded-For';
+    is $env->{'psgi.url_scheme'}, 'https', 'REST: psgi.url_scheme';
+    is $env->{SERVER_PORT}, 443, 'REST: SERVER_PORT';
+
+    # Lambda Function URLs
+    $input = slurp_json("testdata/function-urls-get-request.json");
+    $input->{headers}{'x-forwarded-for'} = '203.0.113.1';
+    $input->{headers}{'x_forwarded_for'} = '203.0.113.2';
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'Function URLs: status code';
+    is $env->{REMOTE_ADDR}, '192.0.2.1', 'Function URLs: REMOTE_ADDR is sourceIp';
+    like $env->{HTTP_X_FORWARDED_FOR}, qr/^203\.0\.113\.[12]$/, 'Function URLs: the app still sees X-Forwarded-For';
+
+    # API Gateway HTTP API without X-Forwarded-For
+    $input = slurp_json("testdata/apigateway-v2-get-request.json");
+    delete $input->{headers}{'x-forwarded-for'};
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'HTTP API: status code';
+    is $env->{REMOTE_ADDR}, '192.0.2.1', 'HTTP API: REMOTE_ADDR is sourceIp';
+    ok !exists $env->{HTTP_X_FORWARDED_FOR}, 'HTTP API: no X-Forwarded-For';
+
+    # ALB appends the client address to X-Forwarded-For.
+    $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x-forwarded-for'} = ['203.0.113.1, 122.249.124.94'];
+    $input->{multiValueHeaders}{'x_forwarded_for'} = ['203.0.113.2'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB: status code';
+    is $env->{REMOTE_ADDR}, '122.249.124.94', 'ALB: REMOTE_ADDR is the address that ALB appended';
+    is $env->{'psgi.url_scheme'}, 'https', 'ALB: psgi.url_scheme';
+    is $env->{SERVER_PORT}, 443, 'ALB: SERVER_PORT';
+
+    # ALB removes X-Forwarded-For (routing.http.xff_header_processing.mode = remove).
+    $input = slurp_json("testdata/alb-get-request.json");
+    delete $input->{multiValueHeaders}{'x-forwarded-for'};
+    $input->{multiValueHeaders}{'x_forwarded_for'} = ['203.0.113.2'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB without X-Forwarded-For: status code';
+    ok !defined $env->{REMOTE_ADDR}, 'ALB without X-Forwarded-For: REMOTE_ADDR is not forged';
+    is $env->{HTTP_X_FORWARDED_FOR}, '203.0.113.2', 'ALB without X-Forwarded-For: the app still sees the header';
+};
+
 done_testing;
