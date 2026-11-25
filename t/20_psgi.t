@@ -423,4 +423,64 @@ subtest "wrap takes REMOTE_ADDR from the event, not from forged X-Forwarded-For"
     is $env->{HTTP_X_FORWARDED_FOR}, '203.0.113.2', 'ALB without X-Forwarded-For: the app still sees the header';
 };
 
+
+# A client can send headers like "X_Forwarded_Proto" and "X_Forwarded_Port".
+# They must not change the URL scheme or the port.
+subtest "wrap takes the scheme and the port from the event, not from forged X-Forwarded-Proto" => sub {
+    my $env;
+    my $func = AWS::Lambda::PSGI->wrap(sub {
+        $env = { %{$_[0]} };
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    }, invoke_mode => 'BUFFERED');
+
+    # ALB on a plain HTTP listener, with forged headers next to the ones ALB sets.
+    my $input = slurp_json("testdata/alb-get-request.json");
+    my $host = $input->{multiValueHeaders}{host}[0];
+    $input->{multiValueHeaders}{'x-forwarded-proto'} = ['http'];
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['80'];
+    $input->{multiValueHeaders}{'x_forwarded_proto'} = ['https'];
+    $input->{multiValueHeaders}{'x_forwarded_port'} = ['443'];
+    my $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB http: status code';
+    is $env->{'psgi.url_scheme'}, 'http', 'ALB http: psgi.url_scheme';
+    ok !$env->{HTTPS}, 'ALB http: HTTPS is not set';
+    is $env->{SERVER_PORT}, 80, 'ALB http: SERVER_PORT';
+    is(Plack::Request->new($env)->base->as_string, "http://$host/", 'ALB http: base url');
+    like $env->{HTTP_X_FORWARDED_PROTO}, qr/^https?$/, 'ALB http: the app still sees X-Forwarded-Proto';
+    like $env->{HTTP_X_FORWARDED_PORT}, qr/^(?:80|443)$/, 'ALB http: the app still sees X-Forwarded-Port';
+
+    # only the forged header, without X-Forwarded-Proto
+    $input = slurp_json("testdata/alb-get-request.json");
+    delete $input->{multiValueHeaders}{'x-forwarded-proto'};
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['80'];
+    $input->{multiValueHeaders}{'x_forwarded_proto'} = ['https'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB http, forged header only: status code';
+    is $env->{'psgi.url_scheme'}, 'http', 'ALB http, forged header only: psgi.url_scheme';
+    ok !$env->{HTTPS}, 'ALB http, forged header only: HTTPS is not set';
+    is $env->{HTTP_X_FORWARDED_PROTO}, 'https', 'ALB http, forged header only: the app still sees the header';
+
+    # ALB on an HTTPS listener
+    $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x_forwarded_proto'} = ['http'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB https: status code';
+    is $env->{'psgi.url_scheme'}, 'https', 'ALB https: psgi.url_scheme';
+    is $env->{HTTPS}, 'ON', 'ALB https: HTTPS';
+    is $env->{SERVER_PORT}, 443, 'ALB https: SERVER_PORT';
+    is(Plack::Request->new($env)->base->as_string, "https://$host/", 'ALB https: base url');
+
+    # Lambda Function URLs accept only HTTPS.
+    $input = slurp_json("testdata/function-urls-get-request.json");
+    $host = $input->{headers}{host};
+    $input->{headers}{'x_forwarded_proto'} = 'http';
+    $input->{headers}{'x_forwarded_port'} = '80';
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'Function URLs: status code';
+    is $env->{'psgi.url_scheme'}, 'https', 'Function URLs: psgi.url_scheme';
+    is $env->{HTTPS}, 'ON', 'Function URLs: HTTPS';
+    is $env->{SERVER_PORT}, 443, 'Function URLs: SERVER_PORT';
+    is(Plack::Request->new($env)->base->as_string, "https://$host/", 'Function URLs: base url');
+};
+
 done_testing;
