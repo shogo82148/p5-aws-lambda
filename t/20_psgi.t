@@ -336,6 +336,154 @@ subtest "request id" => sub {
     is $req->header('X-Request-Id'), '8476a536-e9f4-11e8-9739-2dfe598c3fcd', 'get request id from the header';
 };
 
+
+subtest "remote address, scheme and port from the event" => sub {
+    my @cases = (
+        ["apigateway-get-request.json",          '192.0.2.1',      'https', 443],
+        ["apigateway-post-request.json",         undef,            'https', 443],
+        ["apigateway-v2-get-request.json",       '192.0.2.1',      'https', 443],
+        ["function-urls-get-request.json",       '192.0.2.1',      'https', 443],
+        ["alb-get-request.json",                 '122.249.124.94', 'https', 443],
+    );
+    for my $case (@cases) {
+        my ($file, $addr, $scheme, $port) = @$case;
+        my $input = slurp_json("testdata/$file");
+        $addr //= $input->{requestContext}{identity}{sourceIp};
+        my $env = $app->format_input($input);
+        is $env->{REMOTE_ADDR}, $addr, "$file: REMOTE_ADDR";
+        is $env->{'psgi.url_scheme'}, $scheme, "$file: psgi.url_scheme";
+        is $env->{SERVER_PORT}, $port, "$file: SERVER_PORT";
+    }
+
+    # ALB on a plain HTTP listener
+    my $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x-forwarded-proto'} = ['http'];
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['80'];
+    my $env = $app->format_input($input);
+    is $env->{'psgi.url_scheme'}, 'http', 'ALB http: psgi.url_scheme';
+    is $env->{SERVER_PORT}, 80, 'ALB http: SERVER_PORT';
+};
+
+# A client can send headers like "X_Forwarded_For" and "X-Forwarded-For".
+# They must not change REMOTE_ADDR.
+subtest "wrap takes REMOTE_ADDR from the event, not from forged X-Forwarded-For" => sub {
+    my $env;
+    my $func = AWS::Lambda::PSGI->wrap(sub {
+        $env = { %{$_[0]} };
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    }, invoke_mode => 'BUFFERED');
+
+    # API Gateway REST API
+    my $input = slurp_json("testdata/apigateway-get-request.json");
+    $input->{headers}{'X-Forwarded-For'} = '203.0.113.1';
+    $input->{multiValueHeaders}{'X-Forwarded-For'} = ['203.0.113.1'];
+    $input->{headers}{'x_forwarded_for'} = '203.0.113.2';
+    $input->{multiValueHeaders}{'x_forwarded_for'} = ['203.0.113.2'];
+    my $res = $func->($input);
+    is $res->{statusCode}, 200, 'REST: status code';
+    is $env->{REMOTE_ADDR}, '192.0.2.1', 'REST: REMOTE_ADDR is sourceIp';
+    like $env->{HTTP_X_FORWARDED_FOR}, qr/^203\.0\.113\.[12]$/, 'REST: the app still sees X-Forwarded-For';
+    is $env->{'psgi.url_scheme'}, 'https', 'REST: psgi.url_scheme';
+    is $env->{SERVER_PORT}, 443, 'REST: SERVER_PORT';
+
+    # Lambda Function URLs
+    $input = slurp_json("testdata/function-urls-get-request.json");
+    $input->{headers}{'x-forwarded-for'} = '203.0.113.1';
+    $input->{headers}{'x_forwarded_for'} = '203.0.113.2';
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'Function URLs: status code';
+    is $env->{REMOTE_ADDR}, '192.0.2.1', 'Function URLs: REMOTE_ADDR is sourceIp';
+    like $env->{HTTP_X_FORWARDED_FOR}, qr/^203\.0\.113\.[12]$/, 'Function URLs: the app still sees X-Forwarded-For';
+
+    # API Gateway HTTP API without X-Forwarded-For
+    $input = slurp_json("testdata/apigateway-v2-get-request.json");
+    delete $input->{headers}{'x-forwarded-for'};
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'HTTP API: status code';
+    is $env->{REMOTE_ADDR}, '192.0.2.1', 'HTTP API: REMOTE_ADDR is sourceIp';
+    ok !exists $env->{HTTP_X_FORWARDED_FOR}, 'HTTP API: no X-Forwarded-For';
+
+    # ALB appends the client address to X-Forwarded-For.
+    $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x-forwarded-for'} = ['203.0.113.1, 122.249.124.94'];
+    $input->{multiValueHeaders}{'x_forwarded_for'} = ['203.0.113.2'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB: status code';
+    is $env->{REMOTE_ADDR}, '122.249.124.94', 'ALB: REMOTE_ADDR is the address that ALB appended';
+    is $env->{'psgi.url_scheme'}, 'https', 'ALB: psgi.url_scheme';
+    is $env->{SERVER_PORT}, 443, 'ALB: SERVER_PORT';
+
+    # ALB removes X-Forwarded-For (routing.http.xff_header_processing.mode = remove).
+    $input = slurp_json("testdata/alb-get-request.json");
+    delete $input->{multiValueHeaders}{'x-forwarded-for'};
+    $input->{multiValueHeaders}{'x_forwarded_for'} = ['203.0.113.2'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB without X-Forwarded-For: status code';
+    ok !defined $env->{REMOTE_ADDR}, 'ALB without X-Forwarded-For: REMOTE_ADDR is not forged';
+    is $env->{HTTP_X_FORWARDED_FOR}, '203.0.113.2', 'ALB without X-Forwarded-For: the app still sees the header';
+};
+
+
+# A client can send headers like "X_Forwarded_Proto" and "X_Forwarded_Port".
+# They must not change the URL scheme or the port.
+subtest "wrap takes the scheme and the port from the event, not from forged X-Forwarded-Proto" => sub {
+    my $env;
+    my $func = AWS::Lambda::PSGI->wrap(sub {
+        $env = { %{$_[0]} };
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    }, invoke_mode => 'BUFFERED');
+
+    # ALB on a plain HTTP listener, with forged headers next to the ones ALB sets.
+    my $input = slurp_json("testdata/alb-get-request.json");
+    my $host = $input->{multiValueHeaders}{host}[0];
+    $input->{multiValueHeaders}{'x-forwarded-proto'} = ['http'];
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['80'];
+    $input->{multiValueHeaders}{'x_forwarded_proto'} = ['https'];
+    $input->{multiValueHeaders}{'x_forwarded_port'} = ['443'];
+    my $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB http: status code';
+    is $env->{'psgi.url_scheme'}, 'http', 'ALB http: psgi.url_scheme';
+    ok !$env->{HTTPS}, 'ALB http: HTTPS is not set';
+    is $env->{SERVER_PORT}, 80, 'ALB http: SERVER_PORT';
+    is(Plack::Request->new($env)->base->as_string, "http://$host/", 'ALB http: base url');
+    like $env->{HTTP_X_FORWARDED_PROTO}, qr/^https?$/, 'ALB http: the app still sees X-Forwarded-Proto';
+    like $env->{HTTP_X_FORWARDED_PORT}, qr/^(?:80|443)$/, 'ALB http: the app still sees X-Forwarded-Port';
+
+    # only the forged header, without X-Forwarded-Proto
+    $input = slurp_json("testdata/alb-get-request.json");
+    delete $input->{multiValueHeaders}{'x-forwarded-proto'};
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['80'];
+    $input->{multiValueHeaders}{'x_forwarded_proto'} = ['https'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB http, forged header only: status code';
+    is $env->{'psgi.url_scheme'}, 'http', 'ALB http, forged header only: psgi.url_scheme';
+    ok !$env->{HTTPS}, 'ALB http, forged header only: HTTPS is not set';
+    is $env->{HTTP_X_FORWARDED_PROTO}, 'https', 'ALB http, forged header only: the app still sees the header';
+
+    # ALB on an HTTPS listener
+    $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x_forwarded_proto'} = ['http'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'ALB https: status code';
+    is $env->{'psgi.url_scheme'}, 'https', 'ALB https: psgi.url_scheme';
+    is $env->{HTTPS}, 'ON', 'ALB https: HTTPS';
+    is $env->{SERVER_PORT}, 443, 'ALB https: SERVER_PORT';
+    is(Plack::Request->new($env)->base->as_string, "https://$host/", 'ALB https: base url');
+
+    # Lambda Function URLs accept only HTTPS.
+    $input = slurp_json("testdata/function-urls-get-request.json");
+    $host = $input->{headers}{host};
+    $input->{headers}{'x_forwarded_proto'} = 'http';
+    $input->{headers}{'x_forwarded_port'} = '80';
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'Function URLs: status code';
+    is $env->{'psgi.url_scheme'}, 'https', 'Function URLs: psgi.url_scheme';
+    is $env->{HTTPS}, 'ON', 'Function URLs: HTTPS';
+    is $env->{SERVER_PORT}, 443, 'Function URLs: SERVER_PORT';
+    is(Plack::Request->new($env)->base->as_string, "https://$host/", 'Function URLs: base url');
+};
+
+
 # X-Forwarded-Host, X-Forwarded-Server and X-Forwarded-HTTPS are not set by the AWS front ends.
 # They come from the client, so wrap must not let them rewrite the host, the port or the scheme.
 subtest "wrap ignores client supplied forwarded host headers" => sub {
@@ -354,8 +502,7 @@ subtest "wrap ignores client supplied forwarded host headers" => sub {
     is $res->{statusCode}, 200, 'status code';
     is $env->{HTTP_HOST}, $host, 'host is not rewritten';
     is $env->{SERVER_PORT}, 443, 'port is not rewritten';
-    is $env->{'psgi.url_scheme'}, 'https', 'scheme from X-Forwarded-Proto';
-    is $env->{REMOTE_ADDR}, '192.0.2.1', 'remote address from X-Forwarded-For';
+    is $env->{'psgi.url_scheme'}, 'https', 'scheme';
     is $env->{HTTP_X_FORWARDED_HOST}, '203.0.113.1:8443', 'the app still sees X-Forwarded-Host';
     is $env->{HTTP_X_FORWARDED_SERVER}, '203.0.113.2:8443', 'the app still sees X-Forwarded-Server';
     is $env->{HTTP_X_FORWARDED_HTTPS}, 'ON', 'the app still sees X-Forwarded-HTTPS';
@@ -372,15 +519,24 @@ subtest "wrap ignores client supplied forwarded host headers" => sub {
     is $res->{statusCode}, 200, 'status code';
     is $env->{HTTP_HOST}, $host, 'host is not rewritten';
     ok !$env->{HTTPS}, 'HTTPS is not set';
-    isnt $env->{'psgi.url_scheme'}, 'https', 'scheme is not https';
+    is $env->{'psgi.url_scheme'}, 'http', 'scheme is http';
     is $env->{SERVER_PORT}, 80, 'port is not rewritten';
+};
 
-    # requests without these headers do not get them.
-    $input = slurp_json("testdata/function-urls-get-request.json");
-    $res = $func->($input);
+# The port comes from X-Forwarded-Port that ALB sets, not from the Host header.
+subtest "wrap takes the ALB listener port from X-Forwarded-Port" => sub {
+    my $env;
+    my $func = AWS::Lambda::PSGI->wrap(sub {
+        $env = { %{$_[0]} };
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    }, invoke_mode => 'BUFFERED');
+
+    my $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['8443'];
+    my $res = $func->($input);
     is $res->{statusCode}, 200, 'status code';
-    ok !exists $env->{$_}, "no $_"
-        for qw(HTTP_X_FORWARDED_HOST HTTP_X_FORWARDED_SERVER HTTP_X_FORWARDED_HTTPS);
+    is $env->{SERVER_PORT}, 8443, 'SERVER_PORT';
+    is $env->{'psgi.url_scheme'}, 'https', 'scheme';
 };
 
 done_testing;
