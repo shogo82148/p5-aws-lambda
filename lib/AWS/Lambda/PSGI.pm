@@ -49,19 +49,29 @@ sub to_app {
     return sub { $self->call(@_) };
 }
 
+# format_input sets REMOTE_ADDR, psgi.url_scheme and SERVER_PORT from the event
+# in place of these headers.
+my @HIDDEN_FORWARDED_HEADERS = qw(
+    HTTP_X_FORWARDED_FOR
+    HTTP_X_FORWARDED_PROTO
+    HTTP_X_FORWARDED_PORT
+);
+
 sub wrap {
     my($self, $app, @args) = @_;
 
     # Lambda function runs as reverse proxy backend.
     # So, we always enable ReverseProxy middleware.
-    # However, format_input has already set REMOTE_ADDR from the Lambda event,
-    # so X-Forwarded-For is hidden from ReverseProxy, so that a client cannot overwrite REMOTE_ADDR with it,
-    # and it is handed back to the app unchanged.
+    # However, format_input has already set REMOTE_ADDR, psgi.url_scheme and SERVER_PORT from the Lambda event.
+    # Header names are normalised ("x_forwarded_proto" and "X-Forwarded-Proto" are both HTTP_X_FORWARDED_PROTO),
+    # so a client can put its own value into these keys.
+    # They are hidden from ReverseProxy, so that a client cannot overwrite the values above,
+    # and they are handed back to the app unchanged.
     my $orig = $app;
     $app = sub {
         my $env = shift;
         my %hidden = map { $_ => delete $env->{$_} }
-            grep { exists $env->{$_} } qw(HTTP_X_FORWARDED_FOR);
+            grep { exists $env->{$_} } @HIDDEN_FORWARDED_HEADERS;
         my $proxy = Plack::Middleware::ReverseProxy->wrap(sub {
             my $env = shift;
             @$env{keys %hidden} = values %hidden;
@@ -206,6 +216,7 @@ sub _format_input_v1 {
         }
         my $proto = _last_header_value($payload, 'x-forwarded-proto') // '';
         $env->{'psgi.url_scheme'} = lc $proto eq 'https' ? 'https' : 'http';
+        $env->{HTTPS} = 'ON' if $env->{'psgi.url_scheme'} eq 'https';
         my $port = _last_header_value($payload, 'x-forwarded-port') // '';
         $env->{SERVER_PORT} = $port =~ /^\s*([0-9]+)\s*$/ ? $1
             : $env->{'psgi.url_scheme'} eq 'https' ? 443 : 80;
@@ -216,6 +227,7 @@ sub _format_input_v1 {
             $env->{REMOTE_ADDR} = $source_ip;
         }
         $env->{'psgi.url_scheme'} = 'https';
+        $env->{HTTPS} = 'ON';
         $env->{SERVER_PORT} = 443;
     }
 
@@ -294,6 +306,7 @@ sub _format_input_v2 {
         $env->{REMOTE_ADDR} = $source_ip;
     }
     $env->{'psgi.url_scheme'} = 'https';
+    $env->{HTTPS} = 'ON';
     $env->{SERVER_PORT} = 443;
     return $env;
 }
@@ -517,13 +530,8 @@ This address is the client's only while the load balancer appends to C<X-Forward
 which is the default of the C<routing.http.xff_header_processing.mode> attribute.
 In the C<preserve> mode the client can set it to any value,
 and in the C<remove> mode C<REMOTE_ADDR> is not set.
-C<psgi.url_scheme> and C<SERVER_PORT> come from the C<X-Forwarded-Proto> and C<X-Forwarded-Port> headers.
 
 =back
-
-C<wrap> still enables L<Plack::Middleware::ReverseProxy>, but hides C<X-Forwarded-For> from it,
-so that the address above is not overwritten by a value that the client sent.
-The app still receives C<X-Forwarded-For> as a request header.
 
 This is a change from the earlier versions, which took C<REMOTE_ADDR> from the last address in C<X-Forwarded-For>.
 If another proxy, such as Amazon CloudFront, is in front of API Gateway or Lambda Function URLs,
@@ -531,6 +539,30 @@ C<sourceIp> is the address of that proxy, not the viewer's.
 If you trust that proxy and want the viewer's address,
 take it from C<X-Forwarded-For> in your app,
 for example with L<Plack::Middleware::ReverseProxy> or L<Plack::Middleware::XForwardedFor> and the proxy's addresses.
+
+=head2 URL Scheme and Port
+
+L<AWS::Lambda::PSGI> sets C<psgi.url_scheme>, C<HTTPS> and C<SERVER_PORT> from the Lambda event.
+
+=over 4
+
+=item API Gateway and Lambda Function URLs
+
+They accept only HTTPS, so C<psgi.url_scheme> is C<https>, C<HTTPS> is C<ON> and C<SERVER_PORT> is C<443>.
+
+=item Application Load Balancer
+
+They come from the headers named exactly C<X-Forwarded-Proto> and C<X-Forwarded-Port> that the load balancer sets.
+A header such as C<X_Forwarded_Proto> is not used.
+
+=back
+
+=head2 Reverse Proxy
+
+C<wrap> still enables L<Plack::Middleware::ReverseProxy>,
+but hides C<X-Forwarded-For>, C<X-Forwarded-Proto> and C<X-Forwarded-Port> from it,
+so that the values above are not overwritten by values that the client sent.
+The app still receives these headers as request headers.
 
 =head1 LICENSE
 
