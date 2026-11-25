@@ -24,8 +24,12 @@ esac
 
 cd /opt
 unzip "/var/task/.perl-layer/dist/perl-$TAG-runtime-al2023-$ARCH.zip"
-# fetch Paws and its dependencies only from the HTTPS CPAN mirror
-/opt/bin/cpanm --notest --no-man-pages --from https://www.cpan.org "$PAWS_AUTHOR/Paws-$PAWS_VERSION.tar.gz"
+# fetch Paws and its dependencies only from the HTTPS CPAN mirror.
+# if the pinned release has been removed from CPAN, fetch it from HTTPS BackPAN instead
+# (dependencies still come from the HTTPS CPAN mirror).
+PAWS_DIST_PATH="${PAWS_AUTHOR:0:1}/${PAWS_AUTHOR:0:2}/$PAWS_AUTHOR/Paws-$PAWS_VERSION.tar.gz"
+/opt/bin/cpanm --notest --no-man-pages --from https://www.cpan.org "$PAWS_AUTHOR/Paws-$PAWS_VERSION.tar.gz" \
+  || /opt/bin/cpanm --notest --no-man-pages --from https://www.cpan.org "https://backpan.perl.org/authors/id/$PAWS_DIST_PATH"
 
 # remove pods
 find /opt/lib/perl5/site_perl -type f -a -name '*.pod' -delete

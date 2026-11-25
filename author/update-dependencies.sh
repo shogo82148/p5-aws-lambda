@@ -10,6 +10,10 @@ function update {
     FILE_NAME=$3
     FIELD=${4:-version}
     VERSION=$(curl -sSL "https://fastapi.metacpan.org/v1/release/$MODULE" | jq -r ".$FIELD")
+    if [ -z "$VERSION" ] || [ "$VERSION" = "null" ]; then
+        echo "failed to get $FIELD for $MODULE" >&2
+        exit 1
+    fi
 
     echo "update $MODULE $VERSION_NAME $FILE_NAME $VERSION"
 
