@@ -49,12 +49,35 @@ sub to_app {
     return sub { $self->call(@_) };
 }
 
+# The AWS front ends (API Gateway, ALB and Function URLs) set X-Forwarded-For,
+# X-Forwarded-Port and X-Forwarded-Proto, but none of them sets the following headers.
+# Their values come from the client as is, so ReverseProxy must not trust them.
+my @UNTRUSTED_FORWARDED_HEADERS = qw(
+    HTTP_X_FORWARDED_HOST
+    HTTP_X_FORWARDED_SERVER
+    HTTP_X_FORWARDED_HTTPS
+);
+
 sub wrap {
     my($self, $app, @args) = @_;
 
     # Lambda function runs as reverse proxy backend.
     # So, we always enable ReverseProxy middleware.
-    $app = Plack::Middleware::ReverseProxy->wrap($app);
+    # The untrusted headers are hidden from ReverseProxy, so that a client cannot
+    # rewrite HTTP_HOST, SERVER_PORT or the URL scheme with them,
+    # and they are handed back to the app unchanged.
+    my $orig = $app;
+    $app = sub {
+        my $env = shift;
+        my %hidden = map { $_ => delete $env->{$_} }
+            grep { exists $env->{$_} } @UNTRUSTED_FORWARDED_HEADERS;
+        my $proxy = Plack::Middleware::ReverseProxy->wrap(sub {
+            my $env = shift;
+            @$env{keys %hidden} = values %hidden;
+            return $orig->($env);
+        });
+        return $proxy->($env);
+    };
 
     if (ref $self) {
         $self->{app} = $app;
@@ -430,6 +453,15 @@ An application MAY omit the third element (the body) when calling the responder.
 L<AWS::Lambda::PSGI> injects the request id that compatible with L<Plack::Middleware::RequestId>.
 
     env->{'psgix.request_id'} # It is same value with $context->aws_request_id
+
+=head2 Reverse Proxy
+
+C<wrap> enables L<Plack::Middleware::ReverseProxy> for the headers that the AWS front ends set:
+C<X-Forwarded-For>, C<X-Forwarded-Port> and C<X-Forwarded-Proto>.
+C<X-Forwarded-Host>, C<X-Forwarded-Server> and C<X-Forwarded-HTTPS> come from the client as is,
+so they do not change C<HTTP_HOST>, C<SERVER_PORT> or C<psgi.url_scheme>.
+The app still receives them as request headers.
+If a proxy that you trust sets them, enable L<Plack::Middleware::ReverseProxy> in your own app.
 
 =head1 LICENSE
 
