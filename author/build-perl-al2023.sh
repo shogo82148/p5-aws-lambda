@@ -2,7 +2,7 @@
 # helper script for build-perl-runtime-al2023.sh
 # you should not run this script directly.
 
-set -uex
+set -ueox pipefail
 
 PERL_VERSION=$1
 
@@ -19,6 +19,12 @@ YAML_XS_VERSION=v0.910.0
 IO_SOCKET_SSL_VERSION=2.099
 MOZILLA_CA_VERSION=20261105
 LOCAL_LIB_VERSION=2.000029
+
+# cpanm is taken from this App-cpanminus release and checked against CPANM_SHA256 before it runs.
+# author/update-dependencies.sh updates these three together.
+CPANM_VERSION=1.7049
+CPANM_AUTHOR=MIYAGAWA
+CPANM_SHA256=b9ffb88e62a06aa91bd7d5a28ef6bdbb942608aea90e3969aa29b33640035214
 
 
 # build-provided.al2023 lacks some development packages
@@ -43,7 +49,14 @@ export PERL_MB_OPT="--installdirs=vendor --ccflags=-I/opt/include --lddlflags=-L
 export PERL_MM_USE_DEFAULT=1
 
 # install pre-installed modules
-curl -fsSL --compressed http://cpanmin.us | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpanm
+# cpanm installs everything below into the layer, so fetch a pinned release over HTTPS only
+# (no redirect to plain HTTP) and verify its SHA-256 before using it.
+CPANM_TARBALL="App-cpanminus-$CPANM_VERSION.tar.gz"
+curl --proto '=https' --proto-redir '=https' -fsSL -o "/tmp/$CPANM_TARBALL" \
+    "https://www.cpan.org/authors/id/${CPANM_AUTHOR:0:1}/${CPANM_AUTHOR:0:2}/$CPANM_AUTHOR/$CPANM_TARBALL"
+echo "$CPANM_SHA256  /tmp/$CPANM_TARBALL" | sha256sum -c -
+tar -xzf "/tmp/$CPANM_TARBALL" -C /tmp "App-cpanminus-$CPANM_VERSION/bin/cpanm"
+perl -pe 's(^#!.*perl$)(#!/opt/bin/perl)' "/tmp/App-cpanminus-$CPANM_VERSION/bin/cpanm" > /tmp/cpanm
 install /tmp/cpanm /opt/bin/cpanm
 curl -fsSL --compressed https://raw.githubusercontent.com/skaji/cpm/main/cpm | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpm
 install /tmp/cpm /opt/bin/cpm
