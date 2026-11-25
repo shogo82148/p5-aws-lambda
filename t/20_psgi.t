@@ -483,4 +483,60 @@ subtest "wrap takes the scheme and the port from the event, not from forged X-Fo
     is(Plack::Request->new($env)->base->as_string, "https://$host/", 'Function URLs: base url');
 };
 
+
+# X-Forwarded-Host, X-Forwarded-Server and X-Forwarded-HTTPS are not set by the AWS front ends.
+# They come from the client, so wrap must not let them rewrite the host, the port or the scheme.
+subtest "wrap ignores client supplied forwarded host headers" => sub {
+    my $env;
+    my $func = AWS::Lambda::PSGI->wrap(sub {
+        $env = { %{$_[0]} };
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    }, invoke_mode => 'BUFFERED');
+
+    my $input = slurp_json("testdata/function-urls-get-request.json");
+    my $host = $input->{headers}{host};
+    $input->{headers}{'x-forwarded-host'} = '203.0.113.1:8443';
+    $input->{headers}{'x-forwarded-server'} = '203.0.113.2:8443';
+    $input->{headers}{'x-forwarded-https'} = 'ON';
+    my $res = $func->($input);
+    is $res->{statusCode}, 200, 'status code';
+    is $env->{HTTP_HOST}, $host, 'host is not rewritten';
+    is $env->{SERVER_PORT}, 443, 'port is not rewritten';
+    is $env->{'psgi.url_scheme'}, 'https', 'scheme';
+    is $env->{HTTP_X_FORWARDED_HOST}, '203.0.113.1:8443', 'the app still sees X-Forwarded-Host';
+    is $env->{HTTP_X_FORWARDED_SERVER}, '203.0.113.2:8443', 'the app still sees X-Forwarded-Server';
+    is $env->{HTTP_X_FORWARDED_HTTPS}, 'ON', 'the app still sees X-Forwarded-HTTPS';
+    is(Plack::Request->new($env)->base->as_string, "https://$host/", 'base url');
+
+    # X-Forwarded-HTTPS does not upgrade a plain HTTP request.
+    $input = slurp_json("testdata/alb-get-request.json");
+    $host = $input->{multiValueHeaders}{host}[0];
+    $input->{multiValueHeaders}{'x-forwarded-proto'} = ['http'];
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['80'];
+    $input->{multiValueHeaders}{'x-forwarded-https'} = ['ON'];
+    $input->{multiValueHeaders}{'x-forwarded-host'} = ['203.0.113.1'];
+    $res = $func->($input);
+    is $res->{statusCode}, 200, 'status code';
+    is $env->{HTTP_HOST}, $host, 'host is not rewritten';
+    ok !$env->{HTTPS}, 'HTTPS is not set';
+    is $env->{'psgi.url_scheme'}, 'http', 'scheme is http';
+    is $env->{SERVER_PORT}, 80, 'port is not rewritten';
+};
+
+# The port comes from X-Forwarded-Port that ALB sets, not from the Host header.
+subtest "wrap takes the ALB listener port from X-Forwarded-Port" => sub {
+    my $env;
+    my $func = AWS::Lambda::PSGI->wrap(sub {
+        $env = { %{$_[0]} };
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    }, invoke_mode => 'BUFFERED');
+
+    my $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x-forwarded-port'} = ['8443'];
+    my $res = $func->($input);
+    is $res->{statusCode}, 200, 'status code';
+    is $env->{SERVER_PORT}, 8443, 'SERVER_PORT';
+    is $env->{'psgi.url_scheme'}, 'https', 'scheme';
+};
+
 done_testing;
