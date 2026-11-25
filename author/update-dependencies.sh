@@ -8,7 +8,8 @@ function update {
     MODULE=$1
     VERSION_NAME=$2
     FILE_NAME=$3
-    VERSION=$(curl -sSL "https://fastapi.metacpan.org/v1/release/$MODULE" | jq -r '.version')
+    FIELD=${4:-version}
+    VERSION=$(curl -sSL "https://fastapi.metacpan.org/v1/release/$MODULE" | jq -r ".$FIELD")
 
     echo "update $MODULE $VERSION_NAME $FILE_NAME $VERSION"
 
@@ -49,3 +50,4 @@ update Mozilla-CA MOZILLA_CA_VERSION build-perl-al2023.sh
 update local-lib LOCAL_LIB_VERSION build-perl-al2023.sh
 
 update Paws PAWS_VERSION build-paws-al2023.sh
+update Paws PAWS_AUTHOR build-paws-al2023.sh author
