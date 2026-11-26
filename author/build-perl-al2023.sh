@@ -7,7 +7,12 @@ set -uex
 PERL_VERSION=$1
 
 NET_SSLEAY_VERSION=1.96
-CARTON_VERSION=v1.0.35
+# cpanm, carton and cpm patched to avoid insecure (plain HTTP) connections.
+# https://github.com/shogo82148/actions-setup-perl/tree/main/bin
+ACTIONS_SETUP_PERL_COMMIT=b45a6f48c90b0367842227f88a22400a9045794c
+CPANM_SHA256=d49f75b12a2791241474c9635d666dd983ab2ca631a722e5150cbc6a142b931e
+CARTON_SHA256=baf3f381cd151f64789e042723ac97b9393c9609850c36e4946cc0e956d03f04
+CPM_SHA256=100c72a0662e835cc0d2fde99cea7fda8bd28f649ec43312f2f36d3c9e211ac6
 AWS_XRAY_VERSION=0.12
 JSON_VERSION=4.11
 JSON_XS_VERSION=4.06
@@ -43,16 +48,22 @@ export PERL_MB_OPT="--installdirs=vendor --ccflags=-I/opt/include --lddlflags=-L
 export PERL_MM_USE_DEFAULT=1
 
 # install pre-installed modules
-curl -fsSL --compressed http://cpanmin.us | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpanm
-install /tmp/cpanm /opt/bin/cpanm
-curl -fsSL --compressed https://raw.githubusercontent.com/skaji/cpm/main/cpm | perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' > /tmp/cpm
-install /tmp/cpm /opt/bin/cpm
+# use the patched versions of cpanm, carton and cpm.
+for SCRIPT in cpanm carton cpm; do
+    curl -fsSL -o "/tmp/$SCRIPT" "https://raw.githubusercontent.com/shogo82148/actions-setup-perl/$ACTIONS_SETUP_PERL_COMMIT/bin/$SCRIPT"
+done
+echo "$CPANM_SHA256  /tmp/cpanm" | sha256sum -c -
+echo "$CARTON_SHA256  /tmp/carton" | sha256sum -c -
+echo "$CPM_SHA256  /tmp/cpm" | sha256sum -c -
+for SCRIPT in cpanm carton cpm; do
+    perl -i -pe 's(^#!.*perl$)(#!/opt/bin/perl)' "/tmp/$SCRIPT"
+    install "/tmp/$SCRIPT" "/opt/bin/$SCRIPT"
+done
 
 # Net::SSLeay needs special CCFLAGS and LIBS to link
 PERL_MM_OPT="INSTALLDIRS=vendor INSTALLMAN1DIR=none INSTALLMAN3DIR=none" /opt/bin/cpanm --notest "Net::SSLeay@$NET_SSLEAY_VERSION"
 
 /opt/bin/cpanm --notest \
-    "Carton@$CARTON_VERSION" \
     "AWS::XRay@$AWS_XRAY_VERSION" \
     "JSON@$JSON_VERSION" \
     "Cpanel::JSON::XS@$CPANEL_JSON_XS_VERSION" \
