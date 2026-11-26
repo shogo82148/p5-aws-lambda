@@ -104,4 +104,36 @@ subtest "streaming response" => sub {
     is $body, "hello", "body";
 };
 
+subtest "allowed_hosts in RESPONSE_STREAM mode" => sub {
+    my $called = 0;
+    my $func = AWS::Lambda::PSGI->wrap(sub {
+        $called = 1;
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    }, invoke_mode => 'RESPONSE_STREAM', allowed_hosts => ['example.com']);
+
+    my $run = sub {
+        my $input = shift;
+        my $buf = "";
+        my $res = $func->($input);
+        $res->(sub {
+            open my $fh, ">", \$buf or die "failed to open: $!";
+            return $fh;
+        });
+        my ($prelude, $body) = split /\x00\x00\x00\x00\x00\x00\x00\x00/, $buf;
+        return (decode_json($prelude)->{statusCode}, $body);
+    };
+
+    my $input = slurp_json("testdata/function-urls-get-request.json");
+    my ($status, $body) = $run->($input);
+    is $status, 400, 'other host is rejected';
+    is $body, 'Bad Request', 'body';
+    ok !$called, 'the app is not called';
+
+    $input->{headers}{host} = 'example.com';
+    ($status, $body) = $run->($input);
+    is $status, 200, 'allowed host';
+    is $body, 'ok', 'body';
+    ok $called, 'the app is called';
+};
+
 done_testing;
