@@ -55,8 +55,7 @@ sub wrap {
     # but Plack::Middleware::ReverseProxy is not enabled here.
     # format_input sets REMOTE_ADDR, psgi.url_scheme, HTTPS and SERVER_PORT from the Lambda event.
     # The X-Forwarded-* headers that ReverseProxy reads are not trustworthy:
-    # header names are normalised ("x_forwarded_for" and "X-Forwarded-For" are both HTTP_X_FORWARDED_FOR),
-    # and the AWS front ends do not set X-Forwarded-Host, X-Forwarded-Server and X-Forwarded-HTTPS at all.
+    # the AWS front ends do not set X-Forwarded-Host, X-Forwarded-Server and X-Forwarded-HTTPS at all.
 
     if (ref $self) {
         $self->{app} = $app;
@@ -133,6 +132,7 @@ sub _format_input_v1 {
         %{$payload->{multiValueHeaders} // {}},
     };
     while (my ($key, $value) = each %$headers) {
+        next if _has_underscore($key);
         $key =~ s/-/_/g;
         $key = uc $key;
         if ($key !~ /^(?:CONTENT_LENGTH|CONTENT_TYPE)$/) {
@@ -212,6 +212,14 @@ sub _format_input_v1 {
     return $env;
 }
 
+# Header names that contain "_" are dropped, as Apache httpd and nginx do by default.
+# "-" becomes "_" in the PSGI env, so a client could send "X_Forwarded_For" or "x_amzn_oidc_identity"
+# and overwrite "X-Forwarded-For" or "x-amzn-oidc-identity" that the AWS front end sets.
+sub _has_underscore {
+    my $key = shift;
+    return index($key, '_') >= 0;
+}
+
 # returns the last value of the header $name in the payload.
 # $name must be lower case, and it is compared with the header names as is,
 # i.e. "x_forwarded_for" does not match "x-forwarded-for".
@@ -238,6 +246,7 @@ sub _format_input_v2 {
 
     my $headers = $payload->{headers} // {};
     while (my ($key, $value) = each %$headers) {
+        next if _has_underscore($key);
         $key =~ s/-/_/g;
         $key = uc $key;
         if ($key !~ /^(?:CONTENT_LENGTH|CONTENT_TYPE)$/) {
@@ -484,6 +493,17 @@ An application MAY omit the third element (the body) when calling the responder.
 L<AWS::Lambda::PSGI> injects the request id that compatible with L<Plack::Middleware::RequestId>.
 
     env->{'psgix.request_id'} # It is same value with $context->aws_request_id
+
+=head2 Request Headers
+
+Request headers whose names contain an underscore (C<_>), such as C<X_Forwarded_For>, are dropped,
+as Apache httpd and nginx do by default.
+In the PSGI environment C<-> in header names becomes C<_>,
+so C<X_Forwarded_For> and C<X-Forwarded-For> would both be C<HTTP_X_FORWARDED_FOR>,
+and a client could overwrite a header that the AWS front end sets,
+such as C<X-Forwarded-For> or C<X-Amzn-Oidc-Identity> of Application Load Balancer.
+This is a change from the earlier versions, which passed these headers to the app.
+Use C<-> instead of C<_> in the names of your own headers.
 
 =head2 Remote Address
 

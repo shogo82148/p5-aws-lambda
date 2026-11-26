@@ -382,7 +382,7 @@ subtest "wrap takes REMOTE_ADDR from the event, not from forged X-Forwarded-For"
     my $res = $func->($input);
     is $res->{statusCode}, 200, 'REST: status code';
     is $env->{REMOTE_ADDR}, '192.0.2.1', 'REST: REMOTE_ADDR is sourceIp';
-    like $env->{HTTP_X_FORWARDED_FOR}, qr/^203\.0\.113\.[12]$/, 'REST: the app still sees X-Forwarded-For';
+    is $env->{HTTP_X_FORWARDED_FOR}, '203.0.113.1', 'REST: the app sees X-Forwarded-For, not X_Forwarded_For';
     is $env->{'psgi.url_scheme'}, 'https', 'REST: psgi.url_scheme';
     is $env->{SERVER_PORT}, 443, 'REST: SERVER_PORT';
 
@@ -393,7 +393,7 @@ subtest "wrap takes REMOTE_ADDR from the event, not from forged X-Forwarded-For"
     $res = $func->($input);
     is $res->{statusCode}, 200, 'Function URLs: status code';
     is $env->{REMOTE_ADDR}, '192.0.2.1', 'Function URLs: REMOTE_ADDR is sourceIp';
-    like $env->{HTTP_X_FORWARDED_FOR}, qr/^203\.0\.113\.[12]$/, 'Function URLs: the app still sees X-Forwarded-For';
+    is $env->{HTTP_X_FORWARDED_FOR}, '203.0.113.1', 'Function URLs: the app sees X-Forwarded-For, not X_Forwarded_For';
 
     # API Gateway HTTP API without X-Forwarded-For
     $input = slurp_json("testdata/apigateway-v2-get-request.json");
@@ -420,7 +420,7 @@ subtest "wrap takes REMOTE_ADDR from the event, not from forged X-Forwarded-For"
     $res = $func->($input);
     is $res->{statusCode}, 200, 'ALB without X-Forwarded-For: status code';
     ok !defined $env->{REMOTE_ADDR}, 'ALB without X-Forwarded-For: REMOTE_ADDR is not forged';
-    is $env->{HTTP_X_FORWARDED_FOR}, '203.0.113.2', 'ALB without X-Forwarded-For: the app still sees the header';
+    ok !exists $env->{HTTP_X_FORWARDED_FOR}, 'ALB without X-Forwarded-For: X_Forwarded_For is dropped';
 };
 
 
@@ -446,8 +446,8 @@ subtest "wrap takes the scheme and the port from the event, not from forged X-Fo
     ok !$env->{HTTPS}, 'ALB http: HTTPS is not set';
     is $env->{SERVER_PORT}, 80, 'ALB http: SERVER_PORT';
     is(Plack::Request->new($env)->base->as_string, "http://$host/", 'ALB http: base url');
-    like $env->{HTTP_X_FORWARDED_PROTO}, qr/^https?$/, 'ALB http: the app still sees X-Forwarded-Proto';
-    like $env->{HTTP_X_FORWARDED_PORT}, qr/^(?:80|443)$/, 'ALB http: the app still sees X-Forwarded-Port';
+    is $env->{HTTP_X_FORWARDED_PROTO}, 'http', 'ALB http: the app sees X-Forwarded-Proto, not X_Forwarded_Proto';
+    is $env->{HTTP_X_FORWARDED_PORT}, '80', 'ALB http: the app sees X-Forwarded-Port, not X_Forwarded_Port';
 
     # only the forged header, without X-Forwarded-Proto
     $input = slurp_json("testdata/alb-get-request.json");
@@ -458,7 +458,7 @@ subtest "wrap takes the scheme and the port from the event, not from forged X-Fo
     is $res->{statusCode}, 200, 'ALB http, forged header only: status code';
     is $env->{'psgi.url_scheme'}, 'http', 'ALB http, forged header only: psgi.url_scheme';
     ok !$env->{HTTPS}, 'ALB http, forged header only: HTTPS is not set';
-    is $env->{HTTP_X_FORWARDED_PROTO}, 'https', 'ALB http, forged header only: the app still sees the header';
+    ok !exists $env->{HTTP_X_FORWARDED_PROTO}, 'ALB http, forged header only: X_Forwarded_Proto is dropped';
 
     # ALB on an HTTPS listener
     $input = slurp_json("testdata/alb-get-request.json");
@@ -537,6 +537,59 @@ subtest "wrap takes the ALB listener port from X-Forwarded-Port" => sub {
     is $res->{statusCode}, 200, 'status code';
     is $env->{SERVER_PORT}, 8443, 'SERVER_PORT';
     is $env->{'psgi.url_scheme'}, 'https', 'scheme';
+};
+
+# "-" becomes "_" in the PSGI env, so a header such as "x_amzn_oidc_identity" could overwrite
+# "x-amzn-oidc-identity" that the front end sets. Header names with underscores are dropped.
+subtest "headers whose names contain an underscore are dropped" => sub {
+    # API Gateway REST API (headers and multiValueHeaders)
+    my $input = slurp_json("testdata/apigateway-get-request.json");
+    $input->{headers}{'X-Amzn-Oidc-Identity'} = 'alice';
+    $input->{multiValueHeaders}{'X-Amzn-Oidc-Identity'} = ['alice'];
+    for my $name (qw(x_amzn_oidc_identity X_Amzn-Oidc-Identity X-Amzn_Oidc-Identity)) {
+        $input->{headers}{$name} = 'mallory';
+        $input->{multiValueHeaders}{$name} = ['mallory'];
+    }
+    $input->{headers}{'content_type'} = 'text/x-forged';
+    $input->{multiValueHeaders}{'content_type'} = ['text/x-forged'];
+    $input->{headers}{'X_Custom'} = 'value';
+    $input->{multiValueHeaders}{'X_Custom'} = ['value'];
+    for (1..20) {
+        my $env = $app->format_input($input);
+        is $env->{HTTP_X_AMZN_OIDC_IDENTITY}, 'alice', 'REST: the header that the front end sets wins';
+    }
+    my $env = $app->format_input($input);
+    ok !exists $env->{CONTENT_TYPE}, 'REST: content_type is dropped';
+    ok !exists $env->{HTTP_X_CUSTOM}, 'REST: X_Custom is dropped';
+    is $env->{HTTP_HEADER_NAME}, 'Value1, Value2', 'REST: other headers are kept';
+
+    # ALB (multiValueHeaders only)
+    $input = slurp_json("testdata/alb-get-request.json");
+    $input->{multiValueHeaders}{'x-amzn-oidc-identity'} = ['alice'];
+    $input->{multiValueHeaders}{'x_amzn_oidc_identity'} = ['mallory'];
+    for (1..20) {
+        $env = $app->format_input($input);
+        is $env->{HTTP_X_AMZN_OIDC_IDENTITY}, 'alice', 'ALB: the header that the front end sets wins';
+    }
+
+    # ALB that did not authenticate the request: the forged header must not appear at all.
+    delete $input->{multiValueHeaders}{'x-amzn-oidc-identity'};
+    $env = $app->format_input($input);
+    ok !exists $env->{HTTP_X_AMZN_OIDC_IDENTITY}, 'ALB: x_amzn_oidc_identity alone is dropped';
+
+    # API Gateway HTTP API and Lambda Function URLs
+    for my $file (qw(apigateway-v2-get-request.json function-urls-get-request.json)) {
+        $input = slurp_json("testdata/$file");
+        $input->{headers}{'x-amzn-oidc-identity'} = 'alice';
+        $input->{headers}{'x_amzn_oidc_identity'} = 'mallory';
+        $input->{headers}{'x_custom'} = 'value';
+        for (1..20) {
+            $env = $app->format_input($input);
+            is $env->{HTTP_X_AMZN_OIDC_IDENTITY}, 'alice', "$file: the header that the front end sets wins";
+        }
+        ok !exists $env->{HTTP_X_CUSTOM}, "$file: x_custom is dropped";
+        is $env->{HTTP_HOST}, $input->{headers}{host}, "$file: other headers are kept";
+    }
 };
 
 done_testing;
