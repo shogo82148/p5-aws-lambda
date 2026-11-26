@@ -592,4 +592,96 @@ subtest "headers whose names contain an underscore are dropped" => sub {
     }
 };
 
+# ALB passes the Host header that the client sends as is.
+# With allowed_hosts, a request for another host gets 400 and the app is not called.
+subtest "allowed_hosts" => sub {
+    my $called;
+    my $app = sub {
+        $called = 1;
+        return [200, ['Content-Type' => 'text/plain'], ['ok']];
+    };
+    my $func = AWS::Lambda::PSGI->wrap($app, invoke_mode => 'BUFFERED', allowed_hosts => ['example.com', '.example.net']);
+
+    my $request = sub {
+        my $host = shift;
+        my $input = slurp_json("testdata/alb-get-request.json");
+        if (defined $host) {
+            $input->{multiValueHeaders}{host} = ref $host ? $host : [$host];
+        } else {
+            delete $input->{multiValueHeaders}{host};
+        }
+        $called = 0;
+        return $func->($input);
+    };
+
+    for my $host ('example.com', 'EXAMPLE.com', 'example.com:8443', 'example.com.',
+                  'example.net', 'www.example.net', 'a.b.example.net:443') {
+        my $res = $request->($host);
+        is $res->{statusCode}, 200, "$host is allowed";
+        ok $called, "$host: the app is called";
+    }
+    for my $host ('evil.example', 'www.example.com', 'example.com.evil.example', 'evilexample.net',
+                  'example.net.evil.example', 'example.com@evil.example', 'example.com/evil', 'example.com:',
+                  'example.com:abc', '', ['example.com', 'evil.example'], undef) {
+        my $name = !defined $host ? 'no Host header' : ref $host ? join(', ', @$host) : "'$host'";
+        my $res = $request->($host);
+        is $res->{statusCode}, 400, "$name is rejected";
+        ok !$called, "$name: the app is not called";
+    }
+
+    # API Gateway and Lambda Function URLs are checked too.
+    my $input = slurp_json("testdata/function-urls-get-request.json");
+    $called = 0;
+    is $func->($input)->{statusCode}, 400, 'Function URLs: the default host is not allowed';
+    ok !$called, 'Function URLs: the app is not called';
+    $input->{headers}{host} = 'www.example.net';
+    is $func->($input)->{statusCode}, 200, 'Function URLs: allowed host';
+
+    $input = slurp_json("testdata/apigateway-get-request.json");
+    $input->{headers}{Host} = 'example.com';
+    $input->{multiValueHeaders}{Host} = ['example.com'];
+    is $func->($input)->{statusCode}, 200, 'REST: allowed host';
+    $input->{headers}{Host} = 'evil.example';
+    $input->{multiValueHeaders}{Host} = ['evil.example'];
+    is $func->($input)->{statusCode}, 400, 'REST: other host is rejected';
+
+    # IPv6 address
+    $func = AWS::Lambda::PSGI->wrap($app, invoke_mode => 'BUFFERED', allowed_hosts => ['[2001:db8::1]']);
+    is $request->('[2001:db8::1]:8080')->{statusCode}, 200, 'IPv6 address with port';
+    is $request->('[2001:db8::2]')->{statusCode}, 400, 'other IPv6 address';
+};
+
+subtest "allowed_hosts from the environment variable" => sub {
+    my $app = sub { return [200, ['Content-Type' => 'text/plain'], ['ok']] };
+    my $input = slurp_json("testdata/alb-get-request.json");
+
+    {
+        local $ENV{PERL5_LAMBDA_PSGI_ALLOWED_HOSTS} = ' Example.com , .example.net ';
+        my $func = AWS::Lambda::PSGI->wrap($app, invoke_mode => 'BUFFERED');
+        $input->{multiValueHeaders}{host} = ['www.example.net'];
+        is $func->($input)->{statusCode}, 200, 'allowed host';
+        $input->{multiValueHeaders}{host} = ['example.com'];
+        is $func->($input)->{statusCode}, 200, 'allowed host, compared case-insensitively';
+        $input->{multiValueHeaders}{host} = ['evil.example'];
+        is $func->($input)->{statusCode}, 400, 'other host is rejected';
+
+        # the option takes precedence over the environment variable.
+        $func = AWS::Lambda::PSGI->wrap($app, invoke_mode => 'BUFFERED', allowed_hosts => 'evil.example');
+        is $func->($input)->{statusCode}, 200, 'the option wins';
+    }
+
+    {
+        local $ENV{PERL5_LAMBDA_PSGI_ALLOWED_HOSTS} = '';
+        my $func = AWS::Lambda::PSGI->wrap($app, invoke_mode => 'BUFFERED');
+        $input->{multiValueHeaders}{host} = ['evil.example'];
+        is $func->($input)->{statusCode}, 200, 'empty: any host is allowed';
+    }
+
+    {
+        delete local $ENV{PERL5_LAMBDA_PSGI_ALLOWED_HOSTS};
+        my $func = AWS::Lambda::PSGI->wrap($app, invoke_mode => 'BUFFERED');
+        is $func->($input)->{statusCode}, 200, 'unset: any host is allowed, as in the earlier versions';
+    }
+};
+
 done_testing;

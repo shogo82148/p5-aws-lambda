@@ -31,8 +31,56 @@ sub new {
             || "BUFFERED";
         $self->{invoke_mode} = uc $mode;
     }
+
+    if (!defined $self->{allowed_hosts}) {
+        $self->{allowed_hosts} = $ENV{PERL5_LAMBDA_PSGI_ALLOWED_HOSTS};
+    }
+    $self->{allowed_hosts} = _parse_allowed_hosts($self->{allowed_hosts});
  
     return $self;
+}
+
+# returns an array ref of lower-cased host names, or undef if any host is allowed.
+# $hosts is an array ref or a comma-separated string.
+sub _parse_allowed_hosts {
+    my $hosts = shift;
+    return undef unless defined $hosts;
+    my @hosts = ref $hosts eq 'ARRAY' ? @$hosts : split /,/, $hosts;
+    @hosts = grep { $_ ne '' } map { my $h = lc($_ // ''); $h =~ s/^\s+|\s+$//g; $h =~ s/\.$//; $h } @hosts;
+    return @hosts ? \@hosts : undef;
+}
+
+# returns true if the Host header of $env is one of the allowed hosts.
+sub _is_allowed_host {
+    my ($self, $env) = @_;
+    my $allowed = $self->{allowed_hosts} or return 1;
+    my $host = $env->{HTTP_HOST} // '';
+
+    # strip the port. an IPv6 address is in brackets, e.g. "[2001:db8::1]:8080".
+    if ($host =~ /^(\[[0-9A-Fa-f:.]+\])(?::[0-9]+)?$/) {
+        $host = $1;
+    } elsif ($host =~ /^([A-Za-z0-9.-]+)(?::[0-9]+)?$/) {
+        $host = $1;
+    } else {
+        return 0;
+    }
+    $host = lc $host;
+    $host =~ s/\.$//; # "example.com." is "example.com"
+
+    for my $pattern (@$allowed) {
+        if ($pattern =~ /^\.(.+)$/) {
+            # ".example.com" matches example.com and its subdomains.
+            my $domain = $1;
+            return 1 if $host eq $domain || $host =~ /\Q$pattern\E$/;
+        } else {
+            return 1 if $host eq $pattern;
+        }
+    }
+    return 0;
+}
+
+sub _bad_request {
+    return [400, ['Content-Type' => 'text/plain'], ['Bad Request']];
 }
 
 sub prepare_app { return }
@@ -75,11 +123,11 @@ sub call {
     if ($self->{invoke_mode} eq "RESPONSE_STREAM") {
         my $input = $self->_format_input_v2($env, $ctx);
         $input->{'psgi.streaming'} = Plack::Util::TRUE;
-        my $res = $self->app->($input);
+        my $res = $self->_is_allowed_host($input) ? $self->app->($input) : _bad_request();
         return $self->_handle_response_stream($res);
     } else {
         my $input = $self->format_input($env, $ctx);
-        my $res = $self->app->($input);
+        my $res = $self->_is_allowed_host($input) ? $self->app->($input) : _bad_request();
         return $self->format_output($res);
     }
 }
@@ -554,6 +602,30 @@ They come from the headers named exactly C<X-Forwarded-Proto> and C<X-Forwarded-
 A header such as C<X_Forwarded_Proto> is not used.
 
 =back
+
+=head2 Allowed Hosts
+
+Application Load Balancer passes the C<Host> header that the client sends to the function as is,
+unless a listener rule checks it, and its events have no other host name.
+So C<HTTP_HOST>, and the URLs that the app builds from it (for example the links in password reset emails),
+can be any value that the client chooses.
+
+Set the host names that the app serves with the C<allowed_hosts> option of C<new> or C<wrap>,
+or with the Lambda environment variable C<PERL5_LAMBDA_PSGI_ALLOWED_HOSTS> (comma-separated).
+A request whose C<Host> header is not one of them gets C<400 Bad Request>, and the app is not called.
+
+    my $func = AWS::Lambda::PSGI->wrap($app, allowed_hosts => ['example.com', '.example.net']);
+
+    # or in the SAM template
+    Environment:
+        Variables:
+            PERL5_LAMBDA_PSGI_ALLOWED_HOSTS: example.com,.example.net
+
+The port in the C<Host> header is ignored, and host names are compared case-insensitively.
+A name that starts with a dot, such as C<.example.net>, matches C<example.net> and all its subdomains.
+The option applies to all event types, so include every host name that clients use,
+such as the custom domain names of API Gateway or the Lambda Function URL.
+If neither is set, any C<Host> header is accepted, as in the earlier versions.
 
 =head2 Reverse Proxy
 
