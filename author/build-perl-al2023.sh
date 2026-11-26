@@ -7,6 +7,10 @@ set -uex
 PERL_VERSION=$1
 
 NET_SSLEAY_VERSION=1.96
+# perl-build pinned to a commit and verified with SHA-256.
+# https://github.com/tokuhirom/Perl-Build
+PERL_BUILD_COMMIT=e56e4e44816cb1f9912bf560cc8b86bff609da68
+PERL_BUILD_SHA256=600bcb6689b8668f687089bf258224f65ef1d8be649e12ccc175415ebc7f4228
 # cpanm, carton and cpm patched to avoid insecure (plain HTTP) connections.
 # https://github.com/shogo82148/actions-setup-perl/tree/main/bin
 ACTIONS_SETUP_PERL_COMMIT=b45a6f48c90b0367842227f88a22400a9045794c
@@ -30,7 +34,8 @@ LOCAL_LIB_VERSION=2.000029
 dnf install -y perl glibc-langpack-en openssl openssl-devel
 
 JOBS=$(nproc)
-curl -sL https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build > /tmp/perl-build
+curl -fsSL -o /tmp/perl-build "https://raw.githubusercontent.com/tokuhirom/Perl-Build/$PERL_BUILD_COMMIT/perl-build"
+echo "$PERL_BUILD_SHA256  /tmp/perl-build" | sha256sum -c -
 perl /tmp/perl-build "$PERL_VERSION" /opt --jobs="$JOBS" --noman -Dvendorprefix=/opt
 
 # workaround for "xlocale.h: No such file or directory"
