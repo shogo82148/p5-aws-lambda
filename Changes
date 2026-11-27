@@ -1,6 +1,15 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - AWS::Lambda::PSGI: take REMOTE_ADDR from the Lambda event instead of X-Forwarded-For #270
+    - AWS::Lambda::PSGI: hide X-Forwarded-Proto and X-Forwarded-Port from Plack::Middleware::ReverseProxy in wrap() #271
+    - [BREAKING] AWS::Lambda::PSGI: stop enabling Plack::Middleware::ReverseProxy in wrap() #272
+      - psgi.url_scheme, HTTPS and SERVER_PORT are now set from the Lambda event.
+      - Apps behind a proxy they trust can enable Plack::Middleware::ReverseProxy themselves.
+    - AWS::Lambda::PSGI: drop request headers whose names contain an underscore #276
+    - AWS::Lambda::PSGI: add allowed_hosts option (and PERL5_LAMBDA_PSGI_ALLOWED_HOSTS) to reject requests for unexpected Host headers #277
+    - use patched cpanm, carton and cpm from actions-setup-perl to build the runtime #274
+    - pin perl-build to a commit and verify it with SHA-256 #275
     - bump Mozilla::CA 20261105 #262
     - bump Cpanel::JSON::XS 4.83 #264, #266, #268
     - bump JSON::XS 4.06 #265, #267
