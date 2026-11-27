@@ -1,13 +1,13 @@
 build: psgi.zip
 psgi.zip: handler.pl cpanfile app.psgi
-	docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.32.al2 \
+	docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.44.al2023 \
 		cpanm --notest -L extlocal --installdeps .
 	zip -r psgi.zip . -x '*.zip'
 
 test:
-	docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.32.al2 \
+	docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.44.al2023 \
 		handler.handle '{"httpMethod": "GET", "path":"/"}'
-	docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.32.al2 \
+	docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.44.al2023 \
 		handler.handle '{"httpMethod": "POST", "path":"/foo", "headers": {"Content-Type": "application/json"}, "body":"{\"hello\":\"lambda\"}"}'
 
 clean:

@@ -14,7 +14,7 @@ Resources:
     Type: "AWS::Serverless::Function"
     Properties:
       Handler: handler.handle
-      Runtime: provided.al2
+      Runtime: provided.al2023
       CodeUri: s3-get-object.zip
       Description: >-
         An Amazon S3 trigger that retrieves metadata for the object that has
@@ -22,8 +22,8 @@ Resources:
       MemorySize: 128
       Timeout: 3
       Layers:
-        - !Sub arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-32-runtime-al2:1
-        - !Sub arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-32-paws-al2:1
+        - !Sub arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-44-runtime-al2023-x86_64:3
+        - !Sub arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-44-paws-al2023-x86_64:3
       Policies:
         - S3CrudPolicy:
             BucketName: !Sub "${BucketNamePrefix}-get-object"

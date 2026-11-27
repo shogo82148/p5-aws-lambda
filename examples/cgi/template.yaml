@@ -15,15 +15,15 @@ Resources:
       CidrBlock: 10.0.1.0/24
       AvailabilityZone: !Select
         - 0
-        - Fn::GetAZs: !Ref 'AWS::Region'
+        - Fn::GetAZs: !Ref "AWS::Region"
   EfsSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       VpcId: !Ref VPC
       GroupDescription: "mnt target sg"
       SecurityGroupIngress:
-      - IpProtocol: "-1"
-        CidrIp: 0.0.0.0/0
+        - IpProtocol: "-1"
+          CidrIp: 0.0.0.0/0
   FileSystem:
     Type: AWS::EFS::FileSystem
     Properties:
@@ -63,12 +63,12 @@ Resources:
       Description: Www Counter
       CodeUri: ./WwwCounter/
       Handler: handler.handle
-      Runtime: provided.al2
+      Runtime: provided.al2023
       Environment:
         Variables:
           WWWCOUNT_DIR: /mnt/efs0
       Layers:
-        - arn:aws:lambda:ap-northeast-1:445285296882:layer:perl-5-34-runtime-al2:2
+        - !Sub "arn:aws:lambda:${AWS::Region}:445285296882:layer:perl-5-44-runtime-al2023-x86_64:3"
       Events:
         CatchAll:
           Type: HttpApi

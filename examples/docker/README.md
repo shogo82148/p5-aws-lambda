@@ -19,7 +19,7 @@ To upload the container image, you need to create a new ECR repository in your a
     $ aws ecr get-login-password | docker login --username AWS --password-stdin 123412341234.dkr.ecr.sa-east-1.amazonaws.com
     $ docker push 123412341234.dkr.ecr.sa-east-1.amazonaws.com/hello-perl:latest
 
-Finally, create new function using awscli.
+Finally, create new function using AWS CLI.
 
     $ aws --region "$REGION" --profile "$PROFILE" lambda create-function \
         --function-name "hello-perl" \
