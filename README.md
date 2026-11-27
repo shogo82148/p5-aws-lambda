@@ -65,8 +65,8 @@ You can get the layer ARN in your script by using `get_layer_info`.
     );
     say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-44-runtime-al2023-x86_64:3
     say $info->{runtime_version}; # 3
-    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-44-paws-al2023-x86_64:3
-    say $info->{paws_version}     # 3,
+    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-44-paws-al2023-x86_64:1
+    say $info->{paws_version}     # 1,
 
 Or, you can use following one-liner.
 
