@@ -1,6 +1,7 @@
 Revision history for Perl extension aws-lambda
 
 {{$NEXT}}
+    - Update Docker base images in examples and POD #279
     - AWS::Lambda::PSGI: take REMOTE_ADDR from the Lambda event instead of X-Forwarded-For #270
       - API Gateway and Lambda Function URLs: REMOTE_ADDR is the sourceIp in the event.
       - Application Load Balancer: REMOTE_ADDR is still the last address in the header named exactly X-Forwarded-For, because ALB events have no sourceIp.

@@ -1,4 +1,4 @@
-FROM perl:5.32-slim-buster
+FROM perl:5.44-slim-bookworm
 RUN mkdir -p /var/task \
     && apt-get update \
     && apt-get install -y --no-install-recommends gcc libc6-dev \

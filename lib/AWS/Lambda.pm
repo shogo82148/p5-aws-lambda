@@ -12,57 +12,57 @@ our $VERSION = "0.11.1";
 # the context of Lambda Function
 our $context;
 
-our $LAYERS = $AWS::Lambda::AL::LAYERS;
-our $LAYERS_AL2 = $AWS::Lambda::AL2::LAYERS;
+our $LAYERS        = $AWS::Lambda::AL::LAYERS;
+our $LAYERS_AL2    = $AWS::Lambda::AL2::LAYERS;
 our $LAYERS_AL2023 = $AWS::Lambda::AL2023::LAYERS;
 
 sub get_layer_info {
-    my ($version, $region) = @_;
+    my ( $version, $region ) = @_;
     return $LAYERS->{$version}{$region};
 }
 
 sub print_runtime_arn {
-    my ($version, $region) = @_;
+    my ( $version, $region ) = @_;
     print $LAYERS->{$version}{$region}{runtime_arn};
 }
 
 sub print_paws_arn {
-    my ($version, $region) = @_;
+    my ( $version, $region ) = @_;
     print $LAYERS->{$version}{$region}{paws_arn};
 }
 
 sub get_layer_info_al2 {
-    my ($version, $region, $arch) = @_;
+    my ( $version, $region, $arch ) = @_;
     $arch //= 'x86_64';
     return $LAYERS_AL2->{$version}{$arch}{$region};
 }
 
 sub print_runtime_arn_al2 {
-    my ($version, $region, $arch) = @_;
+    my ( $version, $region, $arch ) = @_;
     $arch //= 'x86_64';
     print $LAYERS_AL2->{$version}{$arch}{$region}{runtime_arn};
 }
 
 sub print_paws_arn_al2 {
-    my ($version, $region, $arch) = @_;
+    my ( $version, $region, $arch ) = @_;
     $arch //= 'x86_64';
     print $LAYERS_AL2->{$version}{$arch}{$region}{paws_arn};
 }
 
 sub get_layer_info_al2023 {
-    my ($version, $region, $arch) = @_;
+    my ( $version, $region, $arch ) = @_;
     $arch //= 'x86_64';
     return $LAYERS_AL2023->{$version}{$arch}{$region};
 }
 
 sub print_runtime_arn_al2023 {
-    my ($version, $region, $arch) = @_;
+    my ( $version, $region, $arch ) = @_;
     $arch //= 'x86_64';
     print $LAYERS_AL2023->{$version}{$arch}{$region}{runtime_arn};
 }
 
 sub print_paws_arn_al2023 {
-    my ($version, $region, $arch) = @_;
+    my ( $version, $region, $arch ) = @_;
     $arch //= 'x86_64';
     print $LAYERS_AL2023->{$version}{$arch}{$region}{paws_arn};
 }
@@ -90,7 +90,7 @@ and then, zip the script.
 
     $ zip handler.zip handler.pl
 
-Finally, create new function using awscli.
+Finally, create new function using AWS CLI.
 
     $ aws --region "$REGION" --profile "$PROFILE" lambda create-function \
         --function-name "hello-perl" \
@@ -98,7 +98,7 @@ Finally, create new function using awscli.
         --handler "handler.handle" \
         --runtime provided.al2023 \
         --role arn:aws:iam::xxxxxxxxxxxx:role/service-role/lambda-custom-runtime-perl-role \
-        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-38-runtime-al2023-x86_64:1"
+        --layers "arn:aws:lambda:$REGION:445285296882:layer:perl-5-44-runtime-al2023-x86_64:3"
 
 It also supports L<response streaming|https://docs.aws.amazon.com/lambda/latest/dg/configuration-response-streaming.html>.
 
@@ -162,19 +162,19 @@ You can get the layer ARN in your script by using C<get_layer_info>.
 
     use AWS::Lambda;
     my $info = AWS::Lambda::get_layer_info_al2023(
-        "5.38",      # Perl Version
+        "5.44",      # Perl Version
         "us-east-1", # Region
         "x86_64",    # Architecture ("x86_64" or "arm64", optional, the default is "x86_64")
     );
-    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-runtime-al2023-x86_64:1
-    say $info->{runtime_version}; # 1
-    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-38-paws-al2023-x86_64:1
+    say $info->{runtime_arn};     # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-44-runtime-al2023-x86_64:3
+    say $info->{runtime_version}; # 3
+    say $info->{paws_arn}         # arn:aws:lambda:us-east-1:445285296882:layer:perl-5-44-paws-al2023-x86_64:1
     say $info->{paws_version}     # 1,
 
 Or, you can use following one-liner.
 
-    perl -MAWS::Lambda -e 'AWS::Lambda::print_runtime_arn_al2023("5.38", "us-east-1")'
-    perl -MAWS::Lambda -e 'AWS::Lambda::print_paws_arn_al2023("5.38", "us-east-1")'
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_runtime_arn_al2023("5.44", "us-east-1")'
+    perl -MAWS::Lambda -e 'AWS::Lambda::print_paws_arn_al2023("5.44", "us-east-1")'
 
 The list of all layer ARNs is available on L<AWS::Lambda::AL2023>.
 
@@ -215,14 +215,14 @@ C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-
 =head2 Use Pre-built Docker Images
 
 Prebuilt Docker Images based on L<https://gallery.ecr.aws/lambda/provided> are available.
-You can pull from L<https://gallery.ecr.aws/shogo82148/p5-aws-lambda> or L<https://hub.docker.com/r/shogo82148/p5-aws-lambda>,
+You can pull from L<https://hub.docker.com/r/shogo82148/p5-aws-lambda> or L<https://github.com/shogo82148/p5-aws-lambda/pkgs/container/p5-aws-lambda>,
 build your custom images and deploy them to AWS Lambda.
 
 Here is an example of Dockerfile.
 
-    FROM shogo82148/p5-aws-lambda:base-5.38.al2023
-    # or if you want to use ECR Public.
-    # FROM public.ecr.aws/shogo82148/p5-aws-lambda:base-5.38.al2023
+    FROM shogo82148/p5-aws-lambda:base-5.44.al2023
+    # or if you want to use GitHub Container Registry.
+    # FROM ghcr.io/shogo82148/p5-aws-lambda:base-5.44.al2023
     COPY handler.pl /var/task/
     CMD [ "handler.handle" ]
 
@@ -245,7 +245,7 @@ To upload the container image, you need to create a new ECR repository in your a
     $ aws ecr get-login-password | docker login --username AWS --password-stdin 123412341234.dkr.ecr.sa-east-1.amazonaws.com
     $ docker push 123412341234.dkr.ecr.sa-east-1.amazonaws.com/hello-perl:latest
 
-Finally, create new function using awscli.
+Finally, create new function using AWS CLI.
 
     $ aws --region "$REGION" --profile "$PROFILE" lambda create-function \
         --function-name "hello-perl" \
@@ -257,15 +257,15 @@ Finally, create new function using awscli.
 =head2 Run in Local using Docker
 
 Prebuilt Docker Images based on L<https://hub.docker.com/r/lambci/lambda/> are available.
-You can pull from L<https://gallery.ecr.aws/shogo82148/p5-aws-lambda> or L<https://hub.docker.com/r/shogo82148/p5-aws-lambda>,
+You can pull from L<https://hub.docker.com/r/shogo82148/p5-aws-lambda> or L<https://github.com/shogo82148/p5-aws-lambda/pkgs/container/p5-aws-lambda>,
 and build zip archives to deploy.
 
     # Install the dependency.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.38.al2023 \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.44.al2023 \
         cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
 
     # run an event.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.38.al2023 \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.44.al2023 \
         handler.handle '{"some":"event"}'
 
 =head2 Pre-installed modules
@@ -362,24 +362,24 @@ C<https://shogo82148-lambda-perl-runtime-$REGION.s3.amazonaws.com/perl-$VERSION-
 
 =head2 Use Prebuilt Docker Images for Paws
 
-use the C<base-$VERSION-paws.al2023> tag on L<https://gallery.ecr.aws/shogo82148/p5-aws-lambda> or L<https://hub.docker.com/r/shogo82148/p5-aws-lambda>.
+use the C<base-$VERSION-paws.al2023> tag on L<https://hub.docker.com/r/shogo82148/p5-aws-lambda> or L<https://github.com/shogo82148/p5-aws-lambda/pkgs/container/p5-aws-lambda>.
 
-    FROM shogo82148/p5-aws-lambda:base-5.38-paws.al2023
-    # or if you want to use ECR Public.
-    # FROM public.ecr.aws/shogo82148/p5-aws-lambda:base-5.38-paws.al2023
+    FROM shogo82148/p5-aws-lambda:base-5.44-paws.al2023
+    # or if you want to use GitHub Container Registry.
+    # FROM ghcr.io/shogo82148/p5-aws-lambda:base-5.44-paws.al2023
     COPY handler.pl /var/task/
     CMD [ "handler.handle" ]
 
 =head2 Run in Local using Docker for Paws
 
-use the C<build-$VERSION-paws.al2023> and C<$VERSION-paws.al2023> tag on L<https://gallery.ecr.aws/shogo82148/p5-aws-lambda> or L<https://hub.docker.com/r/shogo82148/p5-aws-lambda>.
+use the C<build-$VERSION-paws.al2023> and C<$VERSION-paws.al2023> tag on L<https://hub.docker.com/r/shogo82148/p5-aws-lambda> or L<https://github.com/shogo82148/p5-aws-lambda/pkgs/container/p5-aws-lambda>.
 
     # Install the dependency.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.38-paws.al2023 \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:build-5.44-paws.al2023 \
         cpanm --notest --local-lib extlocal --no-man-pages --installdeps .
 
     # run an event.
-    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.38-paws.al2023 \
+    docker run --rm -v $(PWD):/var/task shogo82148/p5-aws-lambda:5.44-paws.al2023 \
         handler.handle '{"some":"event"}'
 
 =head1 CREATE MODULE LAYER
@@ -391,7 +391,7 @@ install the modules into C</opt/lib/perl5/site_perl> in the layer.
     docker run --rm \
         -v $(PWD):/var/task \
         -v $(PATH_TO_LAYER_DIR)/lib/perl5/site_perl:/opt/lib/perl5/site_perl \
-        shogo82148/p5-aws-lambda:build-5.38.al2023 \
+        shogo82148/p5-aws-lambda:build-5.44.al2023 \
         cpanm --notest --no-man-pages Some::Module
     cd $(PATH_TO_LAYER_DIR) && zip -9 -r $(PATH_TO_DIST)/some-module.zip .
 
